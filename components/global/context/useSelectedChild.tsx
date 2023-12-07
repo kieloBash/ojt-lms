@@ -34,9 +34,7 @@ export const SelectedChildProvider = ({
     if (userInfo && userInfo.children && !selectedChild) {
       fetchStudent(userInfo.children[0]._id as string);
     }
-  }, [userInfo]);
-
-  console.log(selectedChild);
+  }, [userInfo,selectedChild]);
 
   return (
     <SelectedChildContext.Provider

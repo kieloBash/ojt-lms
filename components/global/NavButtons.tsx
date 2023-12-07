@@ -16,7 +16,6 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -53,10 +52,9 @@ const NavButtons = ({ user }: { user: ParentType | UserType }) => {
   useEffect(() => {
     if (isParent(user))
       setSelectedChild((user?.children as StudentType[])[0] as StudentType);
-  }, [selectedChild]);
+  }, [selectedChild, user]);
 
   if (isParent(user)) {
-    console.log(user);
     return (
       <div className="flex flex-col items-center justify-center gap-4">
         <ParentAvatarButton parent={user} />
