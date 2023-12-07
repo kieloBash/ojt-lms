@@ -25,10 +25,13 @@ const CalendarComponent = ({
 
   let ATTENDANCES: any;
 
+  const studentAtt = useStudentAttendances(selectedChild?._id as string);
+  const teacherAtt = useTeacherAttendance(currDate.toDate());
+
   if (isParent(userInfo)) {
-    ATTENDANCES = useStudentAttendances(selectedChild?._id as string);
+    ATTENDANCES = studentAtt;
   } else {
-    ATTENDANCES = useTeacherAttendance(currDate.toDate());
+    ATTENDANCES = teacherAtt;
   }
 
   if (selectedChild?.status === "Not Paid")
