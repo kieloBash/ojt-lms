@@ -48,15 +48,15 @@ const NavButtons = ({ user }: { user: ParentType | UserType }) => {
     { label: "settings", href: "/settings" },
   ];
 
-  if (isParent(user)) {
-    const { setSelectedChild } = useSelectedChild();
+  const { setSelectedChild } = useSelectedChild();
 
-    useEffect(() => {
+  useEffect(() => {
+    if (isParent(user))
       setSelectedChild((user?.children as StudentType[])[0] as StudentType);
-    }, []);
+  }, []);
 
+  if (isParent(user)) {
     console.log(user);
-
     return (
       <div className="flex flex-col items-center justify-center gap-4">
         <ParentAvatarButton parent={user} />
