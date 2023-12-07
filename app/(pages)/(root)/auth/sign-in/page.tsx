@@ -1,6 +1,6 @@
 import React from "react";
 
-const SignInPage = () => {
+const SignInPage = async() => {
   return <main className="">SignInPage</main>;
 };
 
