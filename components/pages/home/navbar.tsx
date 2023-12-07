@@ -1,29 +1,9 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import React from "react";
 
-const HEADER_LINKS = [
-  {
-    href: "/home",
-    label: "Home",
-  },
-  {
-    href: "/about",
-    label: "About",
-  },
-  {
-    href: "/subscriptions",
-    label: "Subscriptions",
-  },
-  {
-    href: "/faq",
-    label: "FAQ",
-  },
-];
 const HomeNavbar = () => {
-  const pathname = usePathname();
   return (
     <div className="sticky top-0 z-[100] backdrop-blur-sm">
       <nav className="bg-white/90">
@@ -37,30 +17,13 @@ const HomeNavbar = () => {
               </Link>
               <div className="hidden md:block">
                 <div className="flex items-baseline ml-10 space-x-4">
-                  {HEADER_LINKS.map((nav) => {
-                    const isActive =
-                      (pathname.includes(nav.href) && nav.href.length > 1) ||
-                      pathname === nav.href;
-
-                    const linkClassName = isActive
-                      ? "text-gray-800 hover:text-gray-800 dark:hover:text-white"
-                      : "text-gray-300 hover:text-gray-800 dark:hover:text-white";
-                    return (
-                      <Link
-                        className={`${linkClassName} transition px-3 py-2 text-sm font-semibold rounded-md`}
-                        href={nav.href}
-                      >
-                        {nav.label}
-                      </Link>
-                    );
-                  })}
                   <div className="flex gap-2 ml-2">
-                    <Link href={"/authenticate/sign-up"}>
+                    <Link href={"/auth/sign-up"}>
                       <Button onClick={() => {}} className="px-6">
                         Sign Up
                       </Button>
                     </Link>
-                    <Link href={"/authenticate/sign-in"}>
+                    <Link href={"/auth/sign-in"}>
                       <Button
                         onClick={() => {}}
                         variant={"outline"}
@@ -93,25 +56,7 @@ const HomeNavbar = () => {
           </div>
         </div>
         <div className="md:hidden">
-          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-            {HEADER_LINKS.map((nav) => {
-              const isActive =
-                (pathname.includes(nav.href) && nav.href.length > 1) ||
-                pathname === nav.href;
-
-              const linkClassName = isActive
-                ? "text-gray-800"
-                : "text-gray-300 hover:text-gray-800";
-              return (
-                <Link
-                  className={`${linkClassName} transition block px-3 py-2 text-base font-medium rounded-md`}
-                  href={nav.href}
-                >
-                  {nav.label}
-                </Link>
-              );
-            })}
-          </div>
+          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3"></div>
         </div>
       </nav>
     </div>
