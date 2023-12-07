@@ -34,7 +34,7 @@ const StudentAcceptedScetion = ({
                 <CardDescription>Upcoming Classes</CardDescription>
               </CardHeader>
               <CardContent className="pl-2">
-                <CalendarAttendance selectedChild={selectedChild} />
+                {/* <CalendarAttendance selectedChild={selectedChild} /> */}
               </CardContent>
             </Card>
             <Card className="col-span-3">
