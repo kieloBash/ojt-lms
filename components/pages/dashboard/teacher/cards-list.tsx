@@ -13,7 +13,7 @@ const CardsList = () => {
           {Array(10)
             .fill([])
             .map((_, index) => (
-              <div className="flex flex-col gap-2">
+              <div className="flex flex-col gap-2" key={index}>
                 <Skeleton className="w-[250px] h-[330px]" />
                 <Skeleton className="w-[250px] h-[40px]" />
               </div>
