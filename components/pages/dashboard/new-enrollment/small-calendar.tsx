@@ -2,13 +2,13 @@
 import React, { useEffect, useState } from "react";
 
 // BACKEND
-import { getMatrixMonth } from "@/utils/calendar/helpers";
 import dayjs from "dayjs";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 // UI
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { getMatrixMonth } from "@/utils/helpers/calendar/helpers";
 
 const SmallCalendar = ({ repeatedDays }: { repeatedDays: string[] }) => {
   const [currMonthIdx, setCurrMonthIdx] = useState<number>(dayjs().month());
