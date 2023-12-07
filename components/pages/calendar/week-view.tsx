@@ -29,10 +29,7 @@ const WeeklyView = ({
 
   const days: dayjs.Dayjs[] = [];
   for (let i = 0; i < 7; i++) {
-    const day = dayjs()
-      .year(year)
-      .isoWeek(week)
-      .day(i);
+    const day = dayjs().year(year).isoWeek(week).day(i);
     days.push(day);
   }
 
@@ -91,13 +88,16 @@ const WeeklyView = ({
           <div className="flex w-full py-2">
             <div className="flex items-center justify-center w-20" />
             <ul className="grid w-full grid-cols-7 grid-rows-1">
-              {days.map((d) => {
+              {days.map((d, index) => {
                 const selectedClassName =
                   d.format(format) === dayjs().format(format) &&
                   "bg-main-500 text-white";
 
                 return (
-                  <li className="flex flex-col items-center justify-center h-18">
+                  <li
+                    key={index}
+                    className="flex flex-col items-center justify-center h-18"
+                  >
                     <p className="">{d.format("dd")}</p>
                     <div
                       className={`w-9 h-9 p-2 flex justify-center items-center rounded-full text-lg ${selectedClassName}`}

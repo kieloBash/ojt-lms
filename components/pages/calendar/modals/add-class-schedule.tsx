@@ -70,8 +70,8 @@ export function AddClassScheduleModal({
         <DialogHeader>
           <DialogTitle>Add Class Schedule</DialogTitle>
           <DialogDescription>
-            Add a class for the week to your class schedule here. Click save
-            when you're done.
+            {`Add a class for the week to your class schedule here. Click save
+            when you're done.`}
           </DialogDescription>
         </DialogHeader>
         <div className="flex flex-col gap-2 mb-4">
