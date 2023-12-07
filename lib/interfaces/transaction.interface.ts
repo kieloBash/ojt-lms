@@ -10,6 +10,8 @@ export interface TransactionsType {
   status: TransactionStatusType;
   package: TransactionPackageType;
   classSchedule: AttendanceType[];
+  createdAt: Date;
+  paidAt: Date;
 }
 
 export type TransactionStatusType = "Paid" | "Not Paid" | "Declined";

@@ -69,15 +69,13 @@ export async function fetchParentTransactions({
       .skip(skipAmount)
       .limit(pageSize)
       .lean()
-      .select("_id price status package")
+      .select("_id price status package createdAt paidAt")
       .populate({ path: "student", model: Student, select: "_id name" })
       // .populate({ path: "parent", model: Parent, select: "_id name" })
       .exec();
 
     const totalCount = await Transaction.countDocuments(filter);
     const transactions = await query;
-
-    console.log(transactions);
 
     // Convert _id to string in the results
     const arrToIdString: TransactionsType[] = transactions.map((d: any) => ({
@@ -92,8 +90,6 @@ export async function fetchParentTransactions({
       //   _id: d.parent._id.toString(),
       // },
     }));
-
-    console.log(arrToIdString);
 
     const isNext = totalCount > skipAmount + transactions.length;
 

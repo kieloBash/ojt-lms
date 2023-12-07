@@ -18,6 +18,7 @@ import {
 } from "@/lib/interfaces/transaction.interface";
 import { StudentType } from "@/lib/interfaces/student.interface";
 import { Badge } from "@/components/ui/badge";
+import dayjs from "dayjs";
 
 export const columns: ColumnDef<TransactionsType>[] = [
   //   {
@@ -110,6 +111,16 @@ export const columns: ColumnDef<TransactionsType>[] = [
       }).format(amount);
 
       return <div className="ml-4 font-medium text-left">{formatted}</div>;
+    },
+  },
+  {
+    accessorKey: "createdAt",
+    header: "Date of Transaction",
+    cell: ({ row }) => {
+      const createdAt: Date = row.getValue("createdAt");
+      const d = dayjs(createdAt);
+
+      return <div className="capitalize">{d.format("MM/DD/YYYY")}</div>;
     },
   },
   //   {

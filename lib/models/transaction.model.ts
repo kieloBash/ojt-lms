@@ -24,6 +24,9 @@ const transactionSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    paidAt: {
+      type: Date,
+    },
     classSchedule: [
       {
         type: mongoose.Schema.Types.ObjectId,
