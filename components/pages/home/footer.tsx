@@ -1,5 +1,4 @@
 "use client";
-import Link from "next/link";
 import React from "react";
 import LOGO from "@/public/logo-2.svg";
 import Image from "next/image";
@@ -10,32 +9,6 @@ const Footer = () => {
   return (
     <footer className="w-full py-8 bg-white border-t">
       <div className="max-w-screen-xl px-4 mx-auto">
-        <ul className="relative flex flex-wrap justify-center max-w-screen-md gap-8 mx-auto -mb-8 text-lg font-light">
-          <Link
-            className="z-10 my-2 transition-colors duration-200 text-dark-1"
-            href="/"
-          >
-            Home
-          </Link>
-          <Link
-            className="z-10 my-2 transition-colors duration-200 text-dark-1"
-            href="/about"
-          >
-            About
-          </Link>
-          <Link
-            className="z-10 my-2 transition-colors duration-200 text-dark-1"
-            href="/subscriptions"
-          >
-            Subscriptions
-          </Link>
-          <Link
-            className="z-10 my-2 transition-colors duration-200 text-dark-1"
-            href="/faq"
-          >
-            FAQ
-          </Link>
-        </ul>
         <div className="relative flex items-center justify-center w-full -mb-4 overflow-hidden">
           <Image src={LOGO} alt="Umonics Logo" width={500} />
         </div>
