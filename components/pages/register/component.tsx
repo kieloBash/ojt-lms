@@ -53,7 +53,6 @@ import { StudentType } from "@/lib/interfaces/student.interface";
 import { calculateAge } from "@/utils/helpers/calculateAge";
 import { GRADE_LEVEL, getGradeLevel } from "@/utils/constants/data/gradeLevels";
 import { AgeGroupType } from "@/lib/interfaces/class.interface";
-import { Toast } from "@/components/ui/toast";
 import Image from "next/image";
 
 const RegisterComponent = () => {
@@ -116,7 +115,6 @@ const RegisterComponent = () => {
 
   return (
     <>
-      <Toast />
       <section className="flex w-full h-screen">
         <div className="flex flex-col w-full md:w-1/2">
           <div className="flex flex-col justify-center px-8 pt-8 my-auto md:justify-start md:pt-0 md:px-24 lg:px-32">
