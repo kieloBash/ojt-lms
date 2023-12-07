@@ -57,7 +57,9 @@ const CalendarComponent = ({
 
   return (
     <>
-      <CalendarSideBar userInfo={userInfo} ATTENDANCES={ATTENDANCES.data} />
+      {isParent(userInfo) && (
+        <CalendarSideBar userInfo={userInfo} ATTENDANCES={ATTENDANCES.data} />
+      )}
       {calendarType === "Month" ? (
         <MonthlyView
           userInfo={userInfo}

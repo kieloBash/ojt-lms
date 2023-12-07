@@ -61,62 +61,74 @@ export function AlbumArtwork({
           <ContextMenuSub>
             <ContextMenuSubTrigger>View Attendance</ContextMenuSubTrigger>
             <ContextMenuSubContent className="w-48">
-              {album.classParticipants?.map((s) => {
-                const attending = album.studentsPresent?.find(
-                  (d: StudentType) => d._id === s._id
-                );
+              {album.classParticipants?.length === 0 ? (
+                <>
+                  <ContextMenuItem disabled>No Students Enrolled</ContextMenuItem>
+                </>
+              ) : (
+                <>
+                  {album.classParticipants?.map((s) => {
+                    const attending = album.studentsPresent?.find(
+                      (d: StudentType) => d._id === s._id
+                    );
 
-                return (
-                  <ContextMenuItem key={s._id} className="capitalize">
-                    {attending !== undefined ? (
-                      <>
-                        <Button
-                          type="button"
-                          onClick={async () => {
-                            const res = await updateStudentNo({
-                              studentId: s._id as string,
-                              attendanceId: album._id as string,
-                            });
-                            if (res) {
-                              queryClient.invalidateQueries({
-                                queryKey: [`attendance:upcoming-attendance`],
-                              });
-                              // window.location.reload();
-                            }
-                          }}
-                          variant={"ghost"}
-                          className="w-5 h-5 p-0 mr-2 rounded-full"
-                        >
-                          <CheckCircle className="text-green-600 transition hover:text-green-300" />
-                        </Button>
-                      </>
-                    ) : (
-                      <>
-                        <Button
-                          type="button"
-                          onClick={async () => {
-                            const res = await updateStudentYes({
-                              studentId: s._id as string,
-                              attendanceId: album._id as string,
-                            });
-                            if (res) {
-                              queryClient.invalidateQueries({
-                                queryKey: [`attendance:upcoming-attendance`],
-                              });
-                              // window.location.reload();
-                            }
-                          }}
-                          variant={"ghost"}
-                          className="w-5 h-5 p-0 mr-2 rounded-full"
-                        >
-                          <XCircle className="text-red-600 transition hover:text-red-300" />
-                        </Button>
-                      </>
-                    )}
-                    {s.name}
-                  </ContextMenuItem>
-                );
-              })}
+                    return (
+                      <ContextMenuItem key={s._id} className="capitalize">
+                        {attending !== undefined ? (
+                          <>
+                            <Button
+                              type="button"
+                              onClick={async () => {
+                                const res = await updateStudentNo({
+                                  studentId: s._id as string,
+                                  attendanceId: album._id as string,
+                                });
+                                if (res) {
+                                  queryClient.invalidateQueries({
+                                    queryKey: [
+                                      `attendance:upcoming-attendance`,
+                                    ],
+                                  });
+                                  // window.location.reload();
+                                }
+                              }}
+                              variant={"ghost"}
+                              className="w-5 h-5 p-0 mr-2 rounded-full"
+                            >
+                              <CheckCircle className="text-green-600 transition hover:text-green-300" />
+                            </Button>
+                          </>
+                        ) : (
+                          <>
+                            <Button
+                              type="button"
+                              onClick={async () => {
+                                const res = await updateStudentYes({
+                                  studentId: s._id as string,
+                                  attendanceId: album._id as string,
+                                });
+                                if (res) {
+                                  queryClient.invalidateQueries({
+                                    queryKey: [
+                                      `attendance:upcoming-attendance`,
+                                    ],
+                                  });
+                                  // window.location.reload();
+                                }
+                              }}
+                              variant={"ghost"}
+                              className="w-5 h-5 p-0 mr-2 rounded-full"
+                            >
+                              <XCircle className="text-red-600 transition hover:text-red-300" />
+                            </Button>
+                          </>
+                        )}
+                        {s.name}
+                      </ContextMenuItem>
+                    );
+                  })}
+                </>
+              )}
             </ContextMenuSubContent>
           </ContextMenuSub>
           <ContextMenuSeparator />

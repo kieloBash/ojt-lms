@@ -208,20 +208,21 @@ export async function fetchUpcomingAttendances({
 
     // const skipAmount = (pageNumber - 1) * pageSize;
 
-    const startDate = new Date(year, month - 1, 1); // Note: Month is 0-indexed
-    const endDate = new Date(year, month + 2, 1); // This gives the first day of the next month
-    endDate.setMilliseconds(endDate.getMilliseconds() - 1); // Subtract one millisecond to get the last millisecond of the last day
+    const today = new Date();
+    const startDate = new Date(
+      today.getFullYear(),
+      today.getMonth(),
+      today.getDate()
+    ); // Set the start date to the beginning of today
 
     const query = Attendance.find({
-      date: { $gte: startDate, $lte: endDate },
-      classParticipants: { $exists: true, $not: { $size: 0 } }, // Filter by date within the specified month and ensure classParticipants array exists and is not empty
+      date: { $gte: startDate },
+      // classParticipants: { $exists: true, $not: { $size: 0 } }, // Filter by date within the specified month and ensure classParticipants array exists and is not empty
     })
       .sort({ date: "asc", startTime: "asc" })
       .limit(10)
       .lean()
-      .select(
-        "_id date ageGroup startTime endTime link"
-      )
+      .select("_id date ageGroup startTime endTime link")
       .populate({
         path: "classParticipants",
         select: "_id name",
