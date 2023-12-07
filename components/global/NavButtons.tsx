@@ -48,12 +48,12 @@ const NavButtons = ({ user }: { user: ParentType | UserType }) => {
     { label: "settings", href: "/settings" },
   ];
 
-  const { setSelectedChild } = useSelectedChild();
+  const { setSelectedChild, selectedChild } = useSelectedChild();
 
   useEffect(() => {
     if (isParent(user))
       setSelectedChild((user?.children as StudentType[])[0] as StudentType);
-  }, []);
+  }, [selectedChild]);
 
   if (isParent(user)) {
     console.log(user);
@@ -136,37 +136,38 @@ const NavButtons = ({ user }: { user: ParentType | UserType }) => {
           isActive ? "text-black" : "group-hover:text-white"
         }`;
         return (
-          <TooltipButton tooltip={nav.label}>
-            <Button
-              key={nav.label}
-              variant={"ghost"}
-              className={`w-10 h-10 p-2 rounded-full group relative ${
-                isActive ? "bg-white" : "hover:bg-primary/50"
-              }`}
-              onClick={() => {
-                router.replace(nav.href);
-              }}
-            >
-              {nav.label === "dashboard" && (
-                <LayoutGrid className={iconClassName} />
-              )}
-              {nav.label === "calendar" && (
-                <Calendar className={iconClassName} />
-              )}
-              {nav.label === "courses" && (
-                <Backpack className={iconClassName} />
-              )}
-              {nav.label === "messages" && (
-                <MessagesSquareIcon className={iconClassName} />
-              )}
-              {nav.label === "transactions" && (
-                <BookOpen className={iconClassName} />
-              )}
-              {nav.label === "settings" && (
-                <Settings className={iconClassName} />
-              )}
-            </Button>
-          </TooltipButton>
+          <Link key={nav.label} href={nav.href}>
+            <TooltipButton tooltip={nav.label}>
+              <Button
+                variant={"ghost"}
+                className={`w-10 h-10 p-2 rounded-full group relative ${
+                  isActive ? "bg-white" : "hover:bg-primary/50"
+                }`}
+                onClick={() => {
+                  router.replace(nav.href);
+                }}
+              >
+                {nav.label === "dashboard" && (
+                  <LayoutGrid className={iconClassName} />
+                )}
+                {nav.label === "calendar" && (
+                  <Calendar className={iconClassName} />
+                )}
+                {nav.label === "courses" && (
+                  <Backpack className={iconClassName} />
+                )}
+                {nav.label === "messages" && (
+                  <MessagesSquareIcon className={iconClassName} />
+                )}
+                {nav.label === "transactions" && (
+                  <BookOpen className={iconClassName} />
+                )}
+                {nav.label === "settings" && (
+                  <Settings className={iconClassName} />
+                )}
+              </Button>
+            </TooltipButton>
+          </Link>
         );
       })}
     </div>
