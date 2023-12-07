@@ -2,7 +2,6 @@
 import React, { useState } from "react";
 
 // FORM
-
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { useForm } from "react-hook-form";
@@ -34,6 +33,7 @@ import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
 import Link from "next/link";
+import Image from "next/image";
 
 const LoginComponent = () => {
   const router = useRouter();
@@ -189,7 +189,7 @@ const LoginComponent = () => {
           </div>
         </div>
         <div className="w-1/2 m-10 shadow-2xl">
-          <img
+          <Image
             className="hidden object-cover w-full h-full md:block"
             src=""
             alt=""

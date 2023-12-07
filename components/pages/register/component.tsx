@@ -54,6 +54,7 @@ import { calculateAge } from "@/utils/helpers/calculateAge";
 import { GRADE_LEVEL, getGradeLevel } from "@/utils/constants/data/gradeLevels";
 import { AgeGroupType } from "@/lib/interfaces/class.interface";
 import { Toast } from "@/components/ui/toast";
+import Image from "next/image";
 
 const RegisterComponent = () => {
   const [isLoading, setisLoading] = useState(false);
@@ -307,7 +308,9 @@ const RegisterComponent = () => {
                                 const label =
                                   GRADE_LEVEL[d as keyof typeof GRADE_LEVEL];
                                 return (
-                                  <SelectItem value={d}>{label}</SelectItem>
+                                  <SelectItem key={d} value={d}>
+                                    {label}
+                                  </SelectItem>
                                 );
                               })}
                             </>
@@ -345,7 +348,7 @@ const RegisterComponent = () => {
           </div>
         </div>
         <div className="w-1/2 m-10 shadow-2xl">
-          <img
+          <Image
             className="hidden object-cover w-full h-full md:block"
             src=""
             alt=""
