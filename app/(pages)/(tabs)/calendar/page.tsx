@@ -3,8 +3,14 @@ import { ParentType } from "@/lib/interfaces/parent.interface";
 import { UserType } from "@/lib/interfaces/user.interface";
 import { authOptions } from "@/utils/authOptions";
 import { Loader2 } from "lucide-react";
+import { Metadata } from "next";
 import { getServerSession } from "next-auth";
 import React, { Suspense } from "react";
+
+export const metadata: Metadata = {
+  title: "Umonics LMS | Calendar",
+  description: "Created by interns",
+};
 
 const page = async () => {
   const session = await getServerSession(authOptions);

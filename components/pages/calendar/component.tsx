@@ -36,14 +36,14 @@ const CalendarComponent = ({
 
   if (selectedChild?.status === "Not Paid")
     return (
-      <div className="flex items-center justify-center min-h-[calc(100vh-10rem)] bg-white">
-        <p className="">Waiting for Payment</p>
+      <div className="flex items-center justify-center min-h-[calc(100vh-10rem)] bg-white w-full">
+        <p className="">Waiting for Payments</p>
       </div>
     );
 
   if (selectedChild?.status === "Enrolling")
     return (
-      <div className="flex items-center justify-center min-h-[calc(100vh-10rem)] bg-white">
+      <div className="flex items-center justify-center min-h-[calc(100vh-10rem)] bg-white w-full">
         <p className="">Please Enroll first</p>
       </div>
     );
