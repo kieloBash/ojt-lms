@@ -13,10 +13,12 @@ import StudentAcceptedScetion from "./accepted/main";
 const ParentMain = ({ parent }: { parent: ParentType }) => {
   const { clear } = useSelected();
   const { setSelectedChild, selectedChild } = useSelectedChild();
+  console.log(selectedChild);
 
   if (!selectedChild) return null;
 
   function handleSelectChild(sel: StudentType) {
+    console.log(sel);
     setSelectedChild(sel);
     clear();
   }

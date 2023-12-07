@@ -11,7 +11,6 @@ import {
   FormControl,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 import {
@@ -66,7 +65,6 @@ import { useForm } from "react-hook-form";
 import { calculateAge } from "@/utils/helpers/calculateAge";
 import { ParentType } from "@/lib/interfaces/parent.interface";
 import { createNewStudent } from "@/lib/actions/parent.action";
-import { useRouter } from "next/navigation";
 import { useQueryClient } from "@tanstack/react-query";
 import { GRADE_LEVEL, getGradeLevel } from "@/utils/constants/data/gradeLevels";
 import { AgeGroupType } from "@/lib/interfaces/class.interface";
@@ -87,7 +85,6 @@ export default function ChildSwitcher({
   const [showNewTeamDialog, setShowNewTeamDialog] = React.useState(false);
   const [child_bday, setchild_bday] = React.useState<string | undefined>();
   const [isLoading, setisLoading] = React.useState(false);
-  const router = useRouter();
   const queryClient = useQueryClient();
 
   //FORM

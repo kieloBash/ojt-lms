@@ -50,9 +50,11 @@ const NavButtons = ({ user }: { user: ParentType | UserType }) => {
   const { setSelectedChild, selectedChild } = useSelectedChild();
 
   useEffect(() => {
-    if (isParent(user))
-      setSelectedChild((user?.children as StudentType[])[0] as StudentType);
-  }, [selectedChild, user]);
+    if (isParent(user)) {
+      if (!selectedChild)
+        setSelectedChild((user?.children as StudentType[])[0] as StudentType);
+    }
+  }, [user, selectedChild]);
 
   if (isParent(user)) {
     return (

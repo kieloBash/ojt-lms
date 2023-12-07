@@ -2,8 +2,6 @@
 import { fetchSingleChildId } from "@/lib/actions/parent.action";
 import { ParentType } from "@/lib/interfaces/parent.interface";
 import { StudentType } from "@/lib/interfaces/student.interface";
-import { isParent } from "@/utils/helpers/isParent";
-import { useQuery } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
 import React, { createContext, useState, useContext } from "react";
 
@@ -12,7 +10,7 @@ const SelectedChildContext = createContext<{
   setSelectedChild: (sel: StudentType) => void;
 }>({
   selectedChild: undefined,
-  setSelectedChild: () => {},
+  setSelectedChild: (sel: StudentType) => {},
 });
 
 export const SelectedChildProvider = ({
@@ -27,6 +25,7 @@ export const SelectedChildProvider = ({
 
   async function fetchStudent(_id: string) {
     const student = await fetchSingleChildId({ _id });
+    console.log(student);
     setSelectedChild(student);
   }
 
@@ -34,7 +33,7 @@ export const SelectedChildProvider = ({
     if (userInfo && userInfo.children && !selectedChild) {
       fetchStudent(userInfo.children[0]._id as string);
     }
-  }, [userInfo,selectedChild]);
+  }, [userInfo, selectedChild]);
 
   return (
     <SelectedChildContext.Provider
