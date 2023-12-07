@@ -12,6 +12,7 @@ import connectDB from "../mongodb";
 import { authOptions } from "@/utils/authOptions";
 import { getServerSession } from "next-auth";
 import { ParentType } from "../interfaces/parent.interface";
+import { revalidatePath } from "next/cache";
 
 export async function fetchAttendances({
   year,
@@ -212,16 +213,22 @@ export async function fetchUpcomingAttendances({
     endDate.setMilliseconds(endDate.getMilliseconds() - 1); // Subtract one millisecond to get the last millisecond of the last day
 
     const query = Attendance.find({
-      date: { $gte: startDate, $lte: endDate }, // Filter by date within the specified month
+      date: { $gte: startDate, $lte: endDate },
+      classParticipants: { $exists: true, $not: { $size: 0 } }, // Filter by date within the specified month and ensure classParticipants array exists and is not empty
     })
       .sort({ date: "asc", startTime: "asc" })
       .limit(10)
       .lean()
       .select(
-        "_id date ageGroup startTime endTime link studentsPresent studentsNotPresent"
+        "_id date ageGroup startTime endTime link"
       )
       .populate({
         path: "classParticipants",
+        select: "_id name",
+        model: Student,
+      })
+      .populate({
+        path: "studentsPresent",
         select: "_id name",
         model: Student,
       })
@@ -620,6 +627,10 @@ export async function updateStudentYes({
       console.log("No Attendance Found");
       throw new Error("No Attendance Found");
     }
+
+    console.log(newData);
+
+    revalidatePath("/dashboard");
 
     return { message: "Student Confirmed Successfully" };
   } catch (error: any) {

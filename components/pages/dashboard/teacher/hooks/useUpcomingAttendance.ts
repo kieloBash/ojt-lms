@@ -6,7 +6,7 @@ import { useQuery } from "@tanstack/react-query";
 const useUpcomingAttendance = (currDate: Date) => {
   const { data, isLoading } = useQuery({
     queryKey: [
-      `attendance:${currDate.getFullYear()}:${currDate.getMonth()}`,
+      `attendance:upcoming-attendance`,
       currDate.getMonth(),
     ],
     queryFn: async () => {

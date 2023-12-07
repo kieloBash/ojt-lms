@@ -17,14 +17,6 @@ const CardsList = () => {
                 <Skeleton className="w-[250px] h-[330px]" />
                 <Skeleton className="w-[250px] h-[40px]" />
               </div>
-              //   <AlbumArtwork
-              //     key={index}
-              //     album={_}
-              //     className="w-[250px]"
-              //     aspectRatio="portrait"
-              //     width={250}
-              //     height={330}
-              //   />
             ))}
         </>
       ) : (
