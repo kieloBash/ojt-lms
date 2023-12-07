@@ -236,7 +236,7 @@ const RegisterComponent = () => {
                   )}
                 />
                 <div className="w-full mt-8 mb-4 text-sm font-bold text-center">
-                  Child's information
+                  {`Child's information`}
                 </div>
                 <FormField
                   control={form.control}
