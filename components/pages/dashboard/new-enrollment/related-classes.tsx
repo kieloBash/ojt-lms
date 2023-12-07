@@ -3,7 +3,7 @@ import React from "react";
 
 // BACKEND
 import useRelatedClasses from "./hooks/useRelatedClasses";
-import { AgeGroupType } from "@/lib/interfaces/class.interface";
+import { AgeGroupType, ClassesType } from "@/lib/interfaces/class.interface";
 
 // UI
 import {
@@ -31,13 +31,13 @@ const RelatedClasses = ({
       <CardHeader>
         <CardTitle>Other {ageGroup} Classes</CardTitle>
         <CardDescription>
-          Here's some related classes you may like
+          {`Here's some related classes you may like`}
         </CardDescription>
       </CardHeader>
       <CardContent className="grid gap-6">
         {relatedClasses.data ? (
           <>
-            {relatedClasses.data.map((course) => {
+            {relatedClasses.data.map((course: any) => {
               const classTime = convertTime(course.startTime, course.endTime);
 
               return (

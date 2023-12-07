@@ -18,14 +18,15 @@ const LessonsOnlyBtn = ({ close }: { close: () => void }) => {
   const userInfo = session?.user as UserType;
   const router = useRouter();
 
-  if (!userInfo) return null;
+  // if (!userInfo) return null;
+
   const { selected } = useSelected();
   const { selectedChild } = useSelectedChild();
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const NewTransaction: TransactionsType = {
     student: selectedChild?._id as string,
-    parent: userInfo._id as string,
+    parent: userInfo?._id as string,
     price: 40,
     status: "Not Paid",
     package: "LessonsOnly",
