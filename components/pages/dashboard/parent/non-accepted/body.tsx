@@ -1,6 +1,5 @@
 "use client";
 import React, { useMemo } from "react";
-import { daysOfWeek } from "@/utils/helpers/daysOfWeek";
 import dayjs from "dayjs";
 import { AttendanceType } from "@/lib/interfaces/attendance.interface";
 
