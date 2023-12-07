@@ -37,16 +37,23 @@ async function fetchUsers(pageNumber = 1, pageSize = 20) {
 }
 const SignInPage = async () => {
   const { users } = await fetchUsers();
+  console.log(users);
   return (
     <main className="">
       <ul className="">
-        {users.map((s) => {
-          return (
-            <li key={s._id as string} className="">
-              {s.email}
-            </li>
-          );
-        })}
+        {users?.length === 0 ? (
+          <>No Users</>
+        ) : (
+          <>
+            {users?.map((s) => {
+              return (
+                <li key={s._id as string} className="">
+                  {s.email}
+                </li>
+              );
+            })}
+          </>
+        )}
       </ul>
     </main>
   );
