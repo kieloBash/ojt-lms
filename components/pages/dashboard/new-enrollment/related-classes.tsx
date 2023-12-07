@@ -42,13 +42,11 @@ const RelatedClasses = ({
 
               return (
                 <Link
+                  key={course._id as string}
                   href={`/dashboard/new-enrollment/${course._id}`}
                   className="transition-all border border-transparent rounded-lg hover:border-slate-300 hover:bg-slate-50"
                 >
-                  <div
-                    key={course._id as string}
-                    className="flex items-center justify-between space-x-4"
-                  >
+                  <div className="flex items-center justify-between space-x-4">
                     <div className="flex items-center space-x-4">
                       <div className="w-32 h-24 rounded-lg shadow-sm bg-main-300"></div>
                       <div>

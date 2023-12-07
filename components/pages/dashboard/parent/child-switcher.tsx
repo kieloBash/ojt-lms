@@ -83,8 +83,6 @@ export default function ChildSwitcher({
   className,
   parent,
 }: ChildSwitcherProps) {
-  if (students.length === 0) return null;
-
   const [open, setOpen] = React.useState(false);
   const [showNewTeamDialog, setShowNewTeamDialog] = React.useState(false);
   const [child_bday, setchild_bday] = React.useState<string | undefined>();
@@ -114,7 +112,7 @@ export default function ChildSwitcher({
     });
     if (res.success) {
       toast({
-        variant: "success",
+        // variant: "success",
         title: "Successfully Added New Student",
       });
       form.reset();
@@ -141,6 +139,8 @@ export default function ChildSwitcher({
       setGradeOption(temp);
     }
   }, [child_bday]);
+
+  if (students.length === 0) return null;
 
   return (
     <Dialog open={showNewTeamDialog} onOpenChange={setShowNewTeamDialog}>
