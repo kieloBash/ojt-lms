@@ -1,7 +1,12 @@
+import SignOutButton from "@/components/btns/SignOutButton";
 import React from "react";
 
 const DashboardPage = async () => {
-  return <div>DashboardPage</div>;
+  return (
+    <div>
+      <SignOutButton />
+    </div>
+  );
 };
 
 export default DashboardPage;
