@@ -21,3 +21,9 @@ export const AGEGROUP_COLORS = {
   K1: "bg-green-300",
   K2: "bg-orange-300",
 };
+
+export const STATUS_TRANSACTION_COLORS = {
+  Paid: "bg-green-300",
+  "Not Paid": "bg-red-300",
+  Declined: "bg-slate-300",
+};

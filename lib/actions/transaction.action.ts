@@ -40,56 +40,57 @@ export async function createNewTransactionSubscription({
   }
 }
 
-export async function fetchTransactions(
+export async function fetchParentTransactions({
   pageNumber = 1,
   pageSize = 20,
-  statusFilter = "All"
-) {
+  statusFilter = "All",
+  transactionIds,
+}: {
+  pageNumber?: number;
+  pageSize?: number;
+  statusFilter?: "All" | "Pending";
+  transactionIds: string[];
+}) {
   try {
     connectDB();
 
+    console.log(transactionIds);
+
     const skipAmount = (pageNumber - 1) * pageSize;
 
-    const filter = statusFilter === "All" ? {} : { status: statusFilter };
+    const filter: any = { _id: { $in: transactionIds } };
+
+    if (statusFilter !== "All") {
+      filter.status = statusFilter;
+    }
+
     const query = Transaction.find(filter)
       .sort({ createdAt: "desc" })
       .skip(skipAmount)
       .limit(pageSize)
       .lean()
-      .select("_id price duration status paidDate expiryDate")
-      .populate({ path: "student", model: Student, select: "_id name age" })
-      .populate({
-        path: "class",
-        model: Classes,
-        select: "_id ageGroup classDate class",
-      })
-      .populate({
-        path: "student",
-        populate: {
-          path: "parent",
-          model: Parent,
-          select: "_id name email",
-        },
-        model: Student,
-      })
+      .select("_id price status package")
+      .populate({ path: "student", model: Student, select: "_id name" })
+      // .populate({ path: "parent", model: Parent, select: "_id name" })
       .exec();
 
     const totalCount = await Transaction.countDocuments(filter);
     const transactions = await query;
 
-    // // Convert _id to string in the results
+    console.log(transactions);
+
+    // Convert _id to string in the results
     const arrToIdString: TransactionsType[] = transactions.map((d: any) => ({
       ...d,
       _id: d._id.toString(),
-      class: { ...d.class, _id: d.class._id.toString() },
       student: {
         ...d.student,
         _id: d.student._id.toString(),
-        parent: {
-          ...d.student.parent,
-          _id: d.student.parent._id.toString(),
-        },
       },
+      // parent: {
+      //   ...d.parent,
+      //   _id: d.parent._id.toString(),
+      // },
     }));
 
     console.log(arrToIdString);
