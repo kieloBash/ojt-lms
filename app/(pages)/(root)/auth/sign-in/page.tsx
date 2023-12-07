@@ -41,7 +41,11 @@ const SignInPage = async () => {
     <main className="">
       <ul className="">
         {users.map((s) => {
-          return <li className="">{s.email}</li>;
+          return (
+            <li key={s._id as string} className="">
+              {s.email}
+            </li>
+          );
         })}
       </ul>
     </main>
