@@ -4,8 +4,14 @@ import { PageProps } from "@/lib/interfaces/page.props";
 import { UserType } from "@/lib/interfaces/user.interface";
 import { authOptions } from "@/utils/authOptions";
 import { isParent } from "@/utils/helpers/isParent";
+import { Metadata } from "next";
 import { getServerSession } from "next-auth";
 import React from "react";
+
+export const metadata: Metadata = {
+  title: "Umonics LMS | Dashboard",
+  description: "Created by interns",
+};
 
 const DashboardPage = async ({ searchParams }: PageProps) => {
   const session = await getServerSession(authOptions);
