@@ -71,7 +71,7 @@ export function ClassCard({
             {classCourse?.class}
           </h3>
           <p className="text-xs text-muted-foreground">
-            {classCourse?.repeatedDays?.join(", ")}
+            {/* {classCourse?.repeatedDays?.join(", ")} */}
           </p>
           <div className="flex items-center justify-start gap-2">
             <div className="p-1 rounded-full w-7 h-7 bg-main-50">
