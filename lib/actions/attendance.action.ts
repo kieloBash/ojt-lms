@@ -195,6 +195,72 @@ export async function fetchTeacherAttendances({
   }
 }
 
+export async function fetchUpcomingAttendances({
+  year,
+  month,
+}: {
+  year: number;
+  month: number;
+}) {
+  try {
+    connectDB();
+
+    // const skipAmount = (pageNumber - 1) * pageSize;
+
+    const startDate = new Date(year, month - 1, 1); // Note: Month is 0-indexed
+    const endDate = new Date(year, month + 2, 1); // This gives the first day of the next month
+    endDate.setMilliseconds(endDate.getMilliseconds() - 1); // Subtract one millisecond to get the last millisecond of the last day
+
+    const query = Attendance.find({
+      date: { $gte: startDate, $lte: endDate }, // Filter by date within the specified month
+    })
+      .sort({ date: "asc", startTime: "asc" })
+      .limit(10)
+      .lean()
+      .select(
+        "_id date ageGroup startTime endTime link studentsPresent studentsNotPresent"
+      )
+      .populate({
+        path: "classParticipants",
+        select: "_id name",
+        model: Student,
+      })
+      .populate({
+        path: "class",
+        select: "_id class day",
+        model: Classes,
+      })
+      .exec();
+
+    const totalCount = await Attendance.countDocuments({});
+    const data: any[] = await query;
+
+    console.log(data);
+
+    // Convert _id to string in the results
+    const arrToIdString: AttendanceType[] = data.map((d: AttendanceType) => {
+      return {
+        ...d,
+        _id: d._id?.toString(),
+        classParticipants: d?.classParticipants?.map((single) => {
+          return {
+            ...single,
+            _id: single._id?.toString(),
+          };
+        }),
+        class: {
+          ...d.class,
+          _id: d.class._id?.toString(),
+        },
+      };
+    });
+
+    return { attendances: arrToIdString, totalCount };
+  } catch (error: any) {
+    throw new Error("Error in fetching attendances", error.message);
+  }
+}
+
 export async function fetchWeeklyAttendances({
   StartOfWeek,
   EndOfWeek,
