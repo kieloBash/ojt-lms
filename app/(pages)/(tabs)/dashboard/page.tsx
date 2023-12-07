@@ -1,4 +1,3 @@
-import SignOutButton from "@/components/btns/SignOutButton";
 import LoadingPage from "@/components/loading";
 import { ParentType } from "@/lib/interfaces/parent.interface";
 import { UserType } from "@/lib/interfaces/user.interface";
@@ -20,7 +19,6 @@ const DashboardPage = async () => {
         Welcome, {userInfo.email} |{" "}
         {isParent(userInfo) ? "Parent" : userInfo.role}
       </h1>
-      <SignOutButton />
     </section>
   );
 };

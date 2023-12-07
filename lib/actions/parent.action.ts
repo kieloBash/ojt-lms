@@ -10,11 +10,14 @@ import { StudentType } from "../interfaces/student.interface";
 import * as bcrypt from "bcrypt";
 import { revalidatePath } from "next/cache";
 import Attendance from "../models/attendance.model";
+import User from "../models/user.model";
 
 async function isParentExists(email: string) {
   const existingParent = await Parent.findOne({ email }); // Assuming 'email' is a unique identifier
+  const existingUser = await User.findOne({ email }); // Assuming 'email' is a unique identifier
 
   if (existingParent) return existingParent;
+  if (existingUser) return existingUser;
 
   return false;
 }
@@ -35,7 +38,7 @@ export async function createNewParent({
 
     if (emailExists)
       return {
-        message: "Parent Already Exist in the Database",
+        message: "Account Email Already Exist in the Database",
         data: emailExists,
         success: false,
       };
@@ -159,6 +162,32 @@ export async function fetchSingleParentId({ _id }: { _id: string }) {
     return plainData;
   } catch (error) {
     throw new Error(`Error in fetching single Parent`);
+  }
+}
+
+export async function fetchSingleChildId({ _id }: { _id: string }) {
+  try {
+    connectDB();
+
+    const query = Student.findById({ _id })
+      .lean()
+      .select("_id name age status profileURL package gradeLevel")
+      .exec();
+
+    const single: any = await query;
+
+    if (!single) {
+      throw new Error("Student not Found");
+    }
+
+    const plainData = {
+      ...single,
+      _id: single._id.toString(),
+    };
+
+    return plainData;
+  } catch (error) {
+    throw new Error(`Error in fetching single Student`);
   }
 }
 
