@@ -15,12 +15,12 @@ const NotAcceptedComponent = ({
   userInfo: ParentType;
   selectedChild: StudentType;
 }) => {
-  if (!userInfo?.children) return null;
   const ForYou = useForYouClasses(
     selectedChild._id as string,
     selectedChild.gradeLevel
   );
 
+  if (!userInfo?.children) return null;
   if (ForYou.isLoading) return null;
 
   return (

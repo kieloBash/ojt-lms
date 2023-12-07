@@ -11,8 +11,6 @@ import { useSelectedChild } from "@/components/global/context/useSelectedChild";
 import StudentAcceptedScetion from "./accepted/main";
 
 const ParentMain = ({ parent }: { parent: ParentType }) => {
-  if (parent?.children?.length === 0 && parent?.children) return null;
-
   const { clear } = useSelected();
   const { setSelectedChild, selectedChild } = useSelectedChild();
 
@@ -22,6 +20,8 @@ const ParentMain = ({ parent }: { parent: ParentType }) => {
     setSelectedChild(sel);
     clear();
   }
+  if (parent?.children?.length === 0 && parent?.children) return null;
+
   return (
     <section className="flex flex-col w-full h-screen overflow-y-auto bg-white">
       <div className="flex items-center justify-between w-full p-10 py-5">

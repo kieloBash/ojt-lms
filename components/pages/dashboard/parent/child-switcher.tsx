@@ -235,7 +235,7 @@ export default function ChildSwitcher({
                   <FormItem>
                     <FormControl>
                       <div className="space-y-2">
-                        <Label htmlFor="name">Child's full name</Label>
+                        <Label htmlFor="name">{`Child's full name`}</Label>
                         <Input id="name" placeholder="John Doe" {...field} />
                       </div>
                     </FormControl>
@@ -244,7 +244,7 @@ export default function ChildSwitcher({
                 )}
               />
               <div className="space-y-2">
-                <Label htmlFor="plan">Child's date of birth</Label>
+                <Label htmlFor="plan">{`Child's date of birth`}</Label>
                 <Input
                   id="dob"
                   type="date"
@@ -263,7 +263,7 @@ export default function ChildSwitcher({
                     >
                       <FormControl>
                         <div className="space-y-2">
-                          <Label htmlFor="name">Child's Grade Level</Label>
+                          <Label htmlFor="name">{`Child's Grade Level`}</Label>
                           <SelectTrigger className="flex-1 w-full px-4 py-2 text-base text-gray-700 placeholder-gray-400 bg-white border border-gray-300 rounded-none shadow-sm appearance-none focus:outline-none focus:ring-2 focus:ring-main-600 focus:border-transparent">
                             <SelectValue placeholder="Select a grade level for your child" />
                           </SelectTrigger>
@@ -279,7 +279,11 @@ export default function ChildSwitcher({
                             {gradeOption.map((d: string) => {
                               const label =
                                 GRADE_LEVEL[d as keyof typeof GRADE_LEVEL];
-                              return <SelectItem value={d}>{label}</SelectItem>;
+                              return (
+                                <SelectItem key={d} value={d}>
+                                  {label}
+                                </SelectItem>
+                              );
                             })}
                           </>
                         )}

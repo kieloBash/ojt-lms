@@ -15,8 +15,8 @@ export function SubscriptionPopUp({ close }: { close: () => void }) {
               SUBSCRIPTION PLANS
             </div>
             <p className="text-dark-1">
-              Choose the best subscription plan for your child's learning
-              journey.
+              {`Choose the best subscription plan for your child's learning
+              journey.`}
             </p>
           </div>
           <div className="grid flex-1 w-full max-w-[50rem] grid-cols-2 grid-rows-1 gap-10 mx-auto">
