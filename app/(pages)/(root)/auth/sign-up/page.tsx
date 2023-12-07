@@ -1,10 +1,10 @@
-import Temp from "@/components/pages/home/temp";
+import RegisterComponent from "@/components/pages/register/component";
 import React from "react";
 
 const SignUpPage = async () => {
   return (
     <main className="">
-      <Temp />
+      <RegisterComponent />
     </main>
   );
 };

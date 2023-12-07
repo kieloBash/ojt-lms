@@ -28,6 +28,7 @@ export async function getUserByEmail({
         _id: user._id.toString(),
         name: user._doc.name,
         email: user._doc.email,
+        role: user._doc.role,
       };
       return info;
     } else if (!user && userparent) {
@@ -45,6 +46,7 @@ export async function getUserByEmail({
       };
       return info;
     }
+    
   } catch (error: any) {
     throw new Error(`Error getting User by Email: ${error.message}`);
   }
