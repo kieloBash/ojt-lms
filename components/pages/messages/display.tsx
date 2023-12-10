@@ -24,7 +24,6 @@ const MessageDisplay = ({
   const initialMessages = useFetchMessages(1, 20, chatId);
   const { data: session } = useSession();
   const userInfo = session?.user as UserType | ParentType;
-  console.log(initialMessages);
 
   React.useEffect(() => {
     if (MessagesEndRef.current) {
@@ -66,7 +65,8 @@ const MessageDisplay = ({
         ) : (
           <>
             <ScrollArea className="w-full h-[calc(100vh-9rem)]">
-              <div className="w-full p-1 h-[calc(100vh-9rem)] flex flex-col-reverse justify-start">
+              <div className="w-full px-2 h-[calc(100vh-9rem)] flex flex-col-reverse justify-start overflow-y-auto">
+                <div ref={MessagesEndRef} />
                 {initialMessages?.data?.map((message: MessageType) => {
                   const side =
                     message.sender._id === userInfo?._id ? "Me" : "Other";
@@ -93,7 +93,6 @@ const MessageDisplay = ({
                     </div>
                   );
                 })}
-                <div ref={MessagesEndRef}></div>
               </div>
             </ScrollArea>
           </>

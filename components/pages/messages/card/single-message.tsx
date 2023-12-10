@@ -58,7 +58,7 @@ const SingleMessage = ({
           side === "Other" ? "pr-10 flex" : "pl-10 flex flex-row-reverse"
         }`}
       >
-        <div className="max-w-[15rem] pl-2">
+        <div className="max-w-md pl-2">
           {isImage ? (
             <>
               <div className="relative w-[13rem] p-2 h-[10rem] overflow-hidden border-2 rounded-lg">

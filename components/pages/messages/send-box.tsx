@@ -1,7 +1,7 @@
 "use client";
 
-import { SendHorizonal } from "lucide-react";
-import React from "react";
+import { Loader2, Send } from "lucide-react";
+import React, { useState } from "react";
 
 // UI
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
@@ -28,6 +28,7 @@ const SendBox = ({
   chatId: string;
 }) => {
   const queryClient = useQueryClient();
+  const [isLoading, setIsLoading] = useState(false);
 
   // FORM
   const form = useForm<z.infer<typeof FormSchema>>({
@@ -49,6 +50,7 @@ const SendBox = ({
       content,
       senderId,
     });
+    setIsLoading(true);
     return res.data.data;
   };
 
@@ -62,13 +64,16 @@ const SendBox = ({
         queryKey: [`chats`],
       });
       form.reset();
+      setIsLoading(false);
     },
   });
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
     const { message } = data;
+    setIsLoading(true);
     if (chatId) sendMessageMutation.mutate({ chatId, content: message });
     else {
+      setIsLoading(false);
       console.log({ senderId, chatId });
     }
   }
@@ -87,6 +92,7 @@ const SendBox = ({
               <FormItem className="w-full">
                 <FormControl>
                   <Input
+                    disabled={form.formState.isSubmitting || isLoading}
                     className="w-full h-10"
                     placeholder="Enter message"
                     {...field}
@@ -98,11 +104,21 @@ const SendBox = ({
           <Button
             type="submit"
             disabled={
-              form.getValues("message") === "" || form.formState.isSubmitting
+              form.getValues("message") === "" ||
+              form.formState.isSubmitting ||
+              isLoading
             }
-            className="h-10 p-2 rounded-lg aspect-square"
+            className="h-10 p-2 rounded-md aspect-square"
           >
-            <SendHorizonal />
+            {isLoading ? (
+              <>
+                <Loader2 className="animate-spin" />
+              </>
+            ) : (
+              <>
+                <Send />
+              </>
+            )}
           </Button>
         </form>
       </Form>

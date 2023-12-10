@@ -28,7 +28,7 @@ const SingleMessagePage = async ({ params }: PageProps) => {
             <h2 className="text-3xl font-bold tracking-tight text-white capitalize">
               {recipient?.name}
             </h2>
-            <p className="text-sm text-white">{recipient?.email}</p>
+            <p className="text-sm text-white capitalize">{recipient?.role ? recipient?.role : "Parent"}</p>
           </div>
         </div>
       </header>
