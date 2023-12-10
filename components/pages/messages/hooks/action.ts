@@ -131,11 +131,11 @@ export async function searchChatsAll({
           const isParent = await Parent.exists({ _id: userId });
           if (isParent) {
             return await Parent.findById(userId)
-              .select("_id name email")
+              .select("_id name email profileURL")
               .lean();
           } else {
             return await User.findById(userId)
-              .select("_id name email role")
+              .select("_id name email role profileURL")
               .lean();
           }
         })
@@ -203,5 +203,104 @@ export async function searchChatsAll({
     return plainData;
   } catch (error: any) {
     throw new Error("Error in fetching chats", error.message);
+  }
+}
+
+export async function fetchSingleChat({ chatId }: { chatId: string }) {
+  try {
+    connectDB();
+
+    console.log("object");
+
+    const chatsData = await Chat.find({ _id: chatId })
+      .lean()
+      .select("_id users")
+      .populate({
+        path: "latestMessage",
+        model: Message,
+        select: "_id content isRead sender createdAt isImage",
+      })
+      .exec();
+
+    // Function to populate the users field based on their role
+    const populateUsers = async (userIds: any) => {
+      const users = await Promise.all(
+        userIds.map(async (userId: any) => {
+          // Check the role of the user based on the model
+          const isParent = await Parent.exists({ _id: userId });
+          if (isParent) {
+            return await Parent.findById(userId)
+              .select("_id name email profileURL")
+              .lean();
+          } else {
+            return await User.findById(userId)
+              .select("_id name email role profileURL")
+              .lean();
+          }
+        })
+      );
+
+      return users;
+    };
+
+    const populatedChatsData = await Promise.all(
+      chatsData.map(async (chat) => {
+        // Populate the users field based on their role
+        const users = await populateUsers(chat.users);
+
+        // Return the chat data with the populated users field
+        return {
+          ...chat,
+          _id: chat._id?.toString(),
+          users: users.map((user) => ({
+            ...user,
+            _id: user._id.toString(),
+          })),
+          latestMessage: chat.latestMessage
+            ? {
+                ...chat.latestMessage,
+                _id: chat.latestMessage._id?.toString(),
+                sender: chat.latestMessage.sender
+                  ? {
+                      ...chat.latestMessage.sender,
+                      _id: chat.latestMessage.sender._id?.toString(),
+                    }
+                  : null,
+              }
+            : null,
+        };
+      })
+    );
+
+    const plainData: ChatType[] = populatedChatsData.map((d: any) => {
+      return {
+        ...d,
+        _id: d._id?.toString(),
+        users: d.users.map((user: any) => {
+          return {
+            ...user,
+            _id: user._id.toString(),
+          };
+        }),
+        latestMessage: d.latestMessage
+          ? {
+              ...d.latestMessage,
+              _id: d.latestMessage._id?.toString(),
+              sender: d.latestMessage.sender
+                ? {
+                    ...d.latestMessage.sender,
+                    _id: d.latestMessage.sender._id?.toString(),
+                  }
+                : null,
+            }
+          : null,
+      };
+    });
+
+    console.log(plainData);
+
+    return plainData[0];
+  } catch (error: any) {
+    throw new Error("Error in fetching chat", error.message);
   }
 }

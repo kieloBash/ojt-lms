@@ -9,10 +9,13 @@ import { UserType } from "@/lib/interfaces/user.interface";
 import { ParentType } from "@/lib/interfaces/parent.interface";
 import useDebounce from "@/components/hooks/useDebounce";
 import { Skeleton } from "@/components/ui/skeleton";
+import { usePathname } from "next/navigation";
 
 const ChatSidebar = () => {
   const { data: session } = useSession();
   const userInfo = session?.user as UserType | ParentType;
+
+  const pathname = usePathname();
 
   const [searchString, setSearchString] = useState("");
   const debouncedString = useDebounce(searchString, 500);
@@ -55,12 +58,15 @@ const ChatSidebar = () => {
                     const recipient = chat.users.find(
                       (d) => d._id !== userInfo._id
                     );
+
                     return (
                       <>
                         <ChatCard
                           key={index}
+                          chatId={chat._id as string}
                           latestMessage={chat.latestMessage}
                           user={recipient}
+                          active={pathname.includes(chat?._id as string)}
                         />
                       </>
                     );
