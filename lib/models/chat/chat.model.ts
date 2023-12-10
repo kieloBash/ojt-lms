@@ -9,6 +9,7 @@ const chatSchema = new mongoose.Schema(
     latestMessage: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Message",
+      default: null,
     },
     users: [
       {
@@ -22,13 +23,6 @@ const chatSchema = new mongoose.Schema(
     timestamps: true,
   }
 );
-
-chatSchema.virtual("studentUsers", {
-  ref: "Student",
-  localField: "users",
-  foreignField: "_id",
-  justOne: false,
-});
 
 chatSchema.virtual("parentUsers", {
   ref: "Parent",
