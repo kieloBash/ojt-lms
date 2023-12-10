@@ -30,16 +30,14 @@ const ChatSidebar = () => {
         className="w-full"
         placeholder="Search user..."
       />
-      {chats.isLoading ? (
+      {chats.isLoading || chats?.data === undefined ? (
         <>
           <div className="w-full border rounded-md h-[calc(100vh-8.5rem)]">
-            <div className="flex flex-col px-2">
-              {Array(8)
+            <div className="flex flex-col px-2 gap-1.5">
+              {Array(2)
                 .fill([])
                 .map((_, index) => (
-                  <>
-                    <Skeleton key={index} className="flex flex-1 h-20 px-2" />
-                  </>
+                  <Skeleton key={index} className="flex w-full h-20 px-2" />
                 ))}
             </div>
           </div>

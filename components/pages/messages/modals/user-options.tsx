@@ -66,56 +66,67 @@ export function UserOptionsComboBox({
           onChange={(e) => setStringVal(e.target.value)}
         />
       </div>
-      {options?.data?.length === 0 ? (
-        <>
-          <div className="w-full border rounded-md h-80">
-            <div className="p-4 text-center">No Users found</div>
-          </div>
-        </>
+      {options?.isLoading ? (
+        <div className="flex items-center justify-center flex-1 w-full">
+          <Loader2 className="w-6 h-6 animate-spin" />
+        </div>
       ) : (
         <>
-          <ScrollArea className="w-full border rounded-md h-80">
-            <div className="p-4">
-              {options?.data?.map((user) => {
-                const isActive = user?._id === value?._id;
+          {options?.data?.length === 0 ? (
+            <>
+              <div className="w-full border rounded-md h-80">
+                <div className="p-4 text-center">No Users found</div>
+              </div>
+            </>
+          ) : (
+            <>
+              <ScrollArea className="w-full border rounded-md h-80">
+                <div className="p-4">
+                  {options?.data?.map((user) => {
+                    const isActive = user?._id === value?._id;
 
-                return (
-                  <button
-                    type="button"
-                    key={user._id}
-                    className="relative flex items-center justify-start w-full px-4 py-2 space-x-4 text-left transition rounded-md hover:bg-slate-100"
-                    onClick={() =>
-                      setValue({ _id: user._id as string, email: user.email })
-                    }
-                  >
-                    <Avatar>
-                      <AvatarImage
-                        src="https://github.com/shadcn.png"
-                        alt="@shadcn"
-                      />
-                      <AvatarFallback>CN</AvatarFallback>
-                    </Avatar>
-                    <div className="w-full">
-                      <div className="flex items-center justify-between w-full">
-                        <p className="text-sm font-medium leading-none">
-                          {user.name}
-                        </p>
-                        <p className="text-xs capitalize text-muted-foreground">
-                          {user?.role}
-                        </p>
-                      </div>
-                      <p className="text-sm text-left text-muted-foreground line-clamp-1">
-                        {user.email}
-                      </p>
-                    </div>
-                    {isActive && (
-                      <Check className="absolute w-5 h-5 -translate-y-1/2 right-4 top-1/2" />
-                    )}
-                  </button>
-                );
-              })}
-            </div>
-          </ScrollArea>
+                    return (
+                      <button
+                        type="button"
+                        key={user._id}
+                        className="relative flex items-center justify-start w-full px-4 py-2 space-x-4 text-left transition rounded-md hover:bg-slate-100"
+                        onClick={() =>
+                          setValue({
+                            _id: user._id as string,
+                            email: user.email,
+                          })
+                        }
+                      >
+                        <Avatar>
+                          <AvatarImage
+                            src="https://github.com/shadcn.png"
+                            alt="@shadcn"
+                          />
+                          <AvatarFallback>CN</AvatarFallback>
+                        </Avatar>
+                        <div className="w-full">
+                          <div className="flex items-center justify-between w-full">
+                            <p className="text-sm font-medium leading-none">
+                              {user.name}
+                            </p>
+                            <p className="text-xs capitalize text-muted-foreground">
+                              {user?.role}
+                            </p>
+                          </div>
+                          <p className="text-sm text-left text-muted-foreground line-clamp-1">
+                            {user.email}
+                          </p>
+                        </div>
+                        {isActive && (
+                          <Check className="absolute w-5 h-5 -translate-y-1/2 right-4 top-1/2" />
+                        )}
+                      </button>
+                    );
+                  })}
+                </div>
+              </ScrollArea>
+            </>
+          )}
         </>
       )}
       <DialogFooter className="flex items-center justify-between w-full">
