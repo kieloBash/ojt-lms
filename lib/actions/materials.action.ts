@@ -17,7 +17,7 @@ export async function fetchMaterials(pageNumber = 1, pageSize = 20) {
       .skip(skipAmount)
       .limit(pageSize)
       .lean()
-      .select("_id filename url gradeLevel type createdAt")
+      .select("_id filename url gradeLevel type createdAt available")
       .exec();
 
     const totalCount = await Material.countDocuments({});
@@ -96,5 +96,62 @@ export async function createNewMaterial({
     return true;
   } catch (error: any) {
     throw new Error(`Error creating new material: ${error.message}`);
+  }
+}
+
+export async function deleteMaterial({ id }: { id: string }) {
+  try {
+    connectDB();
+
+    const deleted = await Material.findByIdAndDelete(id).exec();
+
+    if (!deleted) throw new Error("Error in deleting materials");
+
+    return true;
+  } catch (error: any) {
+    throw new Error("Error in deleting materials", error.message);
+  }
+}
+export async function updateStatus({
+  id,
+  status,
+}: {
+  id: string;
+  status: boolean;
+}) {
+  try {
+    connectDB();
+    const available = status ? false : true;
+
+    const updated = await Material.findByIdAndUpdate(id, { available }).exec();
+
+    if (!updated) throw new Error("Error in updating status of materials");
+
+    return true;
+  } catch (error: any) {
+    throw new Error("Error in updating status of materials", error.message);
+  }
+}
+
+export async function updateGradeLevels({
+  id,
+  gradeLevel,
+}: {
+  id: string;
+  gradeLevel: string[];
+}) {
+  try {
+    connectDB();
+
+    const updated = await Material.findByIdAndUpdate(id, { gradeLevel }).exec();
+
+    if (!updated) throw new Error("Error in updating grade level of materials");
+
+    return true;
+  } catch (error: any) {
+    throw new Error(
+      "Error in updating grade level of materials",
+      error.message
+    );
   }
 }

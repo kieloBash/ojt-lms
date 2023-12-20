@@ -8,11 +8,13 @@ export const fileSchema = z.object({
 });
 
 export const materialsSchema = z.object({
+  _id: z.string(),
   filename: z.string(),
   url: z.string(),
   classDate: z.date().optional(),
   gradeLevel: z.array(z.string()).optional(),
   type: z.string(),
+  available: z.boolean(),
   createdAt: z.date().optional(),
 });
 

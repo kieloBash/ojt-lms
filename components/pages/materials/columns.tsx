@@ -6,7 +6,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 
 import { file_types } from "./data/data";
 import { DataTableColumnHeader } from "./data-table-column-header";
-import { FileType, MaterialType } from "./data/schema";
+import { MaterialType } from "./data/schema";
 import { DataTableRowActions } from "./data-table-row-actions";
 import dayjs from "dayjs";
 
@@ -56,6 +56,22 @@ export const columns: ColumnDef<MaterialType>[] = [
     cell: ({ row }) => {
       const levels = row.getValue("gradeLevel") as string[];
       return <div className="w-full line-clamp-1">{levels.join(", ")}</div>;
+    },
+    enableSorting: false,
+    enableHiding: true,
+  },
+  {
+    accessorKey: "available",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Status" />
+    ),
+    cell: ({ row }) => {
+      const available = row.getValue("available") as boolean;
+      return (
+        <div className="w-full line-clamp-1">
+          {available ? "Available" : "Unavailable"}
+        </div>
+      );
     },
     enableSorting: false,
     enableHiding: true,

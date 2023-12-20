@@ -95,11 +95,16 @@ export function AddMaterialModal() {
     onSuccess: async (res) => {
       if (!res || !uploadingFile) return null;
 
+      const customOrder = ["N1", "N2", "K1", "K2"];
+      const sortedArray = res.gradeLevel.sort((a, b) => {
+        return customOrder.indexOf(a) - customOrder.indexOf(b);
+      });
+
       const result = await createNewMaterial({
         attendanceId: "",
         filename: uploadingFile.name,
         url: res.downloadURL,
-        gradeLevel: res.gradeLevel,
+        gradeLevel: sortedArray,
         type: uploadingFile.type,
       });
 

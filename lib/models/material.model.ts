@@ -25,6 +25,10 @@ const materialSchema = new mongoose.Schema(
     type: {
       type: String,
     },
+    available: {
+      type: Boolean,
+      default: false,
+    },
   },
   { timestamps: true }
 );
