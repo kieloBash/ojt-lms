@@ -1,5 +1,6 @@
 "use client";
 
+import { fetchMaterials } from "@/lib/actions/materials.action";
 import { useQuery } from "@tanstack/react-query";
 
 const useMaterials = (page: number) => {
@@ -19,8 +20,9 @@ const useMaterials = (page: number) => {
   const { data, isLoading } = useQuery({
     queryKey: [`materials`, page],
     queryFn: async () => {
-      const data = await getMaterials();
-      return data;
+      const { materials, totalCount } = await fetchMaterials();
+      // const data = await getMaterials();
+      return { data: materials, total: totalCount };
     },
   });
   const items = data?.data || [];
