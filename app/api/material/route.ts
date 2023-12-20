@@ -30,5 +30,6 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ data: materials, total });
   } catch (error) {
     console.log(error);
+    return NextResponse.json({ data: [], total: 0 });
   }
 }
