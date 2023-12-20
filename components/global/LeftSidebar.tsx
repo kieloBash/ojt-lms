@@ -11,15 +11,12 @@ import { isParent } from "@/utils/helpers/isParent";
 const LeftSidebar = async () => {
   const session = await getServerSession(authOptions);
   const user = session?.user as UserType | ParentType;
-  console.log(user);
   let userInfo = user;
 
   if (isParent(user))
     userInfo = await fetchSingleParentId({ _id: user._id as string });
 
   if (!userInfo) return null;
-
-  console.log(userInfo);
 
   return (
     <article className="flex flex-col items-center justify-between flex-1 py-4 bg-main-700">

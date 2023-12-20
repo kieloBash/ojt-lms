@@ -37,5 +37,6 @@ export const config = {
     "/messages/:path*",
     "/settings/:path*",
     "/transactions/:path*",
+    "/materials/:path*",
   ],
 };

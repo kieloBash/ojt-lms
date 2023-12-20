@@ -13,3 +13,10 @@ export function getGradeLevel(age: number) {
   if (age >= 5 && age <= 6) level.push("K2");
   return level;
 }
+
+export const GRADE_LEVELS = [
+  { level: "N1", label: "Nursery 1" },
+  { level: "N2", label: "Nursery 2" },
+  { level: "K1", label: "Kinder 1" },
+  { level: "K2", label: "Kinder 2" },
+] as const;

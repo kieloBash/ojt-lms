@@ -42,6 +42,7 @@ const NavButtons = ({ user }: { user: ParentType | UserType }) => {
   const TeacherNavLinks = [
     { label: "dashboard", href: "/dashboard" },
     { label: "calendar", href: "/calendar" },
+    { label: "materials", href: "/materials" },
     { label: "courses", href: "/courses" },
     { label: "messages", href: "/messages" },
     { label: "settings", href: "/settings" },
@@ -164,6 +165,9 @@ const NavButtons = ({ user }: { user: ParentType | UserType }) => {
                 )}
                 {nav.label === "settings" && (
                   <Settings className={iconClassName} />
+                )}
+                {nav.label === "materials" && (
+                  <BookOpen className={iconClassName} />
                 )}
               </Button>
             </TooltipButton>
