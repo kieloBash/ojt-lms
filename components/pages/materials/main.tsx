@@ -5,11 +5,15 @@ import { columns } from "./columns";
 import useFetchFirebase from "./hook/useFirebase";
 import { Loader2 } from "lucide-react";
 import useMaterials from "./hook/useMaterials";
+import { useSearchParams } from "next/navigation";
 
 const MaterialsMain = () => {
   const files = useFetchFirebase();
-  const materials = useMaterials();
-  console.log(materials);
+
+  const params = useSearchParams();
+  const page = params.get("page") ? params.get("page") : 1;
+
+  const materials = useMaterials(Number(page));
 
   if (files.isLoading || materials.isLoading)
     return (
@@ -20,7 +24,11 @@ const MaterialsMain = () => {
 
   return (
     <article className="flex-1 px-10">
-      <DataTable data={materials?.data || []} columns={columns} />
+      <DataTable
+        data={materials?.data || []}
+        columns={columns}
+        total={materials?.total || 0}
+      />
     </article>
   );
 };

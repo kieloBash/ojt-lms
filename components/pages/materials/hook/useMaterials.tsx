@@ -1,19 +1,32 @@
 "use client";
 
-import { fetchMaterials } from "@/lib/actions/materials.action";
 import { useQuery } from "@tanstack/react-query";
 
-const useMaterials = () => {
-  const { data, isLoading } = useQuery({
-    queryKey: [`materials`],
-    queryFn: async () => {
-      const { materials } = await fetchMaterials();
+const useMaterials = (page: number) => {
+  const getMaterials = async () => {
+    const res = await fetch(`/api/material?page=${page}`);
+    const { data, total } = await res.json();
+    // console.log(total);
+    const formatted = data.map((d: any) => {
+      return {
+        ...d,
+        createdAt: new Date(d.createdAt),
+      };
+    });
+    return { data: formatted, total };
+  };
 
-      console.log(materials);
-      return materials;
+  const { data, isLoading } = useQuery({
+    queryKey: [`materials`, page],
+    queryFn: async () => {
+      const data = await getMaterials();
+      return data;
     },
   });
-  return { data, isLoading };
+  const items = data?.data || [];
+  const total = data?.total || 0;
+
+  return { data: items, isLoading, total };
 };
 
 export default useMaterials;

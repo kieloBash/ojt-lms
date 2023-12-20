@@ -55,7 +55,7 @@ export const columns: ColumnDef<MaterialType>[] = [
     ),
     cell: ({ row }) => {
       const levels = row.getValue("gradeLevel") as string[];
-      return <div className="w-full line-clamp-1">{levels.join(", ")}</div>;
+      return <div className="w-[100px] line-clamp-1">{levels.join(", ")}</div>;
     },
     enableSorting: false,
     enableHiding: true,
@@ -68,7 +68,7 @@ export const columns: ColumnDef<MaterialType>[] = [
     cell: ({ row }) => {
       const available = row.getValue("available") as boolean;
       return (
-        <div className="w-full line-clamp-1">
+        <div className="w-[100px] line-clamp-1">
           {available ? "Available" : "Unavailable"}
         </div>
       );
@@ -107,7 +107,7 @@ export const columns: ColumnDef<MaterialType>[] = [
       <DataTableColumnHeader column={column} title="Last Modified" />
     ),
     cell: ({ row }) => (
-      <div className="w-full line-clamp-1">
+      <div className="w-[100px] line-clamp-1">
         {dayjs(row.getValue("createdAt")).format("MM/DD/YYYY")}
       </div>
     ),
