@@ -14,8 +14,8 @@ const CardsList = () => {
             .fill([])
             .map((_, index) => (
               <div className="flex flex-col gap-2" key={index}>
-                <Skeleton className="w-[250px] h-[330px]" />
-                <Skeleton className="w-[250px] h-[40px]" />
+                <Skeleton className="w-[190px] h-[300px]" />
+                <Skeleton className="w-[190px] h-[40px]" />
               </div>
             ))}
         </>
@@ -25,10 +25,10 @@ const CardsList = () => {
             <AlbumArtwork
               key={index}
               album={_}
-              className="w-[250px]"
+              className="w-[190px]"
               aspectRatio="portrait"
-              width={250}
-              height={330}
+              width={200}
+              height={300}
             />
           ))}
         </>

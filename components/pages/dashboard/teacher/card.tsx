@@ -44,8 +44,8 @@ export function AlbumArtwork({
     <div className={cn("space-y-3", className)} {...props}>
       <ContextMenu>
         <ContextMenuTrigger>
-          <div className="overflow-hidden rounded-md bg-main-600">
-            <Image
+          <div className="w-full overflow-hidden text-white rounded-md bg-main-600">
+            {/* <Image
               src={""}
               alt={album.class.class}
               width={width}
@@ -54,7 +54,15 @@ export function AlbumArtwork({
                 "h-auto w-auto object-cover transition-all hover:scale-105",
                 aspectRatio === "portrait" ? "aspect-[3/4]" : "aspect-square"
               )}
-            />
+            /> */}
+            <div
+              className={cn(
+                "h-auto w-auto object-cover transition-all hover:scale-105 flex items-center justify-center ",
+                aspectRatio === "portrait" ? "aspect-[3/4]" : "aspect-square"
+              )}
+            >
+              <h1 className="text-4xl font-bold cursor-default">{album.class.class}</h1>
+            </div>
           </div>
         </ContextMenuTrigger>
         <ContextMenuContent className="w-48">
@@ -63,7 +71,9 @@ export function AlbumArtwork({
             <ContextMenuSubContent className="w-48">
               {album.classParticipants?.length === 0 ? (
                 <>
-                  <ContextMenuItem disabled>No Students Enrolled</ContextMenuItem>
+                  <ContextMenuItem disabled>
+                    No Students Enrolled
+                  </ContextMenuItem>
                 </>
               ) : (
                 <>

@@ -217,7 +217,7 @@ export async function fetchUpcomingAttendances({
 
     const query = Attendance.find({
       date: { $gte: startDate },
-      // classParticipants: { $exists: true, $not: { $size: 0 } }, // Filter by date within the specified month and ensure classParticipants array exists and is not empty
+      classParticipants: { $exists: true, $not: { $size: 0 } }, // Filter by date within the specified month and ensure classParticipants array exists and is not empty
     })
       .sort({ date: "asc", startTime: "asc" })
       .limit(10)

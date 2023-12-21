@@ -5,6 +5,8 @@ import React from "react";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import CardsList from "./cards-list";
+import { cn } from "@/lib/utils";
+import { SmallCard } from "./small-card";
 
 const TeacherSection = ({ userInfo }: { userInfo: UserType }) => {
   return (
@@ -33,6 +35,24 @@ const TeacherSection = ({ userInfo }: { userInfo: UserType }) => {
                           <CardsList />
                           <ScrollBar orientation="horizontal" />
                         </ScrollArea>
+                      </div>
+                      <div className="flex flex-col w-full gap-4 mt-2">
+                        <div className="space-y-1">
+                          <h2 className="text-2xl font-semibold tracking-tight">
+                            Pending Materials
+                          </h2>
+                          <p className="text-sm text-muted-foreground">
+                            Here are classes that has been concluded and has
+                            pending materials.
+                          </p>
+                        </div>
+                        <div className="flex items-center justify-start w-full gap-2">
+                          {Array(6)
+                            .fill([])
+                            .map((_, index) => {
+                              return <SmallCard key={index} />;
+                            })}
+                        </div>
                       </div>
                     </div>
                   </div>
