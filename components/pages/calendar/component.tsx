@@ -13,6 +13,7 @@ import useStudentAttendances from "./hooks/useStudentAttendances";
 import useTeacherAttendance from "./hooks/useTeachersAttendance";
 import { ParentType } from "@/lib/interfaces/parent.interface";
 import CalendarSideBar from "./sidebar";
+import MainSidebarCalendar from "./main-sidebar";
 
 const CalendarComponent = ({
   userInfo,
@@ -57,8 +58,10 @@ const CalendarComponent = ({
 
   return (
     <>
-      {isParent(userInfo) && (
+      {isParent(userInfo) ? (
         <CalendarSideBar userInfo={userInfo} ATTENDANCES={ATTENDANCES.data} />
+      ) : (
+        <MainSidebarCalendar />
       )}
       {calendarType === "Month" ? (
         <MonthlyView

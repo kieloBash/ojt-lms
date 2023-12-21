@@ -153,7 +153,7 @@ const MonthlyView = ({
                                   <div className="text-xs font-medium">
                                     {dayAttendance.class.class}
                                   </div>
-                                  <p className="text-xs">
+                                  <p className="text-xs line-clamp-1">
                                     {convertTime(
                                       dayAttendance.startTime,
                                       dayAttendance.endTime

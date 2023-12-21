@@ -25,6 +25,7 @@ const CalendarSideBar = ({
 }) => {
   const [selectedIndex, setSelectedIndex] = useState<number>(-1);
   const [open, setOpen] = useState<boolean>(false);
+  const { toggleSidebar } = useCalendarContext();
 
   const { monthIndex } = useCalendarContext();
   const currDate = dayjs().set("month", monthIndex);
@@ -59,6 +60,7 @@ const CalendarSideBar = ({
         return "th";
     }
   }
+  if (!toggleSidebar) return null;
 
   return (
     <>

@@ -19,7 +19,7 @@ const page = async () => {
   if (!userInfo) return null;
 
   return (
-    <div className="flex w-full h-full px-4">
+    <div className="flex w-full h-full">
       <Suspense
         fallback={
           <div className="flex items-center justify-center w-full h-full">

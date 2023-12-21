@@ -7,6 +7,8 @@ export type CalendarContextType = {
   calendarType: "Week" | "Month";
   setMonthIndex: (temp: number) => void;
   setCalendarType: (temp: "Week" | "Month") => void;
+  toggleSidebar: boolean;
+  setToggleSidebar: (temp: boolean) => void;
 };
 
 export const CalendarContext = React.createContext<CalendarContextType>({
@@ -14,6 +16,8 @@ export const CalendarContext = React.createContext<CalendarContextType>({
   calendarType: "Month",
   setMonthIndex: (index: number) => {},
   setCalendarType: (temp: "Week" | "Month") => {},
+  toggleSidebar: false,
+  setToggleSidebar: (temp: boolean) => {},
 });
 
 export const useCalendarContext = () => React.useContext(CalendarContext);
@@ -21,6 +25,7 @@ export const useCalendarContext = () => React.useContext(CalendarContext);
 const CalendarProvider = ({ children }: { children: React.ReactNode }) => {
   const today = dayjs();
   const [monthIndex, setMonthIndex] = React.useState<number>(today.month());
+  const [toggleSidebar, setToggleSidebar] = React.useState<boolean>(false);
   const [calendarType, setCalendarType] = React.useState<"Week" | "Month">(
     "Month"
   );
@@ -31,6 +36,8 @@ const CalendarProvider = ({ children }: { children: React.ReactNode }) => {
         setMonthIndex,
         calendarType,
         setCalendarType,
+        toggleSidebar,
+        setToggleSidebar,
       }}
     >
       {children}

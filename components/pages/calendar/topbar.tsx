@@ -3,13 +3,18 @@ import React from "react";
 
 // UI
 import { Button } from "@/components/ui/button";
-import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
+import {
+  CalendarDays,
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  Menu,
+} from "lucide-react";
 import { useCalendarContext } from "@/components/providers/CalendarProvider";
 import dayjs from "dayjs";
 import { useSelectedChild } from "@/components/global/context/useSelectedChild";
 
 const CalendarTopBar = () => {
-  const { monthIndex, setMonthIndex, calendarType, setCalendarType } =
+  const { monthIndex, setMonthIndex, setToggleSidebar, toggleSidebar } =
     useCalendarContext();
 
   const { selectedChild } = useSelectedChild();
@@ -19,35 +24,22 @@ const CalendarTopBar = () => {
     selectedChild?.status === "Enrolling"
   )
     return (
-      <div className="flex items-center justify-between w-full px-4 bg-white h-28" />
+      <div className="flex items-center justify-between w-full h-20 px-4 bg-white" />
     );
 
   return (
-    <div className="flex items-center justify-between w-full px-4 bg-white h-28">
-      <div className="flex items-center justify-center gap-8">
+    <div className="flex items-center justify-between w-full h-20 px-4 py-6 bg-white">
+      <div className="flex items-center justify-center gap-4">
+        <Button
+          variant={"ghost"}
+          className="w-12 h-12 p-2 mr-4 rounded-full"
+          type="button"
+          onClick={() => setToggleSidebar(!toggleSidebar)}
+        >
+          <Menu className="w-full h-full" />
+        </Button>
+        <CalendarDays className="w-10 h-10" />
         <h1 className="text-4xl font-bold">Calendar</h1>
-        <div className="flex items-center justify-center gap-1 px-2 py-1 rounded-lg bg-slate-200">
-          <Button
-            className={`w-24 py-2 h-fit ${
-              calendarType === "Week"
-                ? "bg-white text-black hover:bg-white border font-semibold"
-                : "text-black bg-slate-200 hover:bg-slate-100"
-            }`}
-            onClick={() => setCalendarType("Week")}
-          >
-            Week
-          </Button>
-          <Button
-            className={`w-24 py-2 h-fit ${
-              calendarType === "Month"
-                ? "bg-white text-black hover:bg-white border font-semibold"
-                : "text-black bg-slate-200 hover:bg-slate-100"
-            }`}
-            onClick={() => setCalendarType("Month")}
-          >
-            Month
-          </Button>
-        </div>
       </div>
       <div className="flex items-center justify-center gap-8 w-[27rem]">
         <Button
