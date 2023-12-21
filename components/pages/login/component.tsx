@@ -34,6 +34,7 @@ import { useRouter } from "next/navigation";
 
 import Link from "next/link";
 import Image from "next/image";
+import HOMEPAGE_PIC from "@/public/homepage-2.jpg";
 
 const LoginComponent = () => {
   const router = useRouter();
@@ -188,11 +189,13 @@ const LoginComponent = () => {
             </div>
           </div>
         </div>
-        <div className="w-1/2 m-10 shadow-2xl">
+        <div className="relative hidden object-cover w-1/2 my-8 border-4 shadow-2xl border-main-500 md:block">
           <Image
-            className="hidden object-cover w-full h-full md:block"
-            src=""
-            alt=""
+            className=""
+            src={HOMEPAGE_PIC}
+            alt="homepage"
+            fill
+            objectFit={"cover"}
           />
         </div>
       </section>

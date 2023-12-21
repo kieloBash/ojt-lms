@@ -54,6 +54,7 @@ import { calculateAge } from "@/utils/helpers/calculateAge";
 import { GRADE_LEVEL, getGradeLevel } from "@/utils/constants/data/gradeLevels";
 import { AgeGroupType } from "@/lib/interfaces/class.interface";
 import Image from "next/image";
+import HOMEPAGE_PIC from "@/public/homepage-2.jpg";
 
 const RegisterComponent = () => {
   const [isLoading, setisLoading] = useState(false);
@@ -122,7 +123,7 @@ const RegisterComponent = () => {
             <Form {...form}>
               <form
                 onSubmit={form.handleSubmit(onSubmit)}
-                className="flex flex-col pt-3 md:pt-8"
+                className="flex flex-col pt-3"
               >
                 <FormField
                   control={form.control}
@@ -345,11 +346,13 @@ const RegisterComponent = () => {
             </div>
           </div>
         </div>
-        <div className="w-1/2 m-10 shadow-2xl">
+        <div className="relative hidden object-cover w-1/2 my-8 border-4 shadow-2xl border-main-500 md:block">
           <Image
-            className="hidden object-cover w-full h-full md:block"
-            src=""
-            alt=""
+            className=""
+            src={HOMEPAGE_PIC}
+            alt="homepage"
+            fill
+            objectFit={"cover"}
           />
         </div>
       </section>
