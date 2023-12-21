@@ -22,6 +22,7 @@ const useMaterials = (page: number) => {
     queryFn: async () => {
       const { materials, totalCount } = await fetchMaterials();
       // const data = await getMaterials();
+      console.log(materials);
       return { data: materials, total: totalCount };
     },
   });

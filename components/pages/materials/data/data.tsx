@@ -1,4 +1,4 @@
-import { File, FileBarChart, Image, Sheet } from "lucide-react";
+import { File, FileBarChart, Image, Sheet, Video } from "lucide-react";
 
 export const file_types = [
   {
@@ -20,5 +20,10 @@ export const file_types = [
     value: "DOCX",
     label: "DOCX",
     icon: FileBarChart,
+  },
+  {
+    value: "Video",
+    label: "Video",
+    icon: Video,
   },
 ];

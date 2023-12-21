@@ -66,7 +66,7 @@ export function DataTableRowActions<TData>({
           <span className="sr-only">Open menu</span>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-[160px]">
+      <DropdownMenuContent align="end" className="w-[200px]">
         <Link href={file.url} target="_blank" className="cursor-pointer">
           <DropdownMenuItem className="cursor-pointer">Open</DropdownMenuItem>
         </Link>
@@ -136,6 +136,9 @@ export function DataTableRowActions<TData>({
             ))}
           </DropdownMenuSubContent>
         </DropdownMenuSub>
+        <DropdownMenuItem onClick={handleDeleteFile} className="cursor-pointer">
+          Add To Attendance
+        </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem onClick={handleDeleteFile} className="cursor-pointer">
           Delete

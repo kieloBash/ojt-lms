@@ -76,6 +76,8 @@ export async function createNewMaterial({
     } else {
       if (type.startsWith("image/")) {
         label = "Image";
+      } else if (type.startsWith("video/")) {
+        label = "Video";
       } else {
         // Use the original fileType as label if no specific mapping is defined
         label = type;
