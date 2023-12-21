@@ -13,8 +13,9 @@ const NonAcceptedHeader = () => {
 
   const { clear, selected } = useSelected();
   const [open, setOpen] = useState<boolean>(false);
-  const closePopUp = () => {
+  const closePopUp = (e: string) => {
     setOpen(false);
+    if (e !== "close") window.location.reload();
   };
   return (
     <>

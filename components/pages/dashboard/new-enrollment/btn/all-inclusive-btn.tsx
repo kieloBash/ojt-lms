@@ -13,11 +13,11 @@ import { createNewTransactionSubscription } from "@/lib/actions/transaction.acti
 import { useRouter } from "next/navigation";
 import { useSelectedChild } from "@/components/global/context/useSelectedChild";
 
-const AllInclusiveBtn = ({ close }: { close: () => void }) => {
+const AllInclusiveBtn = ({ close }: { close: (e: string) => void }) => {
   const { data: session } = useSession();
   const userInfo = session?.user as UserType;
   const router = useRouter();
-  
+
   const { selected } = useSelected();
   const { selectedChild } = useSelectedChild();
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -39,7 +39,7 @@ const AllInclusiveBtn = ({ close }: { close: () => void }) => {
     const res = await createNewTransactionSubscription({ NewTransaction });
     if (res.success) {
       setIsLoading(false);
-      close();
+      close("payment");
       router.replace("/dashboard");
       window.open(
         "https://checkout.umonicsplus.com/b/aEUdUg1275PxfCw9AC?locale=en&__embed_source=buy_btn_1OFCUVJdrjeVG3h14v8ccxp1",

@@ -13,7 +13,7 @@ import { createNewTransactionSubscription } from "@/lib/actions/transaction.acti
 import { useRouter } from "next/navigation";
 import { useSelectedChild } from "@/components/global/context/useSelectedChild";
 
-const LessonsOnlyBtn = ({ close }: { close: () => void }) => {
+const LessonsOnlyBtn = ({ close }: { close: (e: string) => void }) => {
   const { data: session } = useSession();
   const userInfo = session?.user as UserType;
   const router = useRouter();
@@ -41,7 +41,7 @@ const LessonsOnlyBtn = ({ close }: { close: () => void }) => {
     const res = await createNewTransactionSubscription({ NewTransaction });
     if (res.success) {
       setIsLoading(false);
-      close();
+      close("payment");
       window.open(
         "https://checkout.umonicsplus.com/b/8wMdUgbGL6TB4XS003?locale=en&__embed_source=buy_btn_1OFCYgJdrjeVG3h12HCb9Z3C",
         "_blank"

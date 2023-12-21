@@ -4,7 +4,7 @@ import AllInclusiveBtn from "@/components/pages/dashboard/new-enrollment/btn/all
 import LessonsOnlyBtn from "@/components/pages/dashboard/new-enrollment/btn/basic-btn";
 import CloseButton from "./close-btn";
 
-export function SubscriptionPopUp({ close }: { close: () => void }) {
+export function SubscriptionPopUp({ close }: { close: (e: string) => void }) {
   return (
     <>
       <div className="fixed inset-0 bg-main-200 z-[100] flex justify-center items-center">

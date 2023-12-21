@@ -5,11 +5,11 @@ import React from "react";
 import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";
 
-const CloseButton = ({ close }: { close: () => void }) => {
+const CloseButton = ({ close }: { close: (e: string) => void }) => {
   return (
     <Button
       type="button"
-      onClick={close}
+      onClick={() => close("close")}
       variant={"ghost"}
       size={"icon"}
       className="absolute rounded-full top-4 right-4"
