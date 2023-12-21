@@ -41,7 +41,7 @@ const NonAcceptedBody = ({
     });
   }, [selectedCourse.length]);
 
-  console.log(filteredOptions);
+  // console.log(filteredOptions);
 
   return (
     <div className="flex flex-1 gap-6 px-10 1">
@@ -56,28 +56,40 @@ const NonAcceptedBody = ({
           <MiniCalendarCard selected={selectedCourse} />
         </div>
       </div>
-      <ScrollArea className="flex-1">
-        <div className="grid grid-flow-row grid-cols-3 gap-2">
-          {filteredOptions?.length !== 0 && filteredOptions ? (
-            <>
-              {filteredOptions?.map((s) => {
-                return (
-                  <ClassOptionCard
-                    key={s._id}
-                    d={s}
-                    add={addSelected}
-                    length={selectedCourse.length}
-                  />
-                );
-              })}
-            </>
-          ) : (
-            <div className="items-center justify-center flex-1 col-span-3 text-center">
-              No Classes Available
-            </div>
-          )}
+      <div className="flex flex-col flex-1 gap-4">
+        <div className="flex items-center justify-between space-y-2">
+          <div>
+            <h2 className="text-lg font-medium tracking-tight">
+              Add a class
+            </h2>
+            <p className="text-sm text-muted-foreground">
+              Add a class schedule before you proceed to payments.
+            </p>
+          </div>
         </div>
-      </ScrollArea>
+        <ScrollArea className="flex-1">
+          <div className="grid grid-flow-row grid-cols-3 gap-2">
+            {filteredOptions?.length !== 0 && filteredOptions ? (
+              <>
+                {filteredOptions?.map((s) => {
+                  return (
+                    <ClassOptionCard
+                      key={s._id}
+                      d={s}
+                      add={addSelected}
+                      length={selectedCourse.length}
+                    />
+                  );
+                })}
+              </>
+            ) : (
+              <div className="items-center justify-center flex-1 col-span-3 text-center">
+                No Classes Available
+              </div>
+            )}
+          </div>
+        </ScrollArea>
+      </div>
     </div>
   );
 };
