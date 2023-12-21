@@ -7,7 +7,11 @@ const MainSidebarCalendar = () => {
 
   if (!toggleSidebar) return null;
 
-  return <div className="border-r w-72"></div>;
+  return (
+    <>
+      <div className="border-r w-72"></div>
+    </>
+  );
 };
 
 export default MainSidebarCalendar;

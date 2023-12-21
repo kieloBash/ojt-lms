@@ -15,6 +15,8 @@ import { Card } from "@/components/ui/card";
 import { useCalendarContext } from "@/components/providers/CalendarProvider";
 import dayjs from "dayjs";
 import { AddClassScheduleModal } from "./modals/add-class-schedule";
+import { AlertHoliday } from "./modals/propt-holiday";
+import { getWeek } from "@/utils/helpers/getWeek";
 
 const CalendarSideBar = ({
   userInfo,
@@ -27,7 +29,7 @@ const CalendarSideBar = ({
   const [open, setOpen] = useState<boolean>(false);
   const { toggleSidebar } = useCalendarContext();
 
-  const { monthIndex } = useCalendarContext();
+  const { monthIndex, holidays } = useCalendarContext();
   const currDate = dayjs().set("month", monthIndex);
 
   const filteredAttendance = useMemo(() => {
@@ -60,10 +62,24 @@ const CalendarSideBar = ({
         return "th";
     }
   }
-  if (!toggleSidebar) return null;
+  const { start, end } = getWeek(new Date());
 
+  const thisWeekHoliday =
+    holidays.filter(
+      (h) =>
+        dayjs(h.date).isAfter(dayjs(start)) &&
+        dayjs(h.date).isBefore(dayjs(end))
+    ) || [];
+
+  if (!toggleSidebar) return null;
   return (
     <>
+      {thisWeekHoliday.length > 0 && (
+        <AlertHoliday
+          toggle={thisWeekHoliday.length > 0}
+          holidays={thisWeekHoliday}
+        />
+      )}
       <AddClassScheduleModal
         open={open}
         setOpen={(e) => {
