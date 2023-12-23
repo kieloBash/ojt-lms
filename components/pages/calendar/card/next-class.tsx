@@ -17,6 +17,8 @@ import dayjs from "dayjs";
 import React from "react";
 
 import ChangeClassModal from "../modals/change-class";
+import { Separator } from "@/components/ui/separator";
+import GoingBtn from "../btn/going";
 
 export function NextClassCard({
   attendance,
@@ -34,9 +36,13 @@ export function NextClassCard({
             {convertTime(attendance.startTime, attendance.endTime)}
           </CardDescription>
         </div>
-        {index >= 0 && (
-          <ChangeClassModal index={index} attendance={attendance} />
-        )}
+        <div className="flex items-center space-x-1 rounded-md bg-secondary text-secondary-foreground">
+          <GoingBtn attendance={attendance}/>
+          <Separator orientation="vertical" className="h-[20px]" />
+          {index >= 0 && (
+            <ChangeClassModal index={index} attendance={attendance} />
+          )}
+        </div>
       </CardHeader>
       <CardContent>
         <div className="flex items-center justify-between w-full space-x-4 text-sm text-muted-foreground">

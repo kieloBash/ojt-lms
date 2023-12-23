@@ -632,7 +632,7 @@ export async function updateStudentYes({
 
     console.log(newData);
 
-    revalidatePath("/dashboard");
+    revalidatePath("/calendar");
 
     return { message: "Student Confirmed Successfully" };
   } catch (error: any) {
@@ -733,13 +733,42 @@ export async function updateClassScheduleIndex({
     const temp = student.classSchedule.filter((a: AttendanceType) => {
       return a._id?.toString() !== pastAttendanceId;
     });
-    console.log(temp);
     const classSchedule = [...temp, newAttendanceId];
-
-    console.log(classSchedule);
 
     await Student.findByIdAndUpdate(childId, {
       classSchedule,
+    });
+
+    // PAST ATTENCANCE
+    const pastAttendance: any = await Attendance.findById(pastAttendanceId)
+      .select("_id date")
+      .populate({ path: "class", model: Classes, select: "class" })
+      .populate({ path: "classParticipants", model: Student, select: "name" })
+      .lean()
+      .exec();
+    // console.log(pastAttendance);
+
+    const newPastParticipants = pastAttendance?.classParticipants?.filter(
+      (d: any) => {
+        if (d._id?.toString() !== childId) return d;
+      }
+    );
+    await Attendance.findByIdAndUpdate(pastAttendanceId, {
+      classParticipants: newPastParticipants,
+    });
+
+    // NEW ATTENDANCE
+    const newAttendance: any = await Attendance.findById(newAttendanceId)
+      .select("_id date")
+      .populate({ path: "class", model: Classes, select: "class" })
+      .populate({ path: "classParticipants", model: Student, select: "name" })
+      .lean()
+      .exec();
+    // console.log(newAttendance);
+
+    const newNextParticipants = [...newAttendance.classParticipants, childId];
+    await Attendance.findByIdAndUpdate(newAttendanceId, {
+      classParticipants: newNextParticipants,
     });
 
     return { message: "Student updated schedule" };

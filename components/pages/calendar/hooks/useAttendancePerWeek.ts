@@ -1,23 +1,19 @@
 "use client";
 
 import { useSelectedChild } from "@/components/global/context/useSelectedChild";
-import { useCalendarContext } from "@/components/providers/CalendarProvider";
 import { fetchWeeklyAttendances } from "@/lib/actions/attendance.action";
+import { AttendanceType } from "@/lib/interfaces/attendance.interface";
 import { AgeGroupType } from "@/lib/interfaces/class.interface";
 import { classClosedChecker } from "@/utils/helpers/calendar/helpers";
 import { useQuery } from "@tanstack/react-query";
 import dayjs from "dayjs";
 
-const useAttendancePerWeek = (weekIndex: number) => {
-  const { monthIndex } = useCalendarContext();
+const useAttendancePerWeek = (
+  weekIndex: number,
+  currDate: dayjs.Dayjs,
+  attendance: AttendanceType
+) => {
   const { selectedChild } = useSelectedChild();
-  console.log(weekIndex);
-
-  const startOfMonth = dayjs().set("month", monthIndex).startOf("month");
-  const currDate = dayjs(startOfMonth).set(
-    "date",
-    startOfMonth.date() + 7 * weekIndex
-  );
 
   const { data, isLoading } = useQuery({
     queryKey: [`attendances:week-${weekIndex}`, weekIndex, currDate],
@@ -44,21 +40,21 @@ const useAttendancePerWeek = (weekIndex: number) => {
         ageGroup: selectedChild?.gradeLevel as AgeGroupType,
       });
 
-      console.log(attendances.attendances);
+      // console.log(attendances.attendances);
 
       const filtered = attendances.attendances.filter((a) => {
         const attDate = dayjs(a.date);
 
         const closed = classClosedChecker({ dayLimit: 3, attDate });
 
-        if (!closed) {
+        if (!closed && a._id !== attendance._id) {
           return a;
         }
 
         // return a
       });
 
-      console.log(filtered);
+      // console.log(filtered);
 
       return filtered;
     },
