@@ -695,6 +695,9 @@ export async function updateClassSchedule({
     await Student.findByIdAndUpdate(childId, {
       classSchedule,
     });
+    const newData = await Attendance.findByIdAndUpdate(newAttendanceId, {
+      $push: { classParticipants: childId },
+    });
 
     return { message: "Student updated schedule" };
   } catch (error: any) {
@@ -746,7 +749,6 @@ export async function updateClassScheduleIndex({
       .populate({ path: "classParticipants", model: Student, select: "name" })
       .lean()
       .exec();
-    // console.log(pastAttendance);
 
     const newPastParticipants = pastAttendance?.classParticipants?.filter(
       (d: any) => {

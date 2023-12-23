@@ -60,12 +60,20 @@ const CalendarSideBar = ({
         dayjs(h.date).isAfter(dayjs(start)) &&
         dayjs(h.date).isBefore(dayjs(end))
     ) || [];
-  console.log(filteredAttendance.length);
 
   const upcomingClasses = filteredAttendance.filter((a) => {
     const attDate = dayjs(a.date);
-    if (!classUpcomingChecker({ attDate })) return a;
+    if (
+      !classUpcomingChecker({
+        attDate,
+        startTime: a.startTime,
+        endTime: a.endTime,
+      })
+    )
+      return a;
   });
+  // console.log(filteredAttendance);
+  // console.log(upcomingClasses);
 
   if (!toggleSidebar) return null;
   return (

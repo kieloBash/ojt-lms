@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/card";
 import CardGridSection from "./card-grid";
 import CalendarAttendance from "./cards/calendar-attendance";
+import dayjs from "dayjs";
 
 const StudentAcceptedScetion = ({
   userInfo,
@@ -30,11 +31,14 @@ const StudentAcceptedScetion = ({
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
             <Card className="col-span-4">
               <CardHeader>
-                <CardTitle>Calendar</CardTitle>
-                <CardDescription>Upcoming Classes</CardDescription>
+                <CardTitle>Progress Tracker</CardTitle>
+                <CardDescription>
+                  Here are the classes you have signed up for the month of{" "}
+                  {dayjs().format("MMMM")}.
+                </CardDescription>
               </CardHeader>
               <CardContent className="pl-2">
-                {/* <CalendarAttendance selectedChild={selectedChild} /> */}
+                <CalendarAttendance selectedChild={selectedChild} />
               </CardContent>
             </Card>
             <Card className="col-span-3">

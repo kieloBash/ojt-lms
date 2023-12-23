@@ -32,10 +32,27 @@ export function classClosedChecker({
   return closed;
 }
 
-export function classUpcomingChecker({ attDate }: { attDate: dayjs.Dayjs }) {
+export function classUpcomingChecker({
+  attDate,
+  startTime,
+  endTime,
+}: {
+  attDate: dayjs.Dayjs;
+  startTime: string;
+  endTime: string;
+}) {
   const today = dayjs();
+  const time = endTime.split(":");
 
-  const closed = today.get("date") > attDate.get("date");
+  const closed =
+    (Number(today.format("HH")) > Number(time[0]) &&
+      today.format("MM/DD/YYYY") === attDate.format("MM/DD/YYYY")) ||
+    (today.get("date") > attDate.get("date") &&
+      today.get("month") === attDate.get("month") &&
+      today.get("year") === attDate.get("year")) ||
+    (today.get("month") > attDate.get("month") &&
+      today.get("year") === attDate.get("year")) ||
+    today.get("year") > attDate.get("year");
 
   return closed;
 }

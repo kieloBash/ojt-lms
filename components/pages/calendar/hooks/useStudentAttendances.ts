@@ -2,6 +2,7 @@
 
 import { fetchStudentAttendances } from "@/lib/actions/attendance.action";
 import { useQuery } from "@tanstack/react-query";
+import dayjs from "dayjs";
 
 const useStudentAttendances = (studentId: string) => {
   const { data, isLoading } = useQuery({
@@ -9,7 +10,10 @@ const useStudentAttendances = (studentId: string) => {
     queryFn: async () => {
       const attendances = await fetchStudentAttendances({ studentId });
       console.log(attendances);
-      return attendances;
+      const filtered = attendances.filter(
+        (a) => dayjs(a.date).get("month") === dayjs().get("month")
+      );
+      return filtered;
     },
   });
   return { data, isLoading };
