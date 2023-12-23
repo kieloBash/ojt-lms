@@ -137,11 +137,11 @@ const LoginComponent = () => {
                                 placeholder="Password"
                                 className="flex-1 w-full px-4 py-2 text-base text-gray-700 placeholder-gray-400 bg-white border border-gray-300 shadow-sm appearance-none focus:outline-none focus:ring-2 focus:ring-main-600 focus:border-transparent"
                               />
-                              {showPassword ? (
+                              {!showPassword ? (
                                 <Button
                                   type="button"
                                   variant={"ghost"}
-                                  onClick={() => setShowPassword(false)}
+                                  onClick={() => setShowPassword(true)}
                                   className="absolute w-6 h-6 p-1 -translate-y-1/2 rounded-full right-4 top-1/2"
                                 >
                                   <EyeOffIcon className="w-full h-full" />
@@ -150,7 +150,7 @@ const LoginComponent = () => {
                                 <Button
                                   type="button"
                                   variant={"ghost"}
-                                  onClick={() => setShowPassword(true)}
+                                  onClick={() => setShowPassword(false)}
                                   className="absolute w-6 h-6 p-1 -translate-y-1/2 rounded-full right-4 top-1/2"
                                 >
                                   <EyeIcon className="w-full h-full" />

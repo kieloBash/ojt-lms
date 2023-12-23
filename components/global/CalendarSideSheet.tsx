@@ -125,6 +125,7 @@ export function CalendarSheet({
         });
       }
     }
+    window.location.reload();
   }
   return (
     <Sheet open={trigger} onOpenChange={setTrigger}>
