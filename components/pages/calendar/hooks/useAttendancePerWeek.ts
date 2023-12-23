@@ -8,36 +8,34 @@ import { classClosedChecker } from "@/utils/helpers/calendar/helpers";
 import { useQuery } from "@tanstack/react-query";
 import dayjs from "dayjs";
 
-const useWeeklyAttendance = (indexMonth: number) => {
+const useAttendancePerWeek = (weekIndex: number) => {
   const { monthIndex } = useCalendarContext();
   const { selectedChild } = useSelectedChild();
-  console.log(indexMonth);
+  console.log(weekIndex);
+
   const startOfMonth = dayjs().set("month", monthIndex).startOf("month");
   const currDate = dayjs(startOfMonth).set(
     "date",
-    startOfMonth.date() + 7 * indexMonth
+    startOfMonth.date() + 7 * weekIndex
   );
 
-  let StartOfWeek: dayjs.Dayjs;
-  if (currDate.date() < 7) {
-    StartOfWeek = currDate.startOf("month");
-  } else {
-    StartOfWeek = currDate.startOf("week");
-  }
-
-  let EndOfWeek: dayjs.Dayjs;
-  if (currDate.date() > 25) {
-    EndOfWeek = currDate.endOf("month");
-  } else {
-    EndOfWeek = currDate.endOf("week");
-  }
-
-  console.log(StartOfWeek.format("MMM DD YYYY, dddd"));
-  console.log(EndOfWeek.format("MMM DD YYYY, dddd"));
-
   const { data, isLoading } = useQuery({
-    queryKey: [`attendances:week-${indexMonth}`, indexMonth, currDate],
+    queryKey: [`attendances:week-${weekIndex}`, weekIndex, currDate],
     queryFn: async () => {
+      let StartOfWeek: dayjs.Dayjs;
+      if (currDate.date() < 7) {
+        StartOfWeek = currDate.startOf("month");
+      } else {
+        StartOfWeek = currDate.startOf("week");
+      }
+
+      let EndOfWeek: dayjs.Dayjs;
+      if (currDate.date() > 25) {
+        EndOfWeek = currDate.endOf("month");
+      } else {
+        EndOfWeek = currDate.endOf("week");
+      }
+
       const attendances = await fetchWeeklyAttendances({
         StartOfWeek: StartOfWeek.toDate().toDateString(),
         EndOfWeek: EndOfWeek.set("date", EndOfWeek.date() + 1)
@@ -56,15 +54,17 @@ const useWeeklyAttendance = (indexMonth: number) => {
         if (!closed) {
           return a;
         }
+
+        // return a
       });
 
       console.log(filtered);
 
       return filtered;
     },
-    enabled: indexMonth >= 0,
+    enabled: weekIndex >= 0,
   });
   return { data, isLoading };
 };
 
-export default useWeeklyAttendance;
+export default useAttendancePerWeek;

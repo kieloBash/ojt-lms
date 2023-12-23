@@ -12,3 +12,30 @@ export function getMatrixMonth(month = dayjs().month()) {
   });
   return daysMatrix;
 }
+
+export function classClosedChecker({
+  dayLimit,
+  attDate,
+}: {
+  dayLimit: number;
+  attDate: dayjs.Dayjs;
+}) {
+  const format = "MMMM DD YYYY";
+  const today = dayjs();
+
+  const closed =
+    today.set("date", today.date() + dayLimit).format(format) ===
+      attDate.format(format) ||
+    today.isAfter(attDate) ||
+    today.format(format) === attDate.format(format);
+
+  return closed;
+}
+
+export function classUpcomingChecker({ attDate }: { attDate: dayjs.Dayjs }) {
+  const today = dayjs();
+
+  const closed = today.get("date") > attDate.get("date");
+
+  return closed;
+}
