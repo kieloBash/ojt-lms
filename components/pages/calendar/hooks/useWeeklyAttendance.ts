@@ -18,18 +18,18 @@ const useWeeklyAttendance = (indexMonth: number) => {
     startOfMonth.date() + 7 * indexMonth
   );
 
+  
   let StartOfWeek: dayjs.Dayjs;
-  if (currDate.date() < 7) {
-    StartOfWeek = currDate.startOf("month");
+  if (currDate.date() < 6) {
+    StartOfWeek = currDate.startOf("month").day(6); // Sunday is day 0
   } else {
-    StartOfWeek = currDate.startOf("week");
+    StartOfWeek = currDate.startOf("week").day(6);
   }
-
   let EndOfWeek: dayjs.Dayjs;
-  if (currDate.date() > 25) {
-    EndOfWeek = currDate.endOf("month");
+  if (currDate.date() > 26) {
+    EndOfWeek = currDate.endOf("month").day(5);
   } else {
-    EndOfWeek = currDate.endOf("week");
+    EndOfWeek = currDate.endOf("week").day(5);
   }
 
   console.log(StartOfWeek.format("MMM DD YYYY, dddd"));
@@ -50,8 +50,11 @@ const useWeeklyAttendance = (indexMonth: number) => {
 
       const filtered = attendances.attendances.filter((a) => {
         const attDate = dayjs(a.date);
+        const today = dayjs();
 
-        const closed = classClosedChecker({ dayLimit: 3, attDate });
+        const closed =
+        today.isAfter(attDate.set("date", attDate.date() + 2)) ||
+        today.isAfter(attDate);
 
         if (!closed) {
           return a;

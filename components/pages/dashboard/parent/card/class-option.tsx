@@ -6,7 +6,7 @@ import { AttendanceType } from "@/lib/interfaces/attendance.interface";
 // UI
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import dayjs from "dayjs";
+import dayjs from 'dayjs'
 
 const ClassOptionCard = ({
   d,
@@ -38,6 +38,9 @@ const ClassOptionCard = ({
         </div>
       </div>
       <p className="mt-4 mb-2 text-lg text-gray-800"></p>
+      <div className="flex items-center justify-end">
+        <Badge className="px-3 py-2">{dayjs(d.date).format("D MMM YYYY")}</Badge>
+      </div>
       <div
         className={`flex items-center justify-between p-2 my-6 rounded ${colorClass}`}
       >
