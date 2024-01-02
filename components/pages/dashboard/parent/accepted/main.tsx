@@ -41,13 +41,13 @@ const StudentAcceptedScetion = ({
                 <CalendarAttendance selectedChild={selectedChild} />
               </CardContent>
             </Card>
-            <Card className="col-span-3">
+            {/* <Card className="col-span-3">
               <CardHeader>
                 <CardTitle>Class Materials</CardTitle>
                 <CardDescription>Class Materials for you</CardDescription>
               </CardHeader>
-              <CardContent>{/* <RecentSales /> */}</CardContent>
-            </Card>
+              <CardContent><RecentSales /></CardContent>
+            </Card> */}
           </div>
         </div>
       </div>

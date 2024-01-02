@@ -40,29 +40,7 @@ const ParentMain = ({ parent }: { parent: ParentType }) => {
           handleSelectChild={handleSelectChild}
         />
       </div>
-      {/* {selectedChild?.status !== "Enrolling" ? (
-        <>
-          {selectedChild?.status === "Paid" ? (
-            <>
-              <StudentAcceptedScetion
-                userInfo={parent}
-                selectedChild={selectedChild}
-              />
-            </>
-          ) : (
-            <div className="flex items-center justify-center flex-1">
-              <span className="">Waiting for Payment</span>
-            </div>
-          )}
-        </>
-      ) : (
-        <>
-          <NotAcceptedComponent
-            userInfo={parent}
-            selectedChild={selectedChild}
-          />
-        </>
-      )} */}
+      <StudentAcceptedScetion userInfo={parent} selectedChild={selectedChild} />
     </section>
   );
 };

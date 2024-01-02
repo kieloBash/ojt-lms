@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 // UI
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { Check, Clock, Link as LinkIcon, X } from "lucide-react";
+import { Check, Clock, Link as LinkIcon, Loader2, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Table,
@@ -74,7 +74,12 @@ const CalendarAttendance = ({
     setAttendanceTotals({ absent, present, pending });
   }, [Attendance.data, selectedChild]);
 
-  if (Attendance.isLoading) return null;
+  if (Attendance.isLoading)
+    return (
+      <div className="flex items-center justify-center w-full h-full">
+        <Loader2 className="w-6 h-6 animate-spin" />;
+      </div>
+    );
   return (
     <ScrollArea className="w-full h-[calc(100vh-15rem)]">
       <div className="w-full h-full px-4">
