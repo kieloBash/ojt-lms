@@ -8,7 +8,7 @@ export interface ParentType {
   profileURL?: string;
   children?: StudentType[];
   transactions?: TransactionsType[];
-  isAccepted: Boolean;
+  isEnrolled: boolean;
   role?: string;
   clerkId: string;
 }

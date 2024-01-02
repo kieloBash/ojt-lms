@@ -23,7 +23,8 @@ const parentSchema = new mongoose.Schema(
     profileURL: {
       type: String,
     },
-    isOnboarded: {
+
+    isEnrolled: {
       type: Boolean,
       default: false,
     },
@@ -40,10 +41,6 @@ const parentSchema = new mongoose.Schema(
         required: true,
       },
     ],
-    isAccepted: {
-      type: Boolean,
-      default: false,
-    },
   },
   { timestamps: true }
 );

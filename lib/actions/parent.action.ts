@@ -305,7 +305,7 @@ export async function fetchSingleParentClerkId({
 
     const single: any = await Parent.findOne({ clerkId })
       .lean()
-      .select("_id name email profileURL isAccepted clerkId")
+      .select("_id name email profileURL isEnrolled clerkId")
       .populate({
         path: "children",
         model: Student,
@@ -351,7 +351,7 @@ export async function fetchSingleUserClerkId({ clerkId }: { clerkId: string }) {
 
     const single: any = await User.findOne({ clerkId })
       .lean()
-      .select("_id name email image role")
+      .select("_id name email image role isEnrolled")
       .exec();
 
     if (!single) {

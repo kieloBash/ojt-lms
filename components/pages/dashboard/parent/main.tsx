@@ -9,6 +9,7 @@ import ChildSwitcher from "./child-switcher";
 import NotAcceptedComponent from "./non-accepted/component";
 import { useSelectedChild } from "@/components/global/context/useSelectedChild";
 import StudentAcceptedScetion from "./accepted/main";
+import SubscriptionMain from "../subscription/component";
 
 const ParentMain = ({ parent }: { parent: ParentType }) => {
   const { clear } = useSelected();
@@ -24,6 +25,8 @@ const ParentMain = ({ parent }: { parent: ParentType }) => {
   }
   if (parent?.children?.length === 0 && parent?.children) return null;
 
+  if (selectedChild.status === "Enrolling") return <SubscriptionMain />;
+
   return (
     <section className="flex flex-col w-full h-screen overflow-y-auto bg-white">
       <div className="flex items-center justify-between w-full p-10 py-5">
@@ -37,7 +40,7 @@ const ParentMain = ({ parent }: { parent: ParentType }) => {
           handleSelectChild={handleSelectChild}
         />
       </div>
-      {selectedChild?.status !== "Enrolling" ? (
+      {/* {selectedChild?.status !== "Enrolling" ? (
         <>
           {selectedChild?.status === "Paid" ? (
             <>
@@ -59,7 +62,7 @@ const ParentMain = ({ parent }: { parent: ParentType }) => {
             selectedChild={selectedChild}
           />
         </>
-      )}
+      )} */}
     </section>
   );
 };

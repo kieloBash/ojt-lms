@@ -16,3 +16,4 @@ export interface TransactionsType {
 
 export type TransactionStatusType = "Paid" | "Not Paid" | "Declined";
 export type TransactionPackageType = "AllInclusive" | "LessonsOnly";
+export type NewTransactionPackageType = "Discover" | "Advance" | "Ultimate";

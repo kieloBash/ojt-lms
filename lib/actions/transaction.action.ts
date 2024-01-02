@@ -10,7 +10,14 @@ import Student from "../models/student.model";
 export async function createNewTransactionSubscription({
   NewTransaction,
 }: {
-  NewTransaction: TransactionsType;
+  NewTransaction: {
+    student: string;
+    parent: string;
+    price: number;
+    status: string;
+    package: string;
+    classSchedule: string[];
+  };
 }) {
   try {
     connectDB();
@@ -27,7 +34,7 @@ export async function createNewTransactionSubscription({
     // Update Classes model
     await Student.findByIdAndUpdate(NewTransaction.student, {
       classSchedule: NewTransaction.classSchedule,
-      status: "Not Paid",
+      status: NewTransaction.status,
       package: NewTransaction.package,
     });
 
