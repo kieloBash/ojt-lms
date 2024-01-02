@@ -24,7 +24,7 @@ import { createNewTransactionSubscription } from "@/lib/actions/transaction.acti
 import AdditionalInfo from "./cards/additional-info";
 
 const SubscriptionMain = () => {
-//   const [isLoading, setIsLoading] = useState<boolean>(false);
+  //   const [isLoading, setIsLoading] = useState<boolean>(false);
   const { selectedChild } = useSelectedChild();
   const userInfo = useUserInfo();
 
@@ -73,12 +73,12 @@ const SubscriptionMain = () => {
     <section className="relative flex flex-col w-full h-full pb-8">
       <header className="flex flex-col items-center justify-center w-full bg-gradient-to-r from-blue-800 to-indigo-900 h-[16rem]">
         <h1 className="text-3xl font-bold text-white">
-          🚀 Exclusive Learning Packages: An Unveiling of Value 🚀
+          {`🚀 Exclusive Learning Packages: An Unveiling of Value 🚀`}
         </h1>
         <p className="w-full max-w-[56rem] text-sm text-center text-white mt-6">
-          We hope this newsletter finds you well. At The Umonics Method, we're
+          {`We hope this newsletter finds you well. At The Umonics Method, we're
           delighted to share some exciting news that will shape your child's
-          educational journey like never before!
+          educational journey like never before!`}
         </p>
       </header>
       <div className="flex items-start justify-center w-full gap-4 -mt-10">
@@ -106,7 +106,7 @@ const SubscriptionMain = () => {
                       <Separator />
                     </div>
                     <p className="text-muted-foreground">
-                      Enjoy a 20% Discount in Yearly Packages
+                      {`Enjoy a 20% Discount in Yearly Packages`}
                     </p>
                     <div className="flex-1">
                       <Separator />
