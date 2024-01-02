@@ -90,6 +90,7 @@ const RegisterComponent = () => {
     if (!isLoaded) {
       return;
     }
+    setisLoading(true);
 
     try {
       const completeSignUp = await signUp.attemptEmailAddressVerification({
@@ -177,7 +178,9 @@ const RegisterComponent = () => {
         {pendingVerification ? (
           <>
             <div className="flex flex-col items-center justify-center w-1/2 p-10">
-              <Label className="mb-1 text-3xl">Verify your Account to Proceed</Label>
+              <Label className="mb-1 text-3xl">
+                Verify your Account to Proceed
+              </Label>
               <p className="max-w-md mb-6 text-sm text-center text-muted-foreground">
                 A verification code will be sent to you via your email. Thank
                 you please wait!
@@ -193,7 +196,9 @@ const RegisterComponent = () => {
                   placeholder="Input code here"
                   className="w-full"
                 />
-                <Button type="submit">Done</Button>
+                <Button disabled={isLoading} type="submit">
+                  {isLoaded ? <Loader2 className="animate-spin" /> : "Done"}
+                </Button>
               </form>
             </div>
           </>
