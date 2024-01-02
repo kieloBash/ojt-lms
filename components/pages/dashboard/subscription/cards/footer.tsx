@@ -9,8 +9,8 @@ const Footer = () => {
   return (
     <footer className="flex flex-col w-full pt-12 bg-transparent">
       <p className="pt-8 text-center border-t text-dark-1">
-        Feel free to reach out with any questions or for more information. We're
-        here to support your child's educational journey!
+        {`Feel free to reach out with any questions or for more information. We're
+        here to support your child's educational journey!`}
       </p>
       <div className="w-full max-w-screen-xl px-4 mx-auto ">
         <div className="relative flex items-center justify-center w-full -mb-4 overflow-hidden">
@@ -18,8 +18,8 @@ const Footer = () => {
         </div>
         <div className="flex items-center justify-between pt-10 text-sm font-light text-dark-1">
           <span className="">
-            © Preschool Memory Enrichment Training Program by The Umonics Method
-            All Rights Reserved 2023
+            {` © Preschool Memory Enrichment Training Program by The Umonics Method
+            All Rights Reserved 2023`}
           </span>
           <div className="flex items-center justify-center gap-2">
             <Button
