@@ -230,7 +230,7 @@ export function CalendarSheet({
                   </Button>
                 </div>
               </div>
-              {foundPresent && (
+              {foundPresent && selectedChild?.package !== "Discover" && (
                 <div className="flex flex-col w-full">
                   <span className="pb-2 font-medium text-left">Materials</span>
                   {selectedAttendance?.materials?.map((material) => {

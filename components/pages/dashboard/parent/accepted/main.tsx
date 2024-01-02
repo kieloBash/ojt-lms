@@ -3,6 +3,7 @@ import { ParentType } from "@/lib/interfaces/parent.interface";
 import { StudentType } from "@/lib/interfaces/student.interface";
 
 // UI
+import LOGO from "@/public/logo-2.svg";
 import {
   Card,
   CardContent,
@@ -13,6 +14,7 @@ import {
 import CardGridSection from "./card-grid";
 import CalendarAttendance from "./cards/calendar-attendance";
 import dayjs from "dayjs";
+import Image from "next/image";
 
 const StudentAcceptedScetion = ({
   userInfo,
@@ -28,27 +30,35 @@ const StudentAcceptedScetion = ({
           {/* <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
             <CardGridSection />
           </div> */}
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
-            <Card className="col-span-4">
-              <CardHeader>
-                <CardTitle>Progress Tracker</CardTitle>
-                <CardDescription>
-                  Here are the classes you have signed up for the month of{" "}
-                  {dayjs().format("MMMM")}.
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="pl-2">
-                <CalendarAttendance selectedChild={selectedChild} />
-              </CardContent>
-            </Card>
-            {/* <Card className="col-span-3">
+          {selectedChild.package !== "Discover" ? (
+            <>
+              <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
+                <Card className="col-span-4">
+                  <CardHeader>
+                    <CardTitle>Progress Tracker</CardTitle>
+                    <CardDescription>
+                      Here are the classes you have signed up for the month of{" "}
+                      {dayjs().format("MMMM")}.
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent className="pl-2">
+                    <CalendarAttendance selectedChild={selectedChild} />
+                  </CardContent>
+                </Card>
+                {/* <Card className="col-span-3">
               <CardHeader>
                 <CardTitle>Class Materials</CardTitle>
                 <CardDescription>Class Materials for you</CardDescription>
               </CardHeader>
               <CardContent></CardContent>
             </Card> */}
-          </div>
+              </div>
+            </>
+          ) : (
+            <div className="absolute flex items-center justify-center overflow-hidden -translate-x-1/2 -translate-y-1/2 left-1/2 top-1/2">
+              <Image src={LOGO} alt="Umonics Logo" width={900} />
+            </div>
+          )}
         </div>
       </div>
     </div>
