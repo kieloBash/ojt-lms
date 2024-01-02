@@ -11,7 +11,10 @@ const validation = z.object({
   email: z.string().email().min(1, {
     message: "Invalid Email",
   }),
-  password: z.string().min(4),
+  password: z.string().min(8, {
+    message:
+      "Password must contain atleast 8 characters, 1 special character and 1 capital letter",
+  }),
   child_name: z.string().min(1),
   gradeLevel: z.string().min(1),
 });
@@ -75,7 +78,8 @@ const RegisterComponent = () => {
   const [gradeOption, setGradeOption] = useState<string[]>([]);
   const { isLoaded, signUp, setActive } = useSignUp();
   const user = useUser();
-  console.log(user);
+
+  const [errors, setErrors] = useState("");
 
   useEffect(() => {
     if (child_bday) {
@@ -154,6 +158,7 @@ const RegisterComponent = () => {
 
   async function onSubmit(values: z.infer<typeof validation>) {
     setisLoading(true);
+    setErrors("");
     const { username, email, password } = values;
 
     if (!isLoaded) return null;
@@ -167,8 +172,13 @@ const RegisterComponent = () => {
 
       await signUp.prepareEmailAddressVerification({ strategy: "email_code" });
       setPendingVerification(true);
-    } catch (error) {
-      console.log(error);
+      setisLoading(false);
+    } catch (error: any) {
+      if (error.errors) {
+        setisLoading(false);
+        console.log(error.errors[0]);
+        setErrors("Password must have atleast 8 characters");
+      }
     }
   }
 
@@ -197,7 +207,7 @@ const RegisterComponent = () => {
                   className="w-full"
                 />
                 <Button disabled={isLoading} type="submit">
-                  {isLoaded ? <Loader2 className="animate-spin" /> : "Done"}
+                  {isLoading ? <Loader2 className="animate-spin" /> : "Done"}
                 </Button>
               </form>
             </div>
@@ -315,6 +325,7 @@ const RegisterComponent = () => {
                                   )}
                                 </div>
                               </div>
+                              <p className="">{errors}</p>
                             </div>
                           </FormControl>
                           <FormMessage />
