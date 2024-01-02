@@ -319,7 +319,7 @@ export async function fetchSingleParentClerkId({
       .exec();
 
     if (!single) {
-      return false
+      return undefined
     }
 
     const plainData: ParentType = {

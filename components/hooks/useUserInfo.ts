@@ -15,7 +15,7 @@ const useUserInfo = () => {
     const parentInfo = await fetchSingleParentClerkId({
       clerkId: user.id,
     });
-    setUserInfo(parentInfo);
+    if (parentInfo) setUserInfo(parentInfo);
   }
 
   useEffect(() => {
