@@ -1,6 +1,6 @@
 "use server";
 
-import { Dayjs } from "dayjs";
+import dayjs, { Dayjs } from "dayjs";
 import { AttendanceType } from "../interfaces/attendance.interface";
 import { AgeGroupType } from "../interfaces/class.interface";
 import { StudentType } from "../interfaces/student.interface";
@@ -292,21 +292,20 @@ export async function fetchWeeklyAttendances({
     console.log(StartOfWeek);
     console.log(EndOfWeek);
 
-    // const skipAmount = (pageNumber - 1) * pageSize;
-
     const startDate = new Date(StartOfWeek); // Note: Month is 0-indexed
-    const endDate = new Date(EndOfWeek); // This gives the first day of the next month
-    endDate.setMilliseconds(endDate.getMilliseconds() - 1); // Subtract one millisecond to get the last millisecond of the last day
+
+    // Adjust the endDate to represent the last millisecond of Friday
+    const endDate = dayjs(EndOfWeek).endOf("day").toDate(); // Adjusted to include the full day of the end date
+    endDate.setHours(23, 59, 59, 999);
 
     console.log(StartOfWeek);
     console.log(endDate);
 
     const query = Attendance.find({
       ageGroup,
-      date: { $gte: startDate, $lte: endDate }, // Filter by date within the specified month
+      date: { $gte: startDate, $lte: endDate },
     })
       .sort({ date: "asc", startTime: "asc" })
-      // .limit(pageSize)
       .lean()
       .select(
         "_id date ageGroup startTime endTime link studentsPresent studentsNotPresent"
@@ -328,7 +327,6 @@ export async function fetchWeeklyAttendances({
 
     console.log(data);
 
-    // Convert _id to string in the results
     const arrToIdString: AttendanceType[] = data.map((d: AttendanceType) => {
       return {
         ...d,
@@ -438,6 +436,8 @@ export async function fetchStudentAttendances({
   }
 }
 
+
+
 export async function fetchForYouAttendances({
   year,
   month,
@@ -453,8 +453,8 @@ export async function fetchForYouAttendances({
     // const skipAmount = (pageNumber - 1) * pageSize;
 
     const startDate = new Date(year, month, 1); // Note: Month is 0-indexed
-    const endDate = new Date(year, month + 2, 1); // This gives the first day of the next month
-    endDate.setMilliseconds(endDate.getMilliseconds() - 1); // Subtract one millisecond to get the last millisecond of the last day
+    const endDate = new Date(year, month + 2, 0);
+    endDate.setHours(23, 59, 59, 999);
 
     console.log(startDate, endDate);
 
