@@ -14,7 +14,6 @@ const useAttendancePerWeek = (
   attendance: AttendanceType
 ) => {
   const { selectedChild } = useSelectedChild();
-
   const { data, isLoading } = useQuery({
     queryKey: [`attendances:week-${weekIndex}`, weekIndex, currDate],
     queryFn: async () => {
@@ -31,10 +30,27 @@ const useAttendancePerWeek = (
       } else {
         EndOfWeek = currDate.endOf("week");
       }
+      console.log(
+        StartOfWeek.set("date", StartOfWeek.get("date") - 1)
+          .toDate()
+          .toDateString()
+      );
+      console.log(currDate.startOf("month").toDate()
+      .toDateString());
+      console.log(currDate.date() < 7);
+      console.log(currDate.date());
+      
+      // console.log(
+      //   EndOfWeek.set("date", EndOfWeek.get("date") - 1)
+      //     .toDate()
+      //     .toDateString()
+      // );
 
       const attendances = await fetchWeeklyAttendances({
-        StartOfWeek: StartOfWeek.toDate().toDateString(),
-        EndOfWeek: EndOfWeek.set("date", EndOfWeek.date() + 1)
+        StartOfWeek: StartOfWeek.set("date", StartOfWeek.get("date") - 1)
+          .toDate()
+          .toDateString(),
+        EndOfWeek: EndOfWeek.set("date", EndOfWeek.get("date") - 1)
           .toDate()
           .toDateString(),
         ageGroup: selectedChild?.gradeLevel as AgeGroupType,

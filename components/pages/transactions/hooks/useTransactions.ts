@@ -17,6 +17,8 @@ const useTransactions = () => {
         return d._id?.toString() || "";
       }) || [];
 
+  console.log(transactionIds);
+
   const { data, isLoading } = useQuery({
     queryKey: [`transactions:${userInfo?._id}`, userInfo?._id],
     enabled: userInfo !== undefined && transactionIds.length > 0,

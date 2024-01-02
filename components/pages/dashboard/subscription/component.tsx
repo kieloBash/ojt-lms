@@ -18,16 +18,13 @@ import {
   NewTransactionPackageType,
   TransactionsType,
 } from "@/lib/interfaces/transaction.interface";
-import { useSelected } from "../parent/non-accepted/context/useSelected";
 import { useSelectedChild } from "@/components/global/context/useSelectedChild";
 import useUserInfo from "@/components/hooks/useUserInfo";
 import { createNewTransactionSubscription } from "@/lib/actions/transaction.action";
 import AdditionalInfo from "./cards/additional-info";
 
 const SubscriptionMain = () => {
-  const router = useRouter();
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const { selected } = useSelected();
+//   const [isLoading, setIsLoading] = useState<boolean>(false);
   const { selectedChild } = useSelectedChild();
   const userInfo = useUserInfo();
 
@@ -65,11 +62,11 @@ const SubscriptionMain = () => {
       package: packageType,
       classSchedule: [],
     };
-    // const { success } = await createNewTransactionSubscription({
-    //   NewTransaction,
-    // });
-    // return success;
-    return true;
+    const { success } = await createNewTransactionSubscription({
+      NewTransaction,
+    });
+    return success;
+    // return true;
   }
 
   return (
@@ -118,7 +115,7 @@ const SubscriptionMain = () => {
                   <div className="flex items-center justify-center w-full gap-4 text-white">
                     <button
                       onClick={async () => {
-                        setIsLoading(true);
+                        // setIsLoading(true);
                         const PACKAGE_TYPE = [
                           "Discover",
                           "Advance",
@@ -146,8 +143,8 @@ const SubscriptionMain = () => {
                             default:
                               break;
                           }
-                        setIsLoading(false);
-                        router.refresh();
+                        // setIsLoading(false);
+                        window.location.reload();
                       }}
                       type="button"
                       className="h-[11rem] relative flex flex-col gap-2 items-center justify-between w-full p-4 py-8 text-xl shadow-lg hover: bg-gradient-to-r from-blue-800 to-indigo-900 hover:bg-gradient-to-r hover:from-blue-700 hover:to-indigo-800 rounded-2xl"

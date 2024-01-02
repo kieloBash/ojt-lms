@@ -49,6 +49,7 @@ const CalendarComponent = ({
       </div>
     );
 
+  console.log(ATTENDANCES);
   if (ATTENDANCES.isLoading)
     return (
       <div className="flex items-center justify-center w-full h-full">

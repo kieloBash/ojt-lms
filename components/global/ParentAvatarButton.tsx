@@ -72,11 +72,7 @@ const ParentAvatarButton = ({ parent }: { parent: ParentType }) => {
                         <span className="font-normal text-slate-600">
                           {child.status}
 
-                          {child.status !== "Enrolling"
-                            ? child.package === "AllInclusive"
-                              ? " - All Inclusive"
-                              : " - Lessons Only"
-                            : ""}
+                          {child.status !== "Enrolling" ? ` - ${child?.package} Package` : ""}
                         </span>
                       </div>
                     </div>

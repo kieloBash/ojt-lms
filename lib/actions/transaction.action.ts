@@ -21,7 +21,7 @@ export async function createNewTransactionSubscription({
 }) {
   try {
     connectDB();
-
+    console.log(NewTransaction);
     const createdTransaction = await Transaction.create({
       ...NewTransaction,
     });

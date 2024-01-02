@@ -4,7 +4,14 @@ import React, { useState } from "react";
 // UI
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { Check, ChevronDownIcon, Loader2, Lock, Replace } from "lucide-react";
+import {
+  Check,
+  ChevronDownIcon,
+  Delete,
+  Loader2,
+  Lock,
+  Replace,
+} from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -39,7 +46,10 @@ import dayjs from "dayjs";
 import { convertTime } from "@/utils/helpers/convertTime";
 import { AttendanceType } from "@/lib/interfaces/attendance.interface";
 import { useSelectedChild } from "@/components/global/context/useSelectedChild";
-import { updateClassScheduleIndex } from "@/lib/actions/attendance.action";
+import {
+  updateClassScheduleIndex,
+  updateRemoveClass,
+} from "@/lib/actions/attendance.action";
 import { classClosedChecker } from "@/utils/helpers/calendar/helpers";
 import useAttendancePerWeek from "../hooks/useAttendancePerWeek";
 
@@ -65,6 +75,7 @@ const ChangeClassModal = ({
     dayjs(attendance.date),
     attendance
   );
+  console.log(WeekAttendance);
 
   const dayLimit = 3;
   const time = attendance.startTime.split(":");
@@ -129,6 +140,23 @@ const ChangeClassModal = ({
                     </div>
                   </CommandItem>
                 </DialogTrigger>
+                {/* <CommandItem
+                  onSelect={async () => {
+                    const res = await updateRemoveClass({
+                      childId: selectedChild?._id as string,
+                      oldAttendance: attendance?._id as string,
+                    });
+
+                    if (res) window.location.reload();
+                  }}
+                >
+                  <div className="flex items-center justify-between w-full">
+                    <div className={`flex gap-2`}>
+                      <Delete className="w-5 h-5" />
+                      Remove Class
+                    </div>
+                  </div>
+                </CommandItem> */}
               </CommandGroup>
             </CommandList>
           </Command>

@@ -283,23 +283,19 @@ export async function fetchWeeklyAttendances({
   try {
     connectDB();
 
-    const userInfo = await authUserClerk() as ParentType;
-    
+    const userInfo = (await authUserClerk()) as ParentType;
+
     if (!userInfo) {
       throw new Error("Unauthorized");
     }
 
-    console.log(StartOfWeek);
-    console.log(EndOfWeek);
-
     const startDate = new Date(StartOfWeek); // Note: Month is 0-indexed
-
     // Adjust the endDate to represent the last millisecond of Friday
     const endDate = dayjs(EndOfWeek).endOf("day").toDate(); // Adjusted to include the full day of the end date
     endDate.setHours(23, 59, 59, 999);
 
     console.log(StartOfWeek);
-    console.log(endDate);
+    console.log(endDate.toDateString());
 
     const query = Attendance.find({
       ageGroup,
@@ -364,6 +360,8 @@ export async function fetchStudentAttendances({
       .exec();
 
     const data: any = await query;
+    console.log("object");
+    console.log(data);
 
     const attendancePromises: any[] = data.classSchedule.map(
       (attendanceId: string) => {
@@ -435,8 +433,6 @@ export async function fetchStudentAttendances({
     throw new Error("Error in fetching attendances", error.message);
   }
 }
-
-
 
 export async function fetchForYouAttendances({
   year,
@@ -675,7 +671,7 @@ export async function updateClassSchedule({
   try {
     connectDB();
 
-    const userInfo = await authUserClerk() as ParentType;
+    const userInfo = (await authUserClerk()) as ParentType;
 
     if (!userInfo) {
       throw new Error("Unauthorized");
@@ -704,6 +700,48 @@ export async function updateClassSchedule({
   }
 }
 
+export async function updateRemoveClass({
+  childId,
+  oldAttendance,
+}: {
+  childId: string;
+  oldAttendance: string;
+}) {
+  try {
+    connectDB();
+
+    const userInfo = (await authUserClerk()) as ParentType;
+
+    if (!userInfo) {
+      throw new Error("Unauthorized");
+    }
+
+    const student = await Student.findById(childId)
+      .select("_id classSchedule")
+      .exec();
+
+    if (!student) {
+      throw new Error("No Student");
+    }
+
+    const classSchedule = student.classSchedule.filter((d: any) => {
+      return d.toString() !== oldAttendance;
+    });
+    console.log(classSchedule);
+
+    await Student.findByIdAndUpdate(childId, {
+      classSchedule,
+    });
+    const newData = await Attendance.findByIdAndUpdate(oldAttendance, {
+      $pull: { classParticipants: childId },
+    });
+
+    return { message: "Student updated schedule" };
+  } catch (error: any) {
+    throw new Error("Error in updating student schedule", error.message);
+  }
+}
+
 export async function updateClassScheduleIndex({
   childId,
   newAttendanceId,
@@ -716,7 +754,7 @@ export async function updateClassScheduleIndex({
   try {
     connectDB();
 
-    const userInfo = await authUserClerk() as ParentType;
+    const userInfo = (await authUserClerk()) as ParentType;
 
     if (!userInfo) {
       throw new Error("Unauthorized");

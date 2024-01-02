@@ -311,6 +311,11 @@ export async function fetchSingleParentClerkId({
         model: Student,
         select: "_id name age status profileURL package gradeLevel",
       })
+      .populate({
+        path: "transactions",
+        model: Transaction,
+        select: "_id price",
+      })
       .exec();
 
     if (!single) {

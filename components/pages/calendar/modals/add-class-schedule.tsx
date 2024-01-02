@@ -31,16 +31,23 @@ export function AddClassScheduleModal({
   indexMonth,
   open,
   setOpen,
+  prevDateAttendance,
 }: {
   indexMonth: number;
   open: boolean;
   setOpen: (bol: boolean) => void;
+  prevDateAttendance: Date | undefined;
 }) {
   const format = "MM/DD";
   const [weekIndex, setWeekIndex] = useState<number>(indexMonth);
+  const [dateAttendance, setDateAttendance] = useState<Date | undefined>(
+    prevDateAttendance
+  );
+  console.log(prevDateAttendance?.toDateString());
+  console.log(dateAttendance?.toDateString());
 
   console.log(weekIndex, indexMonth);
-  const WeekAttendance = useWeeklyAttendance(weekIndex);
+  const WeekAttendance = useWeeklyAttendance(weekIndex, dateAttendance);
   console.log(WeekAttendance.data);
   const [selectedAttendance, setSelectedAttendance] = useState<string>("");
   const { selectedChild } = useSelectedChild();
@@ -84,7 +91,23 @@ export function AddClassScheduleModal({
           <DialogFooter>
             <Button
               type="button"
-              onClick={() => setWeekIndex((prev) => prev + 1)}
+              onClick={() => {
+                // setWeekIndex((prev) => prev + 1);
+                if (dateAttendance) {
+                  // const newDate = prevDateAttendance.setDate(prevDateAttendance.getDate()+7)
+                  console.log(
+                    dayjs(dateAttendance)
+                      .set("date", dayjs(dateAttendance).get("date") + 7)
+                      .toDate()
+                      .toDateString()
+                  );
+                  setDateAttendance(
+                    dayjs(dateAttendance)
+                      .set("date", dayjs(dateAttendance).get("date") + 7)
+                      .toDate()
+                  );
+                }
+              }}
             >
               Enroll for Next Week
             </Button>

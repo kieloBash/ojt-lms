@@ -30,6 +30,9 @@ const CalendarSideBar = ({
   ATTENDANCES: AttendanceType[];
 }) => {
   const [selectedIndex, setSelectedIndex] = useState<number>(-1);
+  const [prevDateAttendance, setPrevDateAttendance] = useState<
+    Date | undefined
+  >();
   const [open, setOpen] = useState<boolean>(false);
   const { toggleSidebar } = useCalendarContext();
 
@@ -92,6 +95,7 @@ const CalendarSideBar = ({
             setOpen(e);
           }}
           indexMonth={selectedIndex}
+          prevDateAttendance={prevDateAttendance}
         />
       )}
       <article className="flex flex-col items-start justify-center w-full max-w-xs p-1 bg-white">
@@ -121,6 +125,16 @@ const CalendarSideBar = ({
                 onClick={() => {
                   setSelectedIndex(filteredAttendance.length);
                   setOpen(true);
+                  if (filteredAttendance.length === 0)
+                    setPrevDateAttendance(new Date());
+                  else {
+                    const temp = dayjs(
+                      filteredAttendance[filteredAttendance.length - 1].date
+                    );
+                    setPrevDateAttendance(
+                      temp.set("date", temp.get("date") + 7).toDate()
+                    );
+                  }
                 }}
               >
                 <div className="flex">
