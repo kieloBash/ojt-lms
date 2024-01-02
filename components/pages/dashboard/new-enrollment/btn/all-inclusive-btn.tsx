@@ -12,10 +12,10 @@ import { TransactionsType } from "@/lib/interfaces/transaction.interface";
 import { createNewTransactionSubscription } from "@/lib/actions/transaction.action";
 import { useRouter } from "next/navigation";
 import { useSelectedChild } from "@/components/global/context/useSelectedChild";
+import useUserInfo from "@/components/hooks/useUserInfo";
 
 const AllInclusiveBtn = ({ close }: { close: (e: string) => void }) => {
-  const { data: session } = useSession();
-  const userInfo = session?.user as UserType;
+  const userInfo = useUserInfo();
   const router = useRouter();
 
   const { selected } = useSelected();

@@ -4,6 +4,7 @@ import "./globals.css";
 import { QueryProvider } from "@/components/providers/QueryProvider";
 import AuthProvider from "@/components/providers/AuthProvider";
 import { Toaster } from "@/components/ui/toaster";
+import { ClerkProvider } from '@clerk/nextjs'
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -21,15 +22,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body className={poppins.className}>
-        <main className="flex flex-col w-full min-h-screen bg-slate-50">
-          <Toaster />
-          <AuthProvider>
-            <QueryProvider>{children}</QueryProvider>
-          </AuthProvider>
-        </main>
-      </body>
-    </html>
+    <ClerkProvider>
+      <html lang="en">
+        <body className={poppins.className}>
+          <main className="flex flex-col w-full min-h-screen bg-slate-50">
+            <Toaster />
+            <AuthProvider>
+              <QueryProvider>{children}</QueryProvider>
+            </AuthProvider>
+          </main>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }

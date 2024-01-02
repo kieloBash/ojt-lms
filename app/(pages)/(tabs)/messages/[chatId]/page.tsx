@@ -1,17 +1,18 @@
 import AvatarProfile from "@/components/global/AvatarProfile";
 import MessageDisplay from "@/components/pages/messages/display";
 import { fetchSingleChat } from "@/components/pages/messages/hooks/action";
+import { authUserClerk } from "@/lib/actions/parent.action";
 import { PageProps } from "@/lib/interfaces/page.props";
 import { ParentType } from "@/lib/interfaces/parent.interface";
 import { UserType } from "@/lib/interfaces/user.interface";
 import { authOptions } from "@/utils/authOptions";
-import { getServerSession } from "next-auth";
 import React from "react";
 
 const SingleMessagePage = async ({ params }: PageProps) => {
   const data = await fetchSingleChat({ chatId: params.chatId as string });
-  const session = await getServerSession(authOptions);
-  const userInfo = session?.user as UserType | ParentType;
+  const userInfo = await authUserClerk();
+  if (!userInfo) return null;
+  console.log(userInfo);
 
   const recipient = data?.users.find((d) => d._id !== userInfo._id);
 
@@ -28,7 +29,9 @@ const SingleMessagePage = async ({ params }: PageProps) => {
             <h2 className="text-3xl font-bold tracking-tight text-white capitalize">
               {recipient?.name}
             </h2>
-            <p className="text-sm text-white capitalize">{recipient?.role ? recipient?.role : "Parent"}</p>
+            <p className="text-sm text-white capitalize">
+              {recipient?.role ? recipient?.role : "Parent"}
+            </p>
           </div>
         </div>
       </header>

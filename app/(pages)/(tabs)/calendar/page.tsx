@@ -1,10 +1,10 @@
 import CalendarComponent from "@/components/pages/calendar/component";
-import { ParentType } from "@/lib/interfaces/parent.interface";
-import { UserType } from "@/lib/interfaces/user.interface";
-import { authOptions } from "@/utils/authOptions";
+import { authUserClerk } from "@/lib/actions/parent.action";
+
 import { Loader2 } from "lucide-react";
 import { Metadata } from "next";
-import { getServerSession } from "next-auth";
+
+import { redirect } from "next/navigation";
 import React, { Suspense } from "react";
 
 export const metadata: Metadata = {
@@ -13,10 +13,9 @@ export const metadata: Metadata = {
 };
 
 const page = async () => {
-  const session = await getServerSession(authOptions);
-  const userInfo = session?.user as UserType | ParentType;
-
-  if (!userInfo) return null;
+  const user = await authUserClerk();
+  if (!user) return redirect("/");
+  console.log(user);
 
   return (
     <div className="flex w-full h-full">
@@ -27,7 +26,7 @@ const page = async () => {
           </div>
         }
       >
-        <CalendarComponent userInfo={userInfo} />
+        <CalendarComponent userInfo={user} />
       </Suspense>
     </div>
   );

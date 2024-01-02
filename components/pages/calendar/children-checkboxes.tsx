@@ -10,6 +10,7 @@ import { fetchChildrenId } from "@/lib/actions/parent.action";
 import { StudentType } from "@/lib/interfaces/student.interface";
 import { useSession } from "next-auth/react";
 import { UserType } from "@/lib/interfaces/user.interface";
+import useUserInfo from "@/components/hooks/useUserInfo";
 
 const children = [
   {
@@ -23,9 +24,8 @@ const children = [
 ] as const;
 
 const ChildrenCheckboxes = () => {
-  const { data: session } = useSession();
-  const userInfo = session?.user as UserType;
-  const userId = userInfo._id as string;
+  const userInfo = useUserInfo();
+  const userId = userInfo?._id as string;
   
   const { data, isLoading } = useQuery({
     queryKey: [`children`],

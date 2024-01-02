@@ -35,8 +35,10 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import HOMEPAGE_PIC from "@/public/homepage-2.jpg";
+import { useSignIn } from "@clerk/nextjs";
 
 const LoginComponent = () => {
+  const { isLoaded, signIn, setActive } = useSignIn();
   const router = useRouter();
   const [isLoading, setisLoading] = useState(false);
   const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -48,22 +50,31 @@ const LoginComponent = () => {
     },
   });
 
+  if (!isLoaded) {
+    return null;
+  }
+
   async function onSubmit(values: z.infer<typeof loginValidation>) {
+    if (!signIn) return null;
+
     console.log(values);
     setisLoading(true);
     const email = values.email;
     const password = values.password;
 
-    const res = await signIn("credentials", {
-      email,
-      password,
-      redirect: false,
-    });
-    console.log(res);
-    if (res) {
-      console.log("welcome");
-      router.push("/dashboard");
-    }
+    await signIn
+      .create({
+        identifier: email,
+        password,
+      })
+      .then((result: any) => {
+        if (result.status === "complete") {
+          setActive({ session: result.createdSessionId });
+        } else {
+          console.log(result);
+        }
+      })
+      .catch((err) => console.error("error", err.errors[0].longMessage));
   }
 
   return (

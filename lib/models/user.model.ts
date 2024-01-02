@@ -1,6 +1,10 @@
 import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema({
+  clerkId: {
+    type: String,
+    required: true,
+  },
   name: {
     type: String,
     required: true,
@@ -28,13 +32,13 @@ const userSchema = new mongoose.Schema({
     type: String,
     default: "credentials",
   },
-  isOnboarded:{
+  isOnboarded: {
     type: Boolean,
-    default:false,
+    default: false,
   },
-  isAccepted:{
+  isAccepted: {
     type: Boolean,
-    default:false,
+    default: false,
   },
 });
 

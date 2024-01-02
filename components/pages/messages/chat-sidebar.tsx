@@ -3,23 +3,20 @@ import React, { useState } from "react";
 import ChatCard from "./card/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Input } from "@/components/ui/input";
-import { useSession } from "next-auth/react";
 import useFetchChats from "./hooks/getChats";
-import { UserType } from "@/lib/interfaces/user.interface";
-import { ParentType } from "@/lib/interfaces/parent.interface";
 import useDebounce from "@/components/hooks/useDebounce";
 import { Skeleton } from "@/components/ui/skeleton";
 import { usePathname } from "next/navigation";
+import useUserInfo from "@/components/hooks/useUserInfo";
 
 const ChatSidebar = () => {
-  const { data: session } = useSession();
-  const userInfo = session?.user as UserType | ParentType;
-
+  const userInfo = useUserInfo();
   const pathname = usePathname();
 
   const [searchString, setSearchString] = useState("");
   const debouncedString = useDebounce(searchString, 500);
   const chats = useFetchChats(1, 10, debouncedString, userInfo?._id as string);
+  console.log(chats);
 
   return (
     <main className="flex flex-col flex-1 gap-1 px-2">
@@ -54,7 +51,7 @@ const ChatSidebar = () => {
                 <div className="px-2">
                   {chats?.data.map((chat, index) => {
                     const recipient = chat.users.find(
-                      (d) => d._id !== userInfo._id
+                      (d) => d._id !== userInfo?._id
                     );
 
                     return (

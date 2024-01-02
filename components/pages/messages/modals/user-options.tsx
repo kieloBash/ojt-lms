@@ -17,6 +17,7 @@ import { UserType } from "@/lib/interfaces/user.interface";
 import { ParentType } from "@/lib/interfaces/parent.interface";
 import { useRouter } from "next/navigation";
 import { useQueryClient } from "@tanstack/react-query";
+import useUserInfo from "@/components/hooks/useUserInfo";
 
 export function UserOptionsComboBox({
   onChange,
@@ -24,15 +25,18 @@ export function UserOptionsComboBox({
   onChange: (e: boolean) => void;
 }) {
   const [value, setValue] = React.useState<{ _id: string; email: string }>();
-  const { data: session } = useSession();
-  const userInfo = session?.user as UserType | ParentType;
+  const userInfo = useUserInfo();
+  // console.log(userInfo);
   const [isLoading, setIsLoading] = React.useState(false);
 
   const [stringVal, setStringVal] = React.useState("");
   const debouncedVal = useDebounce(stringVal, 500);
   const router = useRouter();
 
-  const options = useFetchUserOptions(debouncedVal);
+  const options = useFetchUserOptions({
+    searchFilter: debouncedVal,
+    userInfo: userInfo,
+  });
   const queryClient = useQueryClient();
 
   async function handleCreate() {

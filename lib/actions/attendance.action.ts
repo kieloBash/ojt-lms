@@ -10,9 +10,10 @@ import Material from "../models/material.model";
 import Student from "../models/student.model";
 import connectDB from "../mongodb";
 import { authOptions } from "@/utils/authOptions";
-import { getServerSession } from "next-auth";
+// import { getServerSession } from "next-auth";
 import { ParentType } from "../interfaces/parent.interface";
 import { revalidatePath } from "next/cache";
+import { authUserClerk } from "./parent.action";
 
 export async function fetchAttendances({
   year,
@@ -282,9 +283,8 @@ export async function fetchWeeklyAttendances({
   try {
     connectDB();
 
-    const session = await getServerSession(authOptions);
-    const userInfo = session?.user as ParentType;
-
+    const userInfo = await authUserClerk() as ParentType;
+    
     if (!userInfo) {
       throw new Error("Unauthorized");
     }
@@ -675,8 +675,7 @@ export async function updateClassSchedule({
   try {
     connectDB();
 
-    const session = await getServerSession(authOptions);
-    const userInfo = session?.user as ParentType;
+    const userInfo = await authUserClerk() as ParentType;
 
     if (!userInfo) {
       throw new Error("Unauthorized");
@@ -717,8 +716,7 @@ export async function updateClassScheduleIndex({
   try {
     connectDB();
 
-    const session = await getServerSession(authOptions);
-    const userInfo = session?.user as ParentType;
+    const userInfo = await authUserClerk() as ParentType;
 
     if (!userInfo) {
       throw new Error("Unauthorized");

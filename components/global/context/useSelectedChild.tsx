@@ -1,4 +1,5 @@
 "use client";
+import useUserInfo from "@/components/hooks/useUserInfo";
 import { fetchSingleChildId } from "@/lib/actions/parent.action";
 import { ParentType } from "@/lib/interfaces/parent.interface";
 import { StudentType } from "@/lib/interfaces/student.interface";
@@ -20,8 +21,7 @@ export const SelectedChildProvider = ({
 }) => {
   const [selectedChild, setSelectedChild] = useState<StudentType | undefined>();
 
-  const { data: session } = useSession();
-  const userInfo = session?.user as ParentType;
+  const userInfo: ParentType = useUserInfo() as ParentType;
 
   async function fetchStudent(_id: string) {
     const student = await fetchSingleChildId({ _id });
@@ -30,8 +30,8 @@ export const SelectedChildProvider = ({
   }
 
   React.useEffect(() => {
-    if (userInfo && userInfo.children && !selectedChild) {
-      fetchStudent(userInfo.children[0]._id as string);
+    if (userInfo && userInfo?.children && !selectedChild) {
+      fetchStudent(userInfo?.children[0]._id as string);
     }
   }, [userInfo, selectedChild]);
 

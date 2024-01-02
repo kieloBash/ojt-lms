@@ -11,6 +11,7 @@ import { pusherClient } from "@/lib/pusher";
 import { MessageType } from "@/lib/interfaces/message.interface";
 import SingleMessage from "./card/single-message";
 import { Loader2 } from "lucide-react";
+import useUserInfo from "@/components/hooks/useUserInfo";
 
 const MessageDisplay = ({
   chatId,
@@ -23,8 +24,7 @@ const MessageDisplay = ({
   const queryClient = useQueryClient();
 
   const initialMessages = useFetchMessages(1, 20, chatId);
-  const { data: session } = useSession();
-  const userInfo = session?.user as UserType | ParentType;
+  const userInfo = useUserInfo()
 
   React.useEffect(() => {
     if (MessagesEndRef.current) {

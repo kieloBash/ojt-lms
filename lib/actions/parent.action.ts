@@ -11,6 +11,22 @@ import * as bcrypt from "bcrypt";
 import { revalidatePath } from "next/cache";
 import Attendance from "../models/attendance.model";
 import User from "../models/user.model";
+import { auth } from "@clerk/nextjs";
+import { UserType } from "../interfaces/user.interface";
+
+export async function authUserClerk() {
+  const { userId: clerkId } = auth();
+  if (!clerkId) return null;
+
+  let result: any;
+
+  result = await fetchSingleParentClerkId({ clerkId });
+  if (!result) {
+    result = await fetchSingleUserClerkId({ clerkId });
+  }
+
+  return result;
+}
 
 async function isParentExists(email: string) {
   const existingParent = await Parent.findOne({ email }); // Assuming 'email' is a unique identifier
@@ -276,5 +292,79 @@ export async function fetchTransactionId({ _id }: { _id: string }) {
     return plainData;
   } catch (error) {
     throw new Error(`Error in fetching single Parent`);
+  }
+}
+
+export async function fetchSingleParentClerkId({
+  clerkId,
+}: {
+  clerkId: string;
+}) {
+  try {
+    connectDB();
+
+    const single: any = await Parent.findOne({ clerkId })
+      .lean()
+      .select("_id name email profileURL isAccepted clerkId")
+      .populate({
+        path: "children",
+        model: Student,
+        select: "_id name age status profileURL package gradeLevel",
+      })
+      .exec();
+
+    if (!single) {
+      throw new Error("Parent not Found");
+    }
+
+    const plainData: ParentType = {
+      ...single,
+      _id: single._id.toString(),
+      children: single.children.map((child: any) => {
+        if (child.enrolledClass)
+          return {
+            ...child,
+            _id: child._id.toString(),
+            enrolledClass: {
+              ...child.enrolledClass,
+              _id: child.enrolledClass._id.toString(),
+            },
+          };
+        else {
+          return {
+            ...child,
+            _id: child._id.toString(),
+          };
+        }
+      }),
+    };
+
+    return plainData;
+  } catch (error) {
+    throw new Error(`Error in fetching single Parent`);
+  }
+}
+
+export async function fetchSingleUserClerkId({ clerkId }: { clerkId: string }) {
+  try {
+    connectDB();
+
+    const single: any = await User.findOne({ clerkId })
+      .lean()
+      .select("_id name email image role")
+      .exec();
+
+    if (!single) {
+      throw new Error("User not Found");
+    }
+
+    const plainData: UserType = {
+      ...single,
+      _id: single._id?.toString(),
+    };
+
+    return plainData;
+  } catch (error) {
+    throw new Error(`Error in fetching single User`);
   }
 }

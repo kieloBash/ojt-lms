@@ -10,4 +10,5 @@ export interface ParentType {
   transactions?: TransactionsType[];
   isAccepted: Boolean;
   role?: string;
+  clerkId: string;
 }

@@ -1,13 +1,13 @@
 "use client";
 
+import useUserInfo from "@/components/hooks/useUserInfo";
 import { fetchParentTransactions } from "@/lib/actions/transaction.action";
 import { ParentType } from "@/lib/interfaces/parent.interface";
 import { useQuery } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
 
 const useTransactions = () => {
-  const { data: session } = useSession();
-  const userInfo: ParentType = session?.user as ParentType;
+  const userInfo = useUserInfo() as ParentType;
   let transactionIds: string[] = [];
 
   transactionIds =

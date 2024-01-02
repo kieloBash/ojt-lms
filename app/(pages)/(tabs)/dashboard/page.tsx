@@ -1,11 +1,10 @@
 import ParentComponent from "@/components/pages/dashboard/parent/component";
 import TeacherSection from "@/components/pages/dashboard/teacher/main";
+import { authUserClerk } from "@/lib/actions/parent.action";
 import { PageProps } from "@/lib/interfaces/page.props";
-import { UserType } from "@/lib/interfaces/user.interface";
-import { authOptions } from "@/utils/authOptions";
 import { isParent } from "@/utils/helpers/isParent";
 import { Metadata } from "next";
-import { getServerSession } from "next-auth";
+import { redirect } from "next/navigation";
 import React from "react";
 
 export const metadata: Metadata = {
@@ -14,9 +13,9 @@ export const metadata: Metadata = {
 };
 
 const DashboardPage = async ({ searchParams }: PageProps) => {
-  const session = await getServerSession(authOptions);
-  const user: UserType = session?.user as UserType;
-  if (!user) return null;
+  const user = await authUserClerk();
+  if (!user) return redirect("/");
+  console.log(user);
 
   return (
     <>
