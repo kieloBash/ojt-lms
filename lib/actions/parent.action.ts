@@ -319,7 +319,7 @@ export async function fetchSingleParentClerkId({
       .exec();
 
     if (!single) {
-      throw new Error("Parent not Found");
+      return false
     }
 
     const plainData: ParentType = {
