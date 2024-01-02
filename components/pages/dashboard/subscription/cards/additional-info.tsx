@@ -33,27 +33,27 @@ const AdditionalInfo = () => {
         <div className="flex flex-col">
           <h4 className="font-bold">Tailored Options</h4>
           <p className="">
-            The £57 option provides the most comprehensive and tailored
-            resources for your child's education.
+            {`The £57 option provides the most comprehensive and tailored
+            resources for your child's education.`}
           </p>
         </div>
         <div className="flex flex-col">
           <h4 className="font-bold">Maximum Benefit</h4>
           <p className="">
-            Ensuring you get the maximum benefit, with added features and
-            resources to support your child's academic success.
+            {`Ensuring you get the maximum benefit, with added features and
+            resources to support your child's academic success.`}
           </p>
         </div>
       </div>
       <article className="flex flex-col w-full mt-10">
         <h1 className="text-xl font-bold text-center">
-          📈 Secure Your Child's Learning Journey Today!
+          {`📈 Secure Your Child's Learning Journey Today!`}
         </h1>
         <p className="text-center">
-          Don't miss out on this opportunity to give your child the gift of
+          {`Don't miss out on this opportunity to give your child the gift of
           enhanced learning and academic success. Our exclusive packages are
           designed to cater to varying needs, and the $57 option provides
-          unparalleled value for your child's educational growth.
+          unparalleled value for your child's educational growth.`}
         </p>
       </article>
       <Footer />
