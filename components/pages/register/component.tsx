@@ -119,7 +119,8 @@ const RegisterComponent = () => {
           clerkId: completeSignUp.createdUserId as string,
           name: form.watch("username"),
           email: form.watch("email"),
-          isAccepted: false,
+          isEnrolled: false,
+          // isAccepted: false,
         };
         const newDataStudent: StudentType = {
           name: form.watch("child_name"),
