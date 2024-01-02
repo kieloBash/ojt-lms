@@ -30,6 +30,7 @@ import {
 } from "@/lib/actions/materials.action";
 import { useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
+import { useMaterialsContext } from "./context/useSelectedChild";
 
 interface DataTableRowActionsProps<TData> {
   row: Row<TData>;
@@ -38,15 +39,20 @@ interface DataTableRowActionsProps<TData> {
 export function DataTableRowActions<TData>({
   row,
 }: DataTableRowActionsProps<TData>) {
-  const file = materialsSchema.parse(row.original);
-
+  const schema = materialsSchema.safeParse(row.original).success
+    ? materialsSchema.safeParse(row.original)
+    : undefined;
+  const file = schema?.success ? schema.data : undefined;
+  const { setToggleEdit, setSelected } = useMaterialsContext();
   const queryClient = useQueryClient();
+
+  console.log(file);
 
   const handleDeleteFile = async () => {
     try {
-      const fileRef = ref(storage, `materials/${file.filename}`);
+      const fileRef = ref(storage, `materials/${file?.filename}`);
       await deleteObject(fileRef);
-      await deleteMaterial({ id: file._id });
+      await deleteMaterial({ id: file?._id as string });
       queryClient.invalidateQueries({
         queryKey: [`materials`],
       });
@@ -67,20 +73,23 @@ export function DataTableRowActions<TData>({
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-[200px]">
-        <Link href={file.url} target="_blank" className="cursor-pointer">
+        <Link href={file?.url || ""} target="_blank" className="cursor-pointer">
           <DropdownMenuItem className="cursor-pointer">Open</DropdownMenuItem>
         </Link>
         <DropdownMenuSub>
           <DropdownMenuSubTrigger>Status</DropdownMenuSubTrigger>
           <DropdownMenuSubContent>
             <DropdownMenuRadioGroup
-              value={file.available ? "Available" : "Unavailable"}
+              value={file?.available ? "Available" : "Unavailable"}
             >
               <DropdownMenuRadioItem
                 value={"Available"}
-                disabled={file.available}
+                disabled={file?.available}
                 onClick={async () => {
-                  await updateStatus({ id: file._id, status: file.available });
+                  await updateStatus({
+                    id: file?._id || "",
+                    status: file?.available || false,
+                  });
                   queryClient.invalidateQueries({
                     queryKey: [`materials`],
                   });
@@ -90,9 +99,12 @@ export function DataTableRowActions<TData>({
               </DropdownMenuRadioItem>
               <DropdownMenuRadioItem
                 value={"Unavailable"}
-                disabled={!file.available}
+                disabled={!file?.available}
                 onClick={async () => {
-                  await updateStatus({ id: file._id, status: file.available });
+                  await updateStatus({
+                    id: file?._id || "",
+                    status: file?.available || false,
+                  });
                   queryClient.invalidateQueries({
                     queryKey: [`materials`],
                   });
@@ -105,25 +117,30 @@ export function DataTableRowActions<TData>({
         </DropdownMenuSub>
         <DropdownMenuSeparator />
         <DropdownMenuSub>
-          <DropdownMenuSubTrigger>Grade Level</DropdownMenuSubTrigger>
+          <DropdownMenuSubTrigger
+            disabled={file?.attendance ? true : false}
+            className={`${file?.attendance && "text-muted-foreground"}`}
+          >
+            Grade Level
+          </DropdownMenuSubTrigger>
           <DropdownMenuSubContent>
             {GRADE_LEVELS.map((lvl) => (
               <DropdownMenuCheckboxItem
                 key={lvl.level}
-                checked={file.gradeLevel?.includes(lvl.level)}
+                checked={file?.gradeLevel?.includes(lvl.level)}
                 onCheckedChange={async (checked) => {
                   let temp = file?.gradeLevel || [];
                   if (checked) {
                     temp.push(lvl.level);
                   } else {
-                    temp = temp.filter((d) => d !== lvl.level);
+                    temp = temp?.filter((d) => d !== lvl.level);
                   }
                   const customOrder = ["N1", "N2", "K1", "K2"];
                   const sortedArray = temp.sort((a, b) => {
                     return customOrder.indexOf(a) - customOrder.indexOf(b);
                   });
                   await updateGradeLevels({
-                    id: file._id,
+                    id: file?._id || "",
                     gradeLevel: sortedArray,
                   });
                   queryClient.invalidateQueries({
@@ -136,7 +153,13 @@ export function DataTableRowActions<TData>({
             ))}
           </DropdownMenuSubContent>
         </DropdownMenuSub>
-        <DropdownMenuItem onClick={() => {}} className="cursor-pointer">
+        <DropdownMenuItem
+          onClick={() => {
+            setToggleEdit(true);
+            setSelected(file as any);
+          }}
+          className="cursor-pointer"
+        >
           Add To Attendance
         </DropdownMenuItem>
         <DropdownMenuSeparator />

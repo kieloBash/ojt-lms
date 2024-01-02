@@ -1,3 +1,4 @@
+import { MaterialType } from "@/components/pages/materials/data/schema";
 import { AgeGroupType, ClassesType } from "./class.interface";
 import { StudentType } from "./student.interface";
 
@@ -12,7 +13,7 @@ export interface AttendanceType {
   studentsNotPresent?: StudentType[];
   classParticipants?: StudentType[];
   link: string;
-  materials: string[];
+  materials: MaterialType[];
 }
 
 export type ClassAttendanceType = "regular" | "special";

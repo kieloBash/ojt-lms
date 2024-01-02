@@ -46,7 +46,7 @@ const StudentAcceptedScetion = ({
                 <CardTitle>Class Materials</CardTitle>
                 <CardDescription>Class Materials for you</CardDescription>
               </CardHeader>
-              <CardContent><RecentSales /></CardContent>
+              <CardContent></CardContent>
             </Card> */}
           </div>
         </div>

@@ -93,7 +93,7 @@ export async function fetchSingleAttendanceById({
     const query = Attendance.findById(attendanceId)
       .lean()
       .select(
-        "_id date ageGroup startTime endTime link studentsPresent studentsNotPresent"
+        "_id date ageGroup startTime endTime link studentsPresent studentsNotPresent materials"
       )
       .populate({
         path: "classParticipants",
@@ -104,6 +104,11 @@ export async function fetchSingleAttendanceById({
         path: "class",
         select: "_id class zoomLink",
         model: Classes,
+      })
+      .populate({
+        path: "materials",
+        select: "_id filename url available",
+        model: Material,
       })
       .exec();
 
@@ -123,6 +128,14 @@ export async function fetchSingleAttendanceById({
         ...d.class,
         _id: d.class._id?.toString(),
       },
+      // materials: d.materials
+      //   ? d.materials?.map((sing: any) => {
+      //       return {
+      //         ...d.materials,
+      //         _id: d.materials._id?.toString(),
+      //       };
+      //     })
+      //   : undefined,
     };
 
     return { attendances: arrToIdString };
@@ -480,6 +493,83 @@ export async function fetchForYouAttendances({
         _id: d.class._id.toString(),
       },
     }));
+    return { attendances: arrToIdString, totalCount };
+  } catch (error: any) {
+    throw new Error("Error in fetching attendances", error.message);
+  }
+}
+
+export async function fetchConnectionAttendances({
+  year,
+  month,
+  ageGroup,
+}: {
+  year: number;
+  month: number;
+  ageGroup: AgeGroupType;
+}) {
+  try {
+    connectDB();
+
+    // const skipAmount = (pageNumber - 1) * pageSize;
+
+    const startDate = new Date(year, month, 1); // Note: Month is 0-indexed
+    const endDate = new Date(year, month + 1, 0);
+    endDate.setHours(23, 59, 59, 999);
+
+    // console.log(startDate, endDate);
+
+    const query = Attendance.find({
+      ageGroup,
+      date: { $gte: startDate, $lte: endDate }, // Filter by date within the specified month
+    })
+      .sort({ date: "asc", startTime: "asc" })
+      .lean()
+      .select("_id date startTime endTime ageGroup zoomLink")
+      .populate({
+        path: "classParticipants",
+        select: "_id name",
+        model: Student,
+      })
+      .populate({
+        path: "studentsPresent",
+        select: "_id name",
+        model: Student,
+      })
+      .populate({
+        path: "class",
+        model: Classes,
+        select: "_id class",
+      })
+      .exec();
+
+    const totalCount = await Attendance.countDocuments({});
+    const data = await query;
+
+    // Convert _id to string in the results
+    const arrToIdString: AttendanceType[] = data.map((d: any) => {
+      return {
+        ...d,
+        _id: d._id?.toString(),
+        classParticipants: d?.classParticipants?.map((single: any) => {
+          return {
+            ...single,
+            _id: single._id?.toString(),
+          };
+        }),
+        studentsPresent: d?.studentsPresent?.map((single: any) => {
+          return {
+            ...single,
+            _id: single._id?.toString(),
+          };
+        }),
+        class: {
+          ...d.class,
+          _id: d.class._id?.toString(),
+        },
+      };
+    });
+    console.log(arrToIdString);
     return { attendances: arrToIdString, totalCount };
   } catch (error: any) {
     throw new Error("Error in fetching attendances", error.message);

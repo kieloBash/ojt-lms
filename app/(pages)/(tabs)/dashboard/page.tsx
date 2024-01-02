@@ -15,7 +15,6 @@ export const metadata: Metadata = {
 const DashboardPage = async ({ searchParams }: PageProps) => {
   const user = await authUserClerk();
   if (!user) return redirect("/");
-  console.log(user);
 
   return (
     <>

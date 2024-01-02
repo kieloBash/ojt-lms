@@ -7,6 +7,16 @@ export const fileSchema = z.object({
   level: z.string().optional(),
 });
 
+const classSchema = z.object({
+  _id: z.string(),
+  class: z.string(),
+});
+const attendanceSchema = z.object({
+  _id: z.string(),
+  date: z.date(),
+  class: classSchema,
+});
+
 export const materialsSchema = z.object({
   _id: z.string(),
   filename: z.string(),
@@ -16,6 +26,7 @@ export const materialsSchema = z.object({
   type: z.string(),
   available: z.boolean(),
   createdAt: z.date().optional(),
+  attendance: attendanceSchema.optional(),
 });
 
 export type FileType = z.infer<typeof fileSchema>;

@@ -12,7 +12,15 @@ import { convertToTimeZone } from "@/utils/helpers/timeZone";
 import { useQueryClient } from "@tanstack/react-query";
 
 // UI
-import { Check, CheckCircle, Pen, X, XCircle } from "lucide-react";
+import {
+  Check,
+  CheckCircle,
+  CheckCircle2,
+  Pen,
+  X,
+  XCircle,
+  XCircleIcon,
+} from "lucide-react";
 import { toast } from "../ui/use-toast";
 import { Button } from "@/components/ui/button";
 import {
@@ -25,6 +33,7 @@ import {
 import { useSelectedChild } from "./context/useSelectedChild";
 import dayjs from "dayjs";
 import { EditLinkModal } from "../pages/calendar/modals/edit-link";
+import Link from "next/link";
 
 export function CalendarSheet({
   trigger,
@@ -124,6 +133,8 @@ export function CalendarSheet({
     window.location.reload();
   }
 
+  console.log(selectedAttendance.materials);
+
   return (
     <Sheet open={trigger} onOpenChange={setTrigger}>
       <SheetContent>
@@ -219,6 +230,24 @@ export function CalendarSheet({
                   </Button>
                 </div>
               </div>
+              {foundPresent && (
+                <div className="flex flex-col w-full">
+                  <span className="pb-2 font-medium text-left">Materials</span>
+                  {selectedAttendance?.materials?.map((material) => {
+                    if (material.available)
+                      return (
+                        <Link
+                          href={material.url}
+                          target="_blank"
+                          className="flex items-center justify-start w-full gap-2 pb-2 hover:underline"
+                          key={material._id}
+                        >
+                          <div className="flex-1">{material.filename}</div>
+                        </Link>
+                      );
+                  })}
+                </div>
+              )}
             </>
           ) : (
             <>
@@ -283,6 +312,26 @@ export function CalendarSheet({
                     No Participants
                   </span>
                 )}
+              </div>
+              <div className="flex flex-col">
+                <span className="pb-2 font-medium text-left">Materials</span>
+                {selectedAttendance?.materials?.map((material) => {
+                  return (
+                    <Link
+                      href={material.url}
+                      target="_blank"
+                      className="flex items-center justify-start gap-2 pb-2 hover:underline"
+                      key={material._id}
+                    >
+                      {material.available ? (
+                        <CheckCircle2 className="w-6 h-6" />
+                      ) : (
+                        <XCircleIcon className="w-6 h-6" />
+                      )}{" "}
+                      <div className="flex-1">{material.filename}</div>
+                    </Link>
+                  );
+                })}
               </div>
             </>
           )}

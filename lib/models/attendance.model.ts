@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import Material from "./material.model";
 
 const attendanceSchema = new mongoose.Schema({
   class: {
@@ -28,7 +29,8 @@ const attendanceSchema = new mongoose.Schema({
   },
   materials: [
     {
-      type: String,
+      type: mongoose.Schema.Types.ObjectId,
+      ref: Material,
     },
   ],
   studentsPresent: [

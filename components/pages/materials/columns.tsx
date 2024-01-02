@@ -9,6 +9,7 @@ import { DataTableColumnHeader } from "./data-table-column-header";
 import { MaterialType } from "./data/schema";
 import { DataTableRowActions } from "./data-table-row-actions";
 import dayjs from "dayjs";
+import { AttendanceType } from "@/lib/interfaces/attendance.interface";
 
 export const columns: ColumnDef<MaterialType>[] = [
   {
@@ -47,6 +48,26 @@ export const columns: ColumnDef<MaterialType>[] = [
     ),
     enableSorting: false,
     enableHiding: false,
+  },
+  {
+    accessorKey: "attendance",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Attendance" />
+    ),
+    cell: ({ row }) => {
+      const attendance = row.getValue("attendance") as AttendanceType;
+      return (
+        <div className="w-[150px] line-clamp-1">
+          {attendance?.class?.class
+            ? `${attendance?.class?.class} - ${dayjs(attendance.date).format(
+                "MMMM DD"
+              )}`
+            : "N/A"}
+        </div>
+      );
+    },
+    enableSorting: false,
+    enableHiding: true,
   },
   {
     accessorKey: "gradeLevel",

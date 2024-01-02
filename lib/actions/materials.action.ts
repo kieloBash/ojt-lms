@@ -4,6 +4,7 @@ import connectDB from "../mongodb";
 import { AgeGroupType } from "../interfaces/class.interface";
 import Attendance from "../models/attendance.model";
 import Material from "../models/material.model";
+import Classes from "../models/class.model";
 
 export async function fetchMaterials(pageNumber = 1, pageSize = 20) {
   try {
@@ -18,6 +19,16 @@ export async function fetchMaterials(pageNumber = 1, pageSize = 20) {
       .limit(pageSize)
       .lean()
       .select("_id filename url gradeLevel type createdAt available")
+      .populate({
+        path: "attendance",
+        select: "_id date",
+        model: Attendance,
+        populate: {
+          path: "class",
+          select: "_id class",
+          model: Classes,
+        },
+      })
       .exec();
 
     const totalCount = await Material.countDocuments({});
@@ -27,8 +38,21 @@ export async function fetchMaterials(pageNumber = 1, pageSize = 20) {
       return {
         ...d,
         _id: d._id?.toString(),
+        attendance: d.attendance
+          ? {
+              ...d.attendance,
+              _id: d.attendance._id?.toString(),
+              class: d.attendance.class
+                ? {
+                    ...d.attendance.class,
+                    _id: d.attendance.class._id?.toString(),
+                  }
+                : undefined,
+            }
+          : undefined,
       };
     });
+    console.log(plainData);
 
     const isNext = totalCount > skipAmount + plainData.length;
 
@@ -153,6 +177,38 @@ export async function updateGradeLevels({
   } catch (error: any) {
     throw new Error(
       "Error in updating grade level of materials",
+      error.message
+    );
+  }
+}
+
+export async function updateAttendanceConnection({
+  materialId,
+  attendanceId,
+}: {
+  materialId: string;
+  attendanceId: string;
+}) {
+  try {
+    connectDB();
+
+    const newAttendance = await Attendance.findByIdAndUpdate(attendanceId, {
+      $push: { materials: materialId },
+    });
+    const updated = await Material.findByIdAndUpdate(materialId, {
+      attendance: attendanceId,
+    }).exec();
+
+    console.log(newAttendance);
+    console.log(updated);
+
+    if (!newAttendance || !updated)
+      throw new Error("Error in updating attendance of materials");
+
+    return true;
+  } catch (error: any) {
+    throw new Error(
+      "Error in updating attendancel of materials",
       error.message
     );
   }

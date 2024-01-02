@@ -6,6 +6,8 @@ import useFetchFirebase from "./hook/useFirebase";
 import { Loader2 } from "lucide-react";
 import useMaterials from "./hook/useMaterials";
 import { useSearchParams } from "next/navigation";
+import { MaterialsProvider } from "./context/useSelectedChild";
+import { ConnectAttendanceModal } from "./modals/connect-attendance";
 
 const MaterialsMain = () => {
   const files = useFetchFirebase();
@@ -24,11 +26,14 @@ const MaterialsMain = () => {
 
   return (
     <article className="flex-1 px-10">
-      <DataTable
-        data={materials?.data || []}
-        columns={columns}
-        total={materials?.total || 0}
-      />
+      <MaterialsProvider>
+        <ConnectAttendanceModal />
+        <DataTable
+          data={materials?.data || []}
+          columns={columns}
+          total={materials?.total || 0}
+        />
+      </MaterialsProvider>
     </article>
   );
 };
