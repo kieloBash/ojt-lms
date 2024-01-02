@@ -47,11 +47,12 @@ const TeacherSection = ({ userInfo }: { userInfo: UserType }) => {
                           </p>
                         </div>
                         <div className="flex items-center justify-start w-full gap-2">
-                          {Array(6)
+                          <p className="">Coming Soon...</p>
+                          {/* {Array(6)
                             .fill([])
                             .map((_, index) => {
                               return <SmallCard key={index} />;
-                            })}
+                            })} */}
                         </div>
                       </div>
                     </div>

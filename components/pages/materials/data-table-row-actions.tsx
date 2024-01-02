@@ -136,7 +136,7 @@ export function DataTableRowActions<TData>({
             ))}
           </DropdownMenuSubContent>
         </DropdownMenuSub>
-        <DropdownMenuItem onClick={handleDeleteFile} className="cursor-pointer">
+        <DropdownMenuItem onClick={() => {}} className="cursor-pointer">
           Add To Attendance
         </DropdownMenuItem>
         <DropdownMenuSeparator />

@@ -102,7 +102,7 @@ export async function fetchSingleAttendanceById({
       })
       .populate({
         path: "class",
-        select: "_id class",
+        select: "_id class zoomLink",
         model: Classes,
       })
       .exec();

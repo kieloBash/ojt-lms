@@ -127,6 +127,27 @@ export async function fetchSingleClassByID({ _id }: { _id: string }) {
   }
 }
 
+export async function updateSingleClassLinkByID({
+  _id,
+  zoomLink,
+}: {
+  _id: string;
+  zoomLink: string;
+}) {
+  try {
+    connectDB();
+
+    console.log(_id, zoomLink);
+    const d = await Classes.findByIdAndUpdate(_id, { zoomLink }).exec();
+    console.log(d);
+    if (!d) return false;
+
+    return true;
+  } catch (error: any) {
+    throw new Error("Error in fetching single class", error.message);
+  }
+}
+
 export async function fetchAllClassesSelection(gradeLevel: string[]) {
   try {
     connectDB();

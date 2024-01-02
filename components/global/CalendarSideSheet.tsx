@@ -12,7 +12,7 @@ import { convertToTimeZone } from "@/utils/helpers/timeZone";
 import { useQueryClient } from "@tanstack/react-query";
 
 // UI
-import { Check, CheckCircle, X, XCircle } from "lucide-react";
+import { Check, CheckCircle, Pen, X, XCircle } from "lucide-react";
 import { toast } from "../ui/use-toast";
 import { Button } from "@/components/ui/button";
 import {
@@ -24,6 +24,7 @@ import {
 } from "@/components/ui/sheet";
 import { useSelectedChild } from "./context/useSelectedChild";
 import dayjs from "dayjs";
+import { EditLinkModal } from "../pages/calendar/modals/edit-link";
 
 export function CalendarSheet({
   trigger,
@@ -43,6 +44,7 @@ export function CalendarSheet({
   startDateTime.setHours(Number(hours), Number(minutes));
   [hours, minutes] = selectedAttendance.endTime.split(":");
   endDateTime.setHours(Number(hours), Number(minutes));
+  console.log(selectedAttendance);
 
   const queryClient = useQueryClient();
   const { selectedChild } = useSelectedChild();
@@ -63,12 +65,6 @@ export function CalendarSheet({
     .set("minute", Number(time[1]));
 
   const closedAttendance = today.isAfter(endTime);
-
-  if (closedAttendance) {
-    console.log("Open Attendance");
-  } else {
-    console.log("Closed Attendance");
-  }
 
   async function handleUpdateAttendance(
     sel: StudentType,
@@ -127,6 +123,7 @@ export function CalendarSheet({
     }
     window.location.reload();
   }
+
   return (
     <Sheet open={trigger} onOpenChange={setTrigger}>
       <SheetContent>
@@ -139,16 +136,26 @@ export function CalendarSheet({
         </SheetHeader>
         <div className="grid gap-4 py-4">
           <div className="flex flex-col gap-2">
-            <span className="font-medium text-left">Link</span>
-            <span className="">
+            <div className="flex items-center justify-start">
+              <span className="font-medium text-left">Link</span>
+              <EditLinkModal
+                link={selectedAttendance?.class.zoomLink || ""}
+                _id={selectedAttendance?.class?._id as string}
+              />
+            </div>
+            <div className="flex items-center justify-start">
               <a
-                href={selectedAttendance?.link || "https://umonicsplus.com"}
+                href={
+                  selectedAttendance?.class.zoomLink ||
+                  "https://umonicsplus.com"
+                }
                 target="_blank"
                 className="transition hover:underline"
               >
-                {selectedAttendance?.link || "https://umonicsplus.com"}
+                {selectedAttendance?.class.zoomLink ||
+                  "https://umonicsplus.com"}
               </a>
-            </span>
+            </div>
           </div>
           <div className="flex flex-col gap-2">
             <span className="font-medium text-left">Time Zones</span>
