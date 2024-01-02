@@ -18,14 +18,17 @@ import { ParentType } from "@/lib/interfaces/parent.interface";
 import { useRouter } from "next/navigation";
 import { useQueryClient } from "@tanstack/react-query";
 import useUserInfo from "@/components/hooks/useUserInfo";
+import { isParent } from "@/utils/helpers/isParent";
 
 export function UserOptionsComboBox({
   onChange,
+  userInfo,
 }: {
   onChange: (e: boolean) => void;
+  userInfo: ParentType | UserType | undefined;
 }) {
   const [value, setValue] = React.useState<{ _id: string; email: string }>();
-  const userInfo = useUserInfo();
+
   // console.log(userInfo);
   const [isLoading, setIsLoading] = React.useState(false);
 
@@ -59,17 +62,24 @@ export function UserOptionsComboBox({
     }
   }
 
+  console.log(userInfo);
   return (
     <>
-      <div className="flex items-center px-3 border-b">
-        <Search className="w-4 h-4 mr-2 opacity-50 shrink-0" />
-        <input
-          className="flex w-full py-3 text-sm bg-transparent rounded-md outline-none h-11 placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50"
-          placeholder="Search a user..."
-          value={stringVal}
-          onChange={(e) => setStringVal(e.target.value)}
-        />
-      </div>
+      {isParent(userInfo) ? (
+        <></>
+      ) : (
+        <>
+          <div className="flex items-center px-3 border-b">
+            <Search className="w-4 h-4 mr-2 opacity-50 shrink-0" />
+            <input
+              className="flex w-full py-3 text-sm bg-transparent rounded-md outline-none h-11 placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50"
+              placeholder="Search a user..."
+              value={stringVal}
+              onChange={(e) => setStringVal(e.target.value)}
+            />
+          </div>
+        </>
+      )}
       {options?.isLoading ? (
         <div className="flex items-center justify-center flex-1 w-full">
           <Loader2 className="w-6 h-6 animate-spin" />

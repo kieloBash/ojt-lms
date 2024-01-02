@@ -10,12 +10,14 @@ const useUserInfo = () => {
   const { user, isLoaded } = useUser();
   const [userInfo, setUserInfo] = useState<ParentType | UserType>();
 
+  console.log(userInfo);
+
   async function getParent() {
     if (!user || !isLoaded) return null;
     const parentInfo = await fetchSingleParentClerkId({
       clerkId: user.id,
     });
-    if (parentInfo) setUserInfo(parentInfo);
+    setUserInfo(parentInfo);
   }
 
   useEffect(() => {

@@ -318,9 +318,12 @@ export async function fetchSingleParentClerkId({
       })
       .exec();
 
+    console.log(single);
+
     if (!single) {
-      return undefined
+      return undefined;
     }
+    console.log(single);
 
     const plainData: ParentType = {
       ...single,
@@ -343,6 +346,7 @@ export async function fetchSingleParentClerkId({
         }
       }),
     };
+    console.log(plainData);
 
     return plainData;
   } catch (error) {

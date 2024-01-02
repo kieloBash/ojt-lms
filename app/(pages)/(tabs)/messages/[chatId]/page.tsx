@@ -6,13 +6,14 @@ import { PageProps } from "@/lib/interfaces/page.props";
 import { ParentType } from "@/lib/interfaces/parent.interface";
 import { UserType } from "@/lib/interfaces/user.interface";
 import { authOptions } from "@/utils/authOptions";
+import { isParent } from "@/utils/helpers/isParent";
 import React from "react";
 
 const SingleMessagePage = async ({ params }: PageProps) => {
   const data = await fetchSingleChat({ chatId: params.chatId as string });
   const userInfo = await authUserClerk();
   if (!userInfo) return null;
-  console.log(userInfo);
+  // console.log(userInfo);
 
   const recipient = data?.users.find((d) => d._id !== userInfo._id);
 
@@ -34,6 +35,11 @@ const SingleMessagePage = async ({ params }: PageProps) => {
             </p>
           </div>
         </div>
+        {isParent(userInfo) && (
+          <p className="text-xs text-white">
+            Admins are active only from 8:00am-6:00pm
+          </p>
+        )}
       </header>
       <main className="flex flex-col flex-1">
         <MessageDisplay

@@ -22,6 +22,7 @@ const useFetchUserOptions = ({
         isParent: isParent(userInfo),
         searchFilter,
       });
+      console.log(data);
       return data;
     },
   });

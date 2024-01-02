@@ -31,12 +31,14 @@ export async function getUserOptions({
     let results;
 
     if (isParent) {
-      results = await User.find(filter)
+      const emails = ["eugune@umonics.com", "teacher@umonics.com"];
+      results = await User.find({ email: { $in: emails } })
         .sort({ createdAt: "desc" })
         .limit(5)
         .lean()
         .select("_id name email role")
         .exec();
+        
     } else {
       results = await Parent.find(filter)
         .sort({ createdAt: "desc" })
