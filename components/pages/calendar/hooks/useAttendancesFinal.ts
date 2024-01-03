@@ -23,7 +23,6 @@ const useAttendanceFinal = ({
       const attendances = await fetchStudentAttendances({
         studentId: studentId || "",
       });
-      console.log(attendances);
       const filtered = attendances.filter(
         (a) => dayjs(a.date).get("month") === dayjs().get("month")
       );

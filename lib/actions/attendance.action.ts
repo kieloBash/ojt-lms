@@ -258,7 +258,6 @@ export async function fetchUpcomingAttendances({
     const totalCount = await Attendance.countDocuments({});
     const data: any[] = await query;
 
-    console.log(data);
 
     // Convert _id to string in the results
     const arrToIdString: AttendanceType[] = data.map((d: AttendanceType) => {
