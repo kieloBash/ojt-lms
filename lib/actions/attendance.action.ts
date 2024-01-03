@@ -258,7 +258,6 @@ export async function fetchUpcomingAttendances({
     const totalCount = await Attendance.countDocuments({});
     const data: any[] = await query;
 
-
     // Convert _id to string in the results
     const arrToIdString: AttendanceType[] = data.map((d: AttendanceType) => {
       return {
@@ -394,6 +393,11 @@ export async function fetchStudentAttendances({
             path: "class",
             select: "_id class",
             model: Classes,
+          })
+          .populate({
+            path: "materials",
+            select: "_id filename url available type",
+            model: Material,
           })
           .lean()
           .exec();
