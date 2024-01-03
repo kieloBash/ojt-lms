@@ -17,38 +17,42 @@ const useAttendanceFinal = ({
   currDate: Date;
   isParent: boolean;
 }) => {
+  const studentAtt = useQuery({
+    queryKey: [`attendances:${studentId}`, studentId],
+    queryFn: async () => {
+      const attendances = await fetchStudentAttendances({
+        studentId: studentId || "",
+      });
+      console.log(attendances);
+      const filtered = attendances.filter(
+        (a) => dayjs(a.date).get("month") === dayjs().get("month")
+      );
+      return filtered;
+    },
+    enabled: isParent && !!studentId,
+  });
+
+  const teacherAtt = useQuery({
+    queryKey: [
+      `attendance:${currDate.getFullYear()}:${currDate.getMonth()}`,
+      currDate.getMonth(),
+    ],
+    queryFn: async () => {
+      const { attendances } = await fetchTeacherAttendances({
+        year: currDate.getFullYear(),
+        month: currDate.getMonth(),
+      });
+      return attendances;
+    },
+    enabled: !isParent,
+  });
+
   if (isParent && studentId) {
-    const studentAtt = useQuery({
-      queryKey: [`attendances:${studentId}`, studentId],
-      queryFn: async () => {
-        const attendances = await fetchStudentAttendances({ studentId });
-        console.log(attendances);
-        const filtered = attendances.filter(
-          (a) => dayjs(a.date).get("month") === dayjs().get("month")
-        );
-        return filtered;
-      },
-      enabled: !!studentId,
-    });
     return {
       data: studentAtt.data as AttendanceType[],
       isLoading: studentAtt.isLoading,
     };
   } else {
-    const teacherAtt = useQuery({
-      queryKey: [
-        `attendance:${currDate.getFullYear()}:${currDate.getMonth()}`,
-        currDate.getMonth(),
-      ],
-      queryFn: async () => {
-        const { attendances } = await fetchTeacherAttendances({
-          year: currDate.getFullYear(),
-          month: currDate.getMonth(),
-        });
-        return attendances;
-      },
-      enabled: !!currDate,
-    });
     return {
       data: teacherAtt.data as AttendanceType[],
       isLoading: teacherAtt.isLoading,
