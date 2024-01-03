@@ -16,6 +16,7 @@ import {
   Check,
   CheckCircle,
   CheckCircle2,
+  Info,
   Pen,
   X,
   XCircle,
@@ -34,6 +35,8 @@ import { useSelectedChild } from "./context/useSelectedChild";
 import dayjs from "dayjs";
 import { EditLinkModal } from "../pages/calendar/modals/edit-link";
 import Link from "next/link";
+import { Tooltip } from "../ui/tooltip";
+import TooltipButton from "./TooltipButton";
 
 export function CalendarSheet({
   trigger,
@@ -232,20 +235,46 @@ export function CalendarSheet({
                   </Button>
                 </div>
               </div>
-              {foundPresent && selectedChild?.package !== "Discover" && (
+              {foundPresent && (
                 <div className="flex flex-col w-full">
-                  <span className="pb-2 font-medium text-left">Materials</span>
+                  <div className="flex items-center justify-start w-full gap-2">
+                    <div className="pb-2 font-medium text-left">Materials</div>
+                    {selectedChild?.package === "Discover" && (
+                      <TooltipButton tooltip="Upgrade your package to get materials for the class">
+                        <Info className="w-4 h-4 -mt-2 cursor-pointer" />
+                      </TooltipButton>
+                    )}
+                  </div>
                   {selectedAttendance?.materials?.map((material) => {
+                    const locked = selectedChild?.package === "Discover";
+
                     if (material.available)
                       return (
-                        <Link
-                          href={material.url}
-                          target="_blank"
-                          className="flex items-center justify-start w-full gap-2 pb-2 hover:underline"
-                          key={material._id}
-                        >
-                          <div className="flex-1">{material.filename}</div>
-                        </Link>
+                        <>
+                          {locked ? (
+                            <>
+                              <div
+                                key={material._id}
+                                className="flex-1 cursor-default text-muted-foreground"
+                              >
+                                {material.filename}
+                              </div>
+                            </>
+                          ) : (
+                            <>
+                              <Link
+                                href={material.url}
+                                target="_blank"
+                                className="flex items-center justify-start w-full gap-2 pb-2 hover:underline"
+                                key={material._id}
+                              >
+                                <div className="flex-1">
+                                  {material.filename}
+                                </div>
+                              </Link>
+                            </>
+                          )}
+                        </>
                       );
                   })}
                 </div>
