@@ -48,7 +48,7 @@ const CalendarComponent = ({
 
       if (prompt) return;
 
-      if (dayjs().get("day") >= 4) {
+      if (dayjs().get("day") >= 3) {
         // MISSED
         // console.log("MISSED");
         setAlertMissed(true);
