@@ -6,6 +6,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 const CardsList = () => {
   const attendances = useUpcomingAttendance(new Date());
+  console.log(attendances);
   return (
     <div className="flex w-full pb-4 space-x-4">
       {attendances.isLoading || !attendances.data ? (

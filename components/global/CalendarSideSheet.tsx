@@ -149,10 +149,12 @@ export function CalendarSheet({
           <div className="flex flex-col gap-2">
             <div className="flex items-center justify-start">
               <span className="font-medium text-left">Link</span>
-              <EditLinkModal
-                link={selectedAttendance?.class.zoomLink || ""}
-                _id={selectedAttendance?.class?._id as string}
-              />
+              {selectedChild === undefined && (
+                <EditLinkModal
+                  link={selectedAttendance?.class.zoomLink || ""}
+                  _id={selectedAttendance?.class?._id as string}
+                />
+              )}
             </div>
             <div className="flex items-center justify-start">
               <a

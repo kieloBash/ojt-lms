@@ -61,7 +61,9 @@ export function AlbumArtwork({
                 aspectRatio === "portrait" ? "aspect-[3/4]" : "aspect-square"
               )}
             >
-              <h1 className="text-4xl font-bold cursor-default">{album.class.class}</h1>
+              <h1 className="text-4xl font-bold cursor-default">
+                {album.class.class}
+              </h1>
             </div>
           </div>
         </ContextMenuTrigger>
@@ -142,7 +144,7 @@ export function AlbumArtwork({
             </ContextMenuSubContent>
           </ContextMenuSub>
           <ContextMenuSeparator />
-          <Link href={`https://google.com`} target="_blank">
+          <Link href={album?.class?.zoomLink || ""} target="_blank">
             <ContextMenuItem className="cursor-pointer">
               <ArrowDownLeft className="w-4 h-4 mr-2" /> View Link
             </ContextMenuItem>

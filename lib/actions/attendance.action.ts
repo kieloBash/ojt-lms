@@ -250,7 +250,7 @@ export async function fetchUpcomingAttendances({
       })
       .populate({
         path: "class",
-        select: "_id class day",
+        select: "_id class day zoomLink",
         model: Classes,
       })
       .exec();
