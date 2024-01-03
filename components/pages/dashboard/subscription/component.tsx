@@ -71,7 +71,7 @@ const SubscriptionMain = () => {
 
   return (
     <section className="relative flex flex-col w-full h-full pb-8">
-      <header className="flex flex-col items-center justify-center w-full bg-gradient-to-r from-blue-800 to-indigo-900 h-[16rem]">
+      {/* <header className="flex flex-col items-center justify-center w-full bg-gradient-to-r from-blue-800 to-indigo-900 h-[16rem]">
         <h1 className="text-3xl font-bold text-white">
           {`🚀 Exclusive Learning Packages: An Unveiling of Value 🚀`}
         </h1>
@@ -80,7 +80,7 @@ const SubscriptionMain = () => {
           delighted to share some exciting news that will shape your child's
           educational journey like never before!`}
         </p>
-      </header>
+      </header> */}
       <div className="flex items-start justify-center w-full gap-4 -mt-10">
         {PACKAGES.map((p, index) => {
           return (
