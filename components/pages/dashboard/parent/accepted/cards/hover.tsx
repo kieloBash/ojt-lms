@@ -28,10 +28,11 @@ export function HoverMaterials({ materials }: { materials: MaterialType[] }) {
             return (
               <Link
                 href={m.url}
+                key={m._id}
                 target="_blank"
                 className="p-2 transition-colors rounded-lg hover:bg-slate-100"
               >
-                <div className="space-y-1" key={m._id}>
+                <div className="space-y-1">
                   <h4 className="text-sm font-semibold line-clamp-1">
                     {m.filename}
                   </h4>
