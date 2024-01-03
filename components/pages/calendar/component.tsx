@@ -1,6 +1,6 @@
 "use client";
 import { useCalendarContext } from "@/components/providers/CalendarProvider";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import MonthlyView from "./month-view";
 import WeeklyView from "./week-view";
 import { AttendanceType } from "@/lib/interfaces/attendance.interface";
@@ -14,6 +14,10 @@ import useTeacherAttendance from "./hooks/useTeachersAttendance";
 import { ParentType } from "@/lib/interfaces/parent.interface";
 import CalendarSideBar from "./sidebar";
 import MainSidebarCalendar from "./main-sidebar";
+import { MissedAlert } from "./modals/missed-alert";
+import Attendance from "@/lib/models/attendance.model";
+import useAttendanceFinal from "./hooks/useAttendancesFinal";
+import { AskAlert } from "./modals/ask-alert";
 
 const CalendarComponent = ({
   userInfo,
@@ -23,17 +27,38 @@ const CalendarComponent = ({
   const { calendarType, monthIndex } = useCalendarContext();
   const currDate = dayjs().year(dayjs().year()).month(monthIndex);
   const { selectedChild } = useSelectedChild();
+  const [alertMissed, setAlertMissed] = useState(false);
+  const [alertAsk, setAlertAsk] = useState(false);
 
-  let ATTENDANCES: any;
+  const ATTENDANCES = useAttendanceFinal({
+    studentId: selectedChild?._id,
+    currDate: new Date(),
+    isParent: isParent(userInfo),
+  });
 
-  const studentAtt = useStudentAttendances(selectedChild?._id as string);
-  const teacherAtt = useTeacherAttendance(currDate.toDate());
+  useEffect(() => {
+    if (ATTENDANCES?.data && (!alertMissed || !alertAsk)) {
+      const thisWeek = dayjs().startOf("week").format("MM-DD-YYYY");
+      const prompt = ATTENDANCES.data.find((d: AttendanceType) => {
+        const comparedWeek = dayjs(d.date).startOf("week").format("MM-DD-YYYY");
+        if (thisWeek === comparedWeek) return d;
+      })
+        ? true
+        : false;
 
-  if (isParent(userInfo)) {
-    ATTENDANCES = studentAtt;
-  } else {
-    ATTENDANCES = teacherAtt;
-  }
+      if (prompt) return;
+
+      if (dayjs().get("day") >= 4) {
+        // MISSED
+        // console.log("MISSED");
+        setAlertMissed(true);
+      } else {
+        // ASK TO SCHEDULE
+        // console.log("ASK TO SCHEDULE");
+        setAlertAsk(true);
+      }
+    }
+  }, [ATTENDANCES?.data]);
 
   if (selectedChild?.status === "Not Paid")
     return (
@@ -59,8 +84,13 @@ const CalendarComponent = ({
 
   return (
     <>
+      <MissedAlert open={alertMissed} openChange={(e) => setAlertMissed(e)} />
+      <AskAlert open={alertAsk} openChange={(e) => setAlertAsk(e)} />
       {isParent(userInfo) ? (
-        <CalendarSideBar userInfo={userInfo} ATTENDANCES={ATTENDANCES.data} />
+        <CalendarSideBar
+          userInfo={userInfo}
+          ATTENDANCES={ATTENDANCES.data || []}
+        />
       ) : (
         <MainSidebarCalendar />
       )}

@@ -16,6 +16,7 @@ const useTeacherAttendance = (currDate: Date) => {
       });
       return attendances;
     },
+    enabled: !!currDate,
   });
   return { data, isLoading };
 };
