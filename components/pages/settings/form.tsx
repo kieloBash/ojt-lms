@@ -24,9 +24,6 @@ import { Label } from "@/components/ui/label";
 import { UserType } from "@/lib/interfaces/user.interface";
 import { ParentType } from "@/lib/interfaces/parent.interface";
 import { useState } from "react";
-import { updatePassword } from "@/lib/actions/parent.action";
-import Parent from "@/lib/models/parent.model";
-import { userId } from "@/utils/constants";
 
 const profileFormSchema = z.object({
   username: z
@@ -73,60 +70,24 @@ export function ProfileForm({ userInfo }: { userInfo: UserType | ParentType }) {
     mode: "onChange",
   });
 
-  async function onSubmit(data: ProfileFormValues) {
-    try {
-      // Check if the new password is provided without the initial password
-      if (data.new_password && !data.initial_password) {
-        toast({
-          title: "Enter your previous password to change to your new password",
-          variant: "destructive",
-        });
-        return null;
-      }
-  
-      // Retrieve the user's stored password from the database (adjust this part based on your data structure)
-      const user = await Parent.findById(userId);
-      if (!user) {
-        toast({
-          title: "User not found",
-          variant: "destructive",
-        });
-        return null;
-      }
-  
-      // Verify the initial password (replace this with your own password verification logic)
-      const isInitialPasswordCorrect = user.password === data.initial_password;
-      if (!isInitialPasswordCorrect) {
-        toast({
-          title: "Incorrect initial password",
-          variant: "destructive",
-        });
-        return null;
-      }
-  
-      // Call the function to update the password
-      const newPassword = data.new_password || ""; 
-      const updatePasswordResponse = await updatePassword(userId, newPassword);
-  
-      if (updatePasswordResponse.success) {
-        toast({
-          title: "Password changed successfully!",
-          variant: "default",
-        });
-      } else {
-        toast({
-          title: "Error changing password",
-          description: updatePasswordResponse.message || "An error occurred.",
-          variant: "destructive",
-        });
-      }
-    } catch (error) {
-      console.error("Error changing password:", error);
+  function onSubmit(data: ProfileFormValues) {
+    if (data.new_password && !data.initial_password) {
+      toast({
+        title: "Enter your previous password to change to your new password",
+        variant: "destructive",
+      });
+      return null;
     }
+    toast({
+      title: "You submitted the following values:",
+      description: (
+        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+          <code className="text-white">{JSON.stringify(data, null, 2)}</code>
+        </pre>
+      ),
+    });
   }
-  
 
-  
   return (
     <Form {...form}>
       <form
