@@ -57,7 +57,7 @@ export const columns: ColumnDef<MaterialType>[] = [
     cell: ({ row }) => {
       const attendance = row.getValue("attendance") as AttendanceType;
       return (
-        <div className="w-[150px] line-clamp-1">
+        <div className="w-full line-clamp-1">
           {attendance?.class?.class
             ? `${attendance?.class?.class} - ${dayjs(attendance.date).format(
                 "MMMM DD"

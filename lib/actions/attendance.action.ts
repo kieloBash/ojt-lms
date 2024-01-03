@@ -250,15 +250,13 @@ export async function fetchUpcomingAttendances({
       })
       .populate({
         path: "class",
-        select: "_id class day",
+        select: "_id class day zoomLink",
         model: Classes,
       })
       .exec();
 
     const totalCount = await Attendance.countDocuments({});
     const data: any[] = await query;
-
-    console.log(data);
 
     // Convert _id to string in the results
     const arrToIdString: AttendanceType[] = data.map((d: AttendanceType) => {
@@ -395,6 +393,11 @@ export async function fetchStudentAttendances({
             path: "class",
             select: "_id class",
             model: Classes,
+          })
+          .populate({
+            path: "materials",
+            select: "_id filename url available type",
+            model: Material,
           })
           .lean()
           .exec();

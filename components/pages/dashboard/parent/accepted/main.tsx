@@ -15,6 +15,7 @@ import CardGridSection from "./card-grid";
 import CalendarAttendance from "./cards/calendar-attendance";
 import dayjs from "dayjs";
 import Image from "next/image";
+import MaterialsTable from "./cards/materials-table";
 
 const StudentAcceptedScetion = ({
   userInfo,
@@ -45,13 +46,15 @@ const StudentAcceptedScetion = ({
                     <CalendarAttendance selectedChild={selectedChild} />
                   </CardContent>
                 </Card>
-                {/* <Card className="col-span-3">
-              <CardHeader>
-                <CardTitle>Class Materials</CardTitle>
-                <CardDescription>Class Materials for you</CardDescription>
-              </CardHeader>
-              <CardContent></CardContent>
-            </Card> */}
+                <Card className="col-span-3">
+                  <CardHeader>
+                    <CardTitle>Class Materials</CardTitle>
+                    <CardDescription>Class Materials for you</CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <MaterialsTable selectedChild={selectedChild} />
+                  </CardContent>
+                </Card>
               </div>
             </>
           ) : (
