@@ -231,14 +231,15 @@ const RegisterComponent = () => {
                           <FormControl>
                             <div className="flex flex-col pt-4">
                               <div className="relative flex ">
-                                <span className="inline-flex items-center px-3 text-sm text-gray-500 bg-white border-t border-b border-l border-gray-300 shadow-sm ">
+                                <span className="inline-flex items-center justify-between w-32 gap-1 px-3 text-sm text-white border-t border-b border-l border-gray-300 shadow-sm rounded-s-xl bg-main-500 ">
+                                  <Label>Username</Label>
                                   <User className="w-4 h-4" />
                                 </span>
                                 <Input
                                   className="flex-1 w-full px-4 py-2 text-base text-gray-700 placeholder-gray-400 bg-white border border-gray-300 rounded-none shadow-sm appearance-none focus:outline-none focus:ring-2 focus:ring-main-600 focus:border-transparent"
                                   type="text"
                                   {...field}
-                                  placeholder="Username"
+                                  placeholder="Enter here"
                                 />
                               </div>
                             </div>
@@ -255,7 +256,8 @@ const RegisterComponent = () => {
                           <FormControl>
                             <div className="flex flex-col pt-4">
                               <div className="relative flex ">
-                                <span className="inline-flex items-center px-3 text-sm text-gray-500 bg-white border-t border-b border-l border-gray-300 shadow-sm ">
+                                <span className="inline-flex items-center justify-between w-32 gap-1 px-3 text-sm text-white border-t border-b border-l border-gray-300 shadow-sm rounded-s-xl bg-main-500 ">
+                                  <Label>Email</Label>
                                   <svg
                                     width="15"
                                     height="15"
@@ -270,7 +272,7 @@ const RegisterComponent = () => {
                                   className="flex-1 w-full px-4 py-2 text-base text-gray-700 placeholder-gray-400 bg-white border border-gray-300 rounded-none shadow-sm appearance-none focus:outline-none focus:ring-2 focus:ring-main-600 focus:border-transparent"
                                   type="email"
                                   {...field}
-                                  placeholder="Email"
+                                  placeholder="Enter here"
                                 />
                               </div>
                             </div>
@@ -287,7 +289,8 @@ const RegisterComponent = () => {
                           <FormControl>
                             <div className="flex flex-col pt-4">
                               <div className="relative flex ">
-                                <span className="inline-flex items-center px-3 text-sm text-gray-500 bg-white border-t border-b border-l border-gray-300 shadow-sm ">
+                                <span className="inline-flex items-center justify-between w-32 gap-1 px-3 text-sm text-white border-t border-b border-l border-gray-300 shadow-sm rounded-s-xl bg-main-500">
+                                  <Label className="">Password</Label>
                                   <svg
                                     width="15"
                                     height="15"
@@ -302,7 +305,7 @@ const RegisterComponent = () => {
                                   <Input
                                     type={showPassword ? "text" : "password"}
                                     {...field}
-                                    placeholder="Password"
+                                    placeholder="Enter here"
                                     className="flex-1 w-full px-4 py-2 text-base text-gray-700 placeholder-gray-400 bg-white border border-gray-300 rounded-none shadow-sm appearance-none focus:outline-none focus:ring-2 focus:ring-main-600 focus:border-transparent"
                                   />
                                   {showPassword ? (
@@ -344,14 +347,15 @@ const RegisterComponent = () => {
                           <FormControl>
                             <div className="flex flex-col">
                               <div className="relative flex ">
-                                <span className="inline-flex items-center px-3 text-sm text-gray-500 bg-white border-t border-b border-l border-gray-300 shadow-sm ">
+                                <span className="inline-flex items-center justify-between w-32 gap-1 px-3 text-sm text-white border-t border-b border-l border-gray-300 shadow-sm bg-main-500 rounded-s-xl">
+                                  <Label className="">Full Name</Label>
                                   <Cat className="w-4 h-4" />
                                 </span>
                                 <Input
                                   className="flex-1 w-full px-4 py-2 text-base text-gray-700 placeholder-gray-400 bg-white border border-gray-300 rounded-none shadow-sm appearance-none focus:outline-none focus:ring-2 focus:ring-main-600 focus:border-transparent"
                                   type="text"
                                   {...field}
-                                  placeholder="Child Name"
+                                  placeholder="Enter here"
                                 />
                               </div>
                             </div>
@@ -362,7 +366,8 @@ const RegisterComponent = () => {
                     />
                     <div className="flex flex-col pt-4">
                       <div className="relative flex ">
-                        <span className="inline-flex items-center px-3 text-sm text-gray-500 bg-white border-t border-b border-l border-gray-300 shadow-sm ">
+                        <span className="inline-flex items-center justify-between w-32 gap-1 px-3 text-sm text-white border-t border-b border-l border-gray-300 shadow-sm bg-main-500 rounded-s-xl">
+                          <Label className="">Birth Date</Label>
                           <CalendarIcon className="w-4 h-4" />
                         </span>
                         <input
@@ -370,7 +375,7 @@ const RegisterComponent = () => {
                           type="date"
                           value={child_bday}
                           onChange={(e) => setchild_bday(e.target.value)}
-                          placeholder="Child Date of Birth"
+                          placeholder="Enter here"
                         />
                       </div>
                     </div>
@@ -386,7 +391,8 @@ const RegisterComponent = () => {
                             <FormControl>
                               <div className="flex flex-col mt-4">
                                 <div className="relative flex ">
-                                  <span className="inline-flex items-center px-3 text-sm text-gray-500 bg-white border-t border-b border-l border-gray-300 shadow-sm ">
+                                  <span className="inline-flex items-center justify-between w-32 gap-1 px-3 text-sm text-white border-t border-b border-l border-gray-300 shadow-sm bg-main-500 rounded-s-xl">
+                                    <Label className="">Level</Label>
                                     <Book className="w-4 h-4" />
                                   </span>
                                   <SelectTrigger className="flex-1 w-full px-4 py-2 text-base text-gray-700 placeholder-gray-400 bg-white border border-gray-300 rounded-none shadow-sm appearance-none focus:outline-none focus:ring-2 focus:ring-main-600 focus:border-transparent">
