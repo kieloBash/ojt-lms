@@ -58,7 +58,6 @@ const LoginComponent = () => {
   async function onSubmit(values: z.infer<typeof loginValidation>) {
     if (!signIn) return null;
 
-    console.log(values);
     setisLoading(true);
     const email = values.email;
     const password = values.password;

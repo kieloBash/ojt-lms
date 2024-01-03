@@ -75,8 +75,8 @@ const CalendarSideBar = ({
     )
       return a;
   });
-  // console.log(filteredAttendance);
-  // console.log(upcomingClasses);
+  console.log(filteredAttendance);
+  console.log(upcomingClasses);
 
   if (!toggleSidebar) return null;
   return (
