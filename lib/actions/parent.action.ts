@@ -92,6 +92,28 @@ export async function createNewParent({
   }
 }
 
+export async function updatePassword(userId: string, newPassword: string) {
+  try {
+    connectDB();
+
+    const saltRounds = 10;
+    const salt = bcrypt.genSaltSync(saltRounds);
+    const hashedPassword = bcrypt.hashSync(newPassword, salt);
+
+    await Parent.findByIdAndUpdate(userId, {
+      password: hashedPassword,
+    });
+
+    return {
+      message: "Password updated successfully",
+      success: true,
+    };
+  } catch (error: any) {
+    throw new Error(`Error updating password: ${error.message}`);
+  }
+}
+
+
 export async function createNewStudent({
   parentId,
   newDataStudent,
