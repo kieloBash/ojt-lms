@@ -12,19 +12,21 @@ const useAttendanceFinal = ({
   studentId,
   currDate,
   isParent,
+  monthIndex,
 }: {
   studentId?: string;
   currDate: Date;
   isParent: boolean;
+  monthIndex: number;
 }) => {
   const studentAtt = useQuery({
-    queryKey: [`attendances:${studentId}`, studentId],
+    queryKey: [`attendances:${studentId}:${monthIndex}`, studentId, monthIndex],
     queryFn: async () => {
       const attendances = await fetchStudentAttendances({
         studentId: studentId || "",
       });
       const filtered = attendances.filter(
-        (a) => dayjs(a.date).get("month") === dayjs().get("month")
+        (a) => dayjs(a.date).get("month") === monthIndex
       );
       return filtered;
     },

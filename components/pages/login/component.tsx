@@ -36,6 +36,7 @@ import Link from "next/link";
 import Image from "next/image";
 import HOMEPAGE_PIC from "@/public/homepage-2.jpg";
 import { useSignIn } from "@clerk/nextjs";
+import { Label } from "@/components/ui/label";
 
 const LoginComponent = () => {
   const { isLoaded, signIn, setActive } = useSignIn();
@@ -57,7 +58,6 @@ const LoginComponent = () => {
   async function onSubmit(values: z.infer<typeof loginValidation>) {
     if (!signIn) return null;
 
-    console.log(values);
     setisLoading(true);
     const email = values.email;
     const password = values.password;
@@ -96,7 +96,8 @@ const LoginComponent = () => {
                       <FormControl>
                         <div className="flex flex-col pt-4">
                           <div className="relative flex ">
-                            <span className="inline-flex items-center px-3 text-sm text-gray-500 bg-white border-t border-b border-l border-gray-300 shadow-sm ">
+                            <span className="inline-flex items-center justify-between w-32 gap-1 px-3 text-sm text-white border-t border-b border-l border-gray-300 shadow-sm rounded-s-xl bg-main-500 ">
+                              <Label>Email</Label>
                               <svg
                                 width="15"
                                 height="15"
@@ -129,7 +130,8 @@ const LoginComponent = () => {
                       <FormControl>
                         <div className="flex flex-col pt-4 mb-12">
                           <div className="relative flex ">
-                            <span className="inline-flex items-center px-3 text-sm text-gray-500 bg-white border-t border-b border-l border-gray-300 shadow-sm ">
+                            <span className="inline-flex items-center justify-between w-32 gap-1 px-3 text-sm text-white border-t border-b border-l border-gray-300 shadow-sm rounded-s-xl bg-main-500">
+                              <Label className="">Password</Label>
                               <svg
                                 width="15"
                                 height="15"

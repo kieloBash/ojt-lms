@@ -9,8 +9,6 @@ import { useSelectedChild } from "@/components/global/context/useSelectedChild";
 import dayjs from "dayjs";
 import { isParent } from "@/utils/helpers/isParent";
 import { UserType } from "@/lib/interfaces/user.interface";
-import useStudentAttendances from "./hooks/useStudentAttendances";
-import useTeacherAttendance from "./hooks/useTeachersAttendance";
 import { ParentType } from "@/lib/interfaces/parent.interface";
 import CalendarSideBar from "./sidebar";
 import MainSidebarCalendar from "./main-sidebar";
@@ -34,11 +32,12 @@ const CalendarComponent = ({
     studentId: selectedChild?._id,
     currDate: new Date(),
     isParent: isParent(userInfo),
+    monthIndex,
   });
 
   useEffect(() => {
     if (ATTENDANCES?.data && (!alertMissed || !alertAsk)) {
-      const thisWeek = dayjs().startOf("week").format("MM-DD-YYYY");
+      const thisWeek = currDate.startOf("week").format("MM-DD-YYYY");
       const prompt = ATTENDANCES.data.find((d: AttendanceType) => {
         const comparedWeek = dayjs(d.date).startOf("week").format("MM-DD-YYYY");
         if (thisWeek === comparedWeek) return d;
