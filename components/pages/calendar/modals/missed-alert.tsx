@@ -27,7 +27,7 @@ export function MissedAlert({
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>Ok</AlertDialogCancel>
+          <AlertDialogCancel>OK</AlertDialogCancel>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

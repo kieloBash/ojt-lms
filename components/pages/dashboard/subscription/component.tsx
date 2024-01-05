@@ -168,15 +168,15 @@ const SubscriptionMain = () => {
                             <Book className="w-10 h-10" />
                           </div>
                           <div className="absolute text-sm line-through top-[4rem] left-10">
-                            ${p.discountedPriceMo}
+                            ${p.priceMo}
                           </div>
                           <div className="flex flex-col">
                             <div className="flex items-center mt-4">
                               <span className="">$</span>
                               <div className="text-4xl font-extrabold">
-                                {p.priceMo}
+                                {p.discountedPriceMo}
                               </div>{" "}
-                              <span className="">/yr</span>
+                              <span className="">/mo</span>
                             </div>
                             <div className="flex items-center justify-center gap-2 text-2xl font-bold">
                               Enroll
@@ -194,7 +194,7 @@ const SubscriptionMain = () => {
                               <div className="text-4xl font-extrabold">
                                 {p.priceMo}
                               </div>{" "}
-                              <span className="">/yr</span>
+                              <span className="">/mo</span>
                             </div>
                             <div className="flex items-center justify-center gap-2 text-2xl font-bold">
                               Enroll

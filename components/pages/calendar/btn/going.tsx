@@ -47,7 +47,7 @@ const GoingBtn = ({ attendance }: { attendance: AttendanceType }) => {
     <Button
       type="button"
       disabled={classClosedChecker({
-        dayLimit: 3,
+        dayLimit: 1,
         attDate: dayjs(attendance.date),
       })}
       onClick={() => {

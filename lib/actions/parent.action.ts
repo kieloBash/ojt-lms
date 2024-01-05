@@ -18,7 +18,7 @@ export async function authUserClerk() {
   const { userId: clerkId } = auth();
   if (!clerkId) return null;
 
-  let result: ParentType | UserType;
+  let result: ParentType | UserType | undefined;
 
   result = await fetchSingleParentClerkId({ clerkId });
   if (!result) {
@@ -363,7 +363,8 @@ export async function fetchSingleParentClerkId({
     console.log(single);
 
     if (!single) {
-      throw new Error(`Error in fetching single Parent`);
+      return;
+      // throw new Error(`Error in fetching single Parent`);
     }
     console.log(single);
 

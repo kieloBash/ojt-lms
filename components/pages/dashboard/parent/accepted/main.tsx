@@ -16,6 +16,8 @@ import CalendarAttendance from "./cards/calendar-attendance";
 import dayjs from "dayjs";
 import Image from "next/image";
 import MaterialsTable from "./cards/materials-table";
+import { Button } from "@/components/ui/button";
+import { ShoppingBag } from "lucide-react";
 
 const StudentAcceptedScetion = ({
   userInfo,
@@ -46,20 +48,25 @@ const StudentAcceptedScetion = ({
                     <CalendarAttendance selectedChild={selectedChild} />
                   </CardContent>
                 </Card>
-                <Card className="col-span-3">
-                  <CardHeader>
-                    <CardTitle>Class Materials</CardTitle>
-                    <CardDescription>Class Materials for you</CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <MaterialsTable selectedChild={selectedChild} />
-                  </CardContent>
-                </Card>
+                {selectedChild.package === "Ultimate" && (
+                  <Card className="col-span-3">
+                    <CardHeader>
+                      <CardTitle>Class Materials</CardTitle>
+                      <CardDescription>Class Materials for you</CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                      <MaterialsTable selectedChild={selectedChild} />
+                    </CardContent>
+                  </Card>
+                )}
               </div>
             </>
           ) : (
-            <div className="absolute flex items-center justify-center overflow-hidden -translate-x-1/2 -translate-y-1/2 left-1/2 top-1/2">
+            <div className="absolute flex flex-col items-center justify-center overflow-hidden -translate-x-1/2 -translate-y-1/2 left-1/2 top-1/2">
               <Image src={LOGO} alt="Umonics Logo" width={900} />
+              <Button>
+                <ShoppingBag className="w-6 h-6 mr-2" /> Upgrade Plan
+              </Button>
             </div>
           )}
         </div>
