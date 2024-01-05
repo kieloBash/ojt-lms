@@ -18,7 +18,7 @@ import {
   getCheckoutInfo,
 } from "@/utils/helpers/stripe/billing";
 import { createNewTransactionSubscription } from "@/lib/actions/transaction.action";
-import { redirect, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 const ParentMain = ({
   parent,
@@ -70,7 +70,7 @@ const ParentMain = ({
       const { success } = await createNewTransactionSubscription({
         NewTransaction,
       });
-      if (success) router.push("/dashboard");
+      if (success) window.location.replace("/dashboard");
     } else if (sessionId !== "" && !status) {
       // User has cancelled the payment process
       console.log("cancelled");
