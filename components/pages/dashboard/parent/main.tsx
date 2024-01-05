@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import { ParentType } from "@/lib/interfaces/parent.interface";
 import { StudentType } from "@/lib/interfaces/student.interface";
 import { useSelected } from "./non-accepted/context/useSelected";
@@ -12,25 +12,90 @@ import StudentAcceptedScetion from "./accepted/main";
 import SubscriptionMain from "../subscription/component";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { isParent } from "@/utils/helpers/isParent";
+import {
+  generateCustomerPortalLink,
+  getCheckoutInfo,
+} from "@/utils/helpers/stripe/billing";
+import { createNewTransactionSubscription } from "@/lib/actions/transaction.action";
+import { redirect, useRouter } from "next/navigation";
 
 const ParentMain = ({
   parent,
   manage_link,
+  sessionId,
+  studentId,
+  status,
 }: {
   parent: ParentType;
   manage_link: string;
+  sessionId: string;
+  studentId: string;
+  status: boolean;
 }) => {
   const { clear } = useSelected();
   const { setSelectedChild, selectedChild } = useSelectedChild();
+  const router = useRouter();
   console.log(selectedChild);
-
-  if (!selectedChild) return null;
 
   function handleSelectChild(sel: StudentType) {
     console.log(sel);
     setSelectedChild(sel);
     clear();
   }
+
+  async function customerPortalLink() {
+    const manage_link = await generateCustomerPortalLink(
+      isParent(parent) ? parent?.stripe_customer_id || "" : "",
+      isParent(parent)
+    );
+    console.log(manage_link);
+  }
+
+  async function checkOutInfo() {
+    if (sessionId !== "" && status) {
+      // User has successfully completed the payment process
+      console.log("succcess");
+      const checkOut = await getCheckoutInfo(sessionId);
+
+      const NewTransaction = {
+        student: studentId,
+        parent: parent?._id as string,
+        price: checkOut.data[0].amount_total / 100,
+        status: "Paid",
+        package: checkOut.data[0].description,
+        classSchedule: [],
+      };
+      console.log(NewTransaction);
+      const { success } = await createNewTransactionSubscription({
+        NewTransaction,
+      });
+      if (success) router.push("/dashboard");
+    } else if (sessionId !== "" && !status) {
+      // User has cancelled the payment process
+      console.log("cancelled");
+
+      const checkOut = await getCheckoutInfo(sessionId);
+      const NewTransaction = {
+        student: studentId,
+        parent: parent?._id as string,
+        price: checkOut.data[0].amount_total / 100,
+        status: "Paid",
+        package: checkOut.data[0].description,
+        classSchedule: [],
+      };
+      console.log(NewTransaction);
+    }
+  }
+
+  useEffect(() => {
+    if (parent) {
+      // customerPortalLink();
+      checkOutInfo();
+    }
+  }, [sessionId, studentId, status, parent]);
+
+  if (!selectedChild) return null;
   if (parent?.children?.length === 0 && parent?.children) return null;
 
   if (selectedChild.status === "Enrolling")

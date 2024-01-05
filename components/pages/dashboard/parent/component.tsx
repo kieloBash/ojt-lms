@@ -9,15 +9,27 @@ import ParentMain from "./main";
 const ParentComponent = ({
   userInfo,
   manage_link,
+  sessionId,
+  studentId,
+  status,
 }: {
   userInfo: ParentType;
   manage_link: string;
+  sessionId: string;
+  studentId: string;
+  status: boolean;
 }) => {
   console.log(userInfo);
   return (
     <>
       <SelectedProvider>
-        <ParentMain parent={userInfo} manage_link={manage_link} />
+        <ParentMain
+          parent={userInfo}
+          manage_link={manage_link}
+          sessionId={sessionId}
+          status={status}
+          studentId={studentId}
+        />
       </SelectedProvider>
     </>
   );

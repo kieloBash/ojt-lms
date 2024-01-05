@@ -22,7 +22,7 @@ export const metadata: Metadata = {
 
 const DashboardPage = async ({ searchParams }: PageProps) => {
   const user = await authUserClerk();
-  // const session = await createCustomerIfNull();
+  await createCustomerIfNull();
 
   // const manage_link = await generateCustomerPortalLink(
   //   isParent(user) ? session?.stripe_customer_id : "",
@@ -72,7 +72,15 @@ const DashboardPage = async ({ searchParams }: PageProps) => {
     <>
       {isParent(user) ? (
         <>
-          <ParentComponent userInfo={user} manage_link={ ""} />
+          <ParentComponent
+            userInfo={user}
+            manage_link={""}
+            sessionId={(searchParams.session_id as string) || ""}
+            status={
+              searchParams.success ? true : searchParams.fail ? false : false
+            }
+            studentId={(searchParams.studentId as string) || ""}
+          />
         </>
       ) : (
         <>
