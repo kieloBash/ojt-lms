@@ -239,44 +239,50 @@ export function CalendarSheet({
                 <div className="flex flex-col w-full">
                   <div className="flex items-center justify-start w-full gap-2">
                     <div className="pb-2 font-medium text-left">Materials</div>
-                    {selectedChild?.package === "Discover" && (
-                      <TooltipButton tooltip="Upgrade your package to get materials for the class">
+                    {selectedChild?.package !== "Ultimate" && (
+                      <TooltipButton
+                        tooltip={`Upgrade your package to 'Ultimate' get materials for the class`}
+                      >
                         <Info className="w-4 h-4 -mt-2 cursor-pointer" />
                       </TooltipButton>
                     )}
                   </div>
-                  {selectedAttendance?.materials?.map((material) => {
-                    const locked = selectedChild?.package === "Discover";
+                  {selectedChild?.package === "Ultimate" && (
+                    <>
+                      {selectedAttendance?.materials?.map((material) => {
+                        const locked = selectedChild?.package === "Discover";
 
-                    if (material.available)
-                      return (
-                        <>
-                          {locked ? (
+                        if (material.available)
+                          return (
                             <>
-                              <div
-                                key={material._id}
-                                className="flex-1 cursor-default text-muted-foreground"
-                              >
-                                {material.filename}
-                              </div>
+                              {locked ? (
+                                <>
+                                  <div
+                                    key={material._id}
+                                    className="flex-1 cursor-default text-muted-foreground"
+                                  >
+                                    {material.filename}
+                                  </div>
+                                </>
+                              ) : (
+                                <>
+                                  <Link
+                                    href={material.url}
+                                    target="_blank"
+                                    className="flex items-center justify-start w-full gap-2 pb-2 hover:underline"
+                                    key={material._id}
+                                  >
+                                    <div className="flex-1">
+                                      {material.filename}
+                                    </div>
+                                  </Link>
+                                </>
+                              )}
                             </>
-                          ) : (
-                            <>
-                              <Link
-                                href={material.url}
-                                target="_blank"
-                                className="flex items-center justify-start w-full gap-2 pb-2 hover:underline"
-                                key={material._id}
-                              >
-                                <div className="flex-1">
-                                  {material.filename}
-                                </div>
-                              </Link>
-                            </>
-                          )}
-                        </>
-                      );
-                  })}
+                          );
+                      })}
+                    </>
+                  )}
                 </div>
               )}
             </>

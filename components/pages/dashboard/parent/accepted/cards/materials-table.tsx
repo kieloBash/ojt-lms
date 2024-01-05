@@ -74,7 +74,7 @@ const MaterialsTable = ({ selectedChild }: { selectedChild: StudentType }) => {
   if (Attendance.isLoading)
     return (
       <div className="flex items-center justify-center w-full h-full">
-        <Loader2 className="w-6 h-6 animate-spin" />;
+        <Loader2 className="w-6 h-6 animate-spin" />
       </div>
     );
 

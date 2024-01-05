@@ -37,10 +37,24 @@ const CalendarComponent = ({
 
   useEffect(() => {
     if (ATTENDANCES?.data && (!alertMissed || !alertAsk)) {
-      const thisWeek = currDate.startOf("week").format("MM-DD-YYYY");
+      const temp = currDate.startOf("week");
+      const temp2 = currDate.endOf("week");
+      const thisStartWeek = temp
+        .set("date", temp.get("date") - 1)
+        .format("MM-DD-YYYY");
+      const thisEndWeek = temp2
+        .set("date", temp2.get("date") - 1)
+        .format("MM-DD-YYYY");
+
       const prompt = ATTENDANCES.data.find((d: AttendanceType) => {
         const comparedWeek = dayjs(d.date).startOf("week").format("MM-DD-YYYY");
-        if (thisWeek === comparedWeek) return d;
+        if (
+          (dayjs(comparedWeek).isAfter(dayjs(thisStartWeek), "year") &&
+            dayjs(comparedWeek).isBefore(dayjs(thisEndWeek), "year")) ||
+          dayjs(comparedWeek).isSame(dayjs(thisStartWeek), "year") ||
+          dayjs(comparedWeek).isSame(dayjs(thisEndWeek), "year")
+        )
+          return d;
       })
         ? true
         : false;

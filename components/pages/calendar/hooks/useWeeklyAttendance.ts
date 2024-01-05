@@ -3,6 +3,7 @@
 import { useSelectedChild } from "@/components/global/context/useSelectedChild";
 import { useCalendarContext } from "@/components/providers/CalendarProvider";
 import { fetchWeeklyAttendances } from "@/lib/actions/attendance.action";
+import { AttendanceType } from "@/lib/interfaces/attendance.interface";
 import { AgeGroupType } from "@/lib/interfaces/class.interface";
 import { useQuery } from "@tanstack/react-query";
 import dayjs from "dayjs";
@@ -59,20 +60,17 @@ const useWeeklyAttendance = (
         ageGroup: selectedChild?.gradeLevel as AgeGroupType,
       });
 
-      const filtered = attendances.attendances.filter((a) => {
+      const filtered: AttendanceType[] = attendances.attendances.filter((a) => {
         const attDate = dayjs(a.date);
         const today = dayjs();
+        const filter = attDate.set("date", attDate.date() - 1);
 
-        const closed =
-          today.isAfter(attDate.set("date", attDate.date() + 2)) ||
-          today.isAfter(attDate);
+        const closed = today.isAfter(filter) || today.isAfter(attDate);
 
         if (!closed) {
           return a;
         }
       });
-
-      // console.log(filtered);
 
       return filtered;
     },

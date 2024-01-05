@@ -102,7 +102,6 @@ const ChangeClassModal = ({
   const foundPresent = attendance?.studentsPresent?.find(
     (d) => d._id === selectedChild?._id
   );
-  console.log(foundPresent);
 
   return (
     <Dialog open={show} onOpenChange={setShow}>
@@ -140,7 +139,8 @@ const ChangeClassModal = ({
                     </div>
                   </CommandItem>
                 </DialogTrigger>
-                {/* <CommandItem
+                <CommandItem
+                  disabled={foundPresent ? true : false}
                   onSelect={async () => {
                     const res = await updateRemoveClass({
                       childId: selectedChild?._id as string,
@@ -151,12 +151,16 @@ const ChangeClassModal = ({
                   }}
                 >
                   <div className="flex items-center justify-between w-full">
-                    <div className={`flex gap-2`}>
+                    <div
+                      className={`flex gap-2 ${
+                        foundPresent && "text-muted-foreground"
+                      }`}
+                    >
                       <Delete className="w-5 h-5" />
                       Remove Class
                     </div>
                   </div>
-                </CommandItem> */}
+                </CommandItem>
               </CommandGroup>
             </CommandList>
           </Command>
@@ -189,7 +193,7 @@ const ChangeClassModal = ({
             <DialogHeader>
               <DialogTitle>Change your class</DialogTitle>
               <DialogDescription>
-                You can only change class 3 day before the actual class.
+                You can only change class a day before the actual class.
               </DialogDescription>
             </DialogHeader>
             <div className="flex flex-col gap-2 mb-4">

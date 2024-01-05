@@ -18,19 +18,18 @@ export function HoverMaterials({ materials }: { materials: MaterialType[] }) {
         </span>
       </HoverCardTrigger>
       <HoverCardContent className="w-80">
-        <div className="flex flex-col items-center justify-center">
+        <div className="flex flex-col items-center justify-center w-full">
           {materials.map((m) => {
             const filetype: any = file_types.find(
               (file) => file.label === m?.type
             );
-            console.log(filetype);
 
             return (
               <Link
                 href={m.url}
                 key={m._id}
                 target="_blank"
-                className="p-2 transition-colors rounded-lg hover:bg-slate-100"
+                className="w-full p-2 transition-colors rounded-lg hover:bg-slate-100"
               >
                 <div className="space-y-1">
                   <h4 className="text-sm font-semibold line-clamp-1">

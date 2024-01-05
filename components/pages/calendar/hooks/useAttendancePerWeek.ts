@@ -61,7 +61,7 @@ const useAttendancePerWeek = (
       const filtered = attendances.attendances.filter((a) => {
         const attDate = dayjs(a.date);
 
-        const closed = classClosedChecker({ dayLimit: 3, attDate });
+        const closed = classClosedChecker({ dayLimit: 1, attDate });
 
         if (!closed && a._id !== attendance._id) {
           return a;
