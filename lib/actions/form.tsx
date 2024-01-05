@@ -55,7 +55,7 @@ const profileFormSchema = z.object({
 
 type ProfileFormValues = z.infer<typeof profileFormSchema>;
 
-export function dudProfileForm({ userInfo }: { userInfo: UserType | ParentType }) {
+export function ProfileForm({ userInfo }: { userInfo: UserType | ParentType }) {
   const [showPasswordNew, setShowPasswordNew] = useState<boolean>(false);
   const [showPasswordPrev, setShowPasswordPrev] = useState<boolean>(false);
 
