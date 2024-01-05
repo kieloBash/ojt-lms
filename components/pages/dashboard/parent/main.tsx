@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { ParentType } from "@/lib/interfaces/parent.interface";
 import { StudentType } from "@/lib/interfaces/student.interface";
 import { useSelected } from "./non-accepted/context/useSelected";
@@ -10,8 +10,16 @@ import NotAcceptedComponent from "./non-accepted/component";
 import { useSelectedChild } from "@/components/global/context/useSelectedChild";
 import StudentAcceptedScetion from "./accepted/main";
 import SubscriptionMain from "../subscription/component";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
-const ParentMain = ({ parent }: { parent: ParentType }) => {
+const ParentMain = ({
+  parent,
+  manage_link,
+}: {
+  parent: ParentType;
+  manage_link: string;
+}) => {
   const { clear } = useSelected();
   const { setSelectedChild, selectedChild } = useSelectedChild();
   console.log(selectedChild);
@@ -30,9 +38,14 @@ const ParentMain = ({ parent }: { parent: ParentType }) => {
       <section className="flex flex-col w-full overflow-y-auto bg-white">
         <header className="flex flex-col items-center justify-center w-full bg-gradient-to-r from-blue-800 to-indigo-900 h-[16rem]">
           <div className="flex items-center justify-between w-full px-10 pb-8 -mt-10">
-            <h2 className="text-3xl font-bold tracking-tight text-white">
-              Subscriptions
-            </h2>
+            <div className="flex gap-2">
+              <h2 className="text-3xl font-bold tracking-tight text-white">
+                Subscriptions
+              </h2>
+              <Link href={manage_link}>
+                <Button>Billing</Button>
+              </Link>
+            </div>
             <ChildSwitcher
               parent={parent}
               students={parent?.children as StudentType[]}

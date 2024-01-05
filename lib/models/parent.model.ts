@@ -6,6 +6,9 @@ const parentSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    stripe_customer_id: {
+      type: String,
+    },
     name: {
       type: String,
       required: true,

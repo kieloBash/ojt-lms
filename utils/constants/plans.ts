@@ -2,7 +2,7 @@ export const PACKAGES = [
   {
     label: "Discovery Package",
     priceMo: 45,
-    priceYr: 432,
+    priceYr: 486,
     discounted: false,
     discountedPriceYr: 540,
     description:
@@ -58,8 +58,7 @@ export const PACKAGES = [
     offers: [
       {
         title: "All the benefits from the lower-tiered packages",
-        details:
-          "",
+        details: "",
       },
       {
         title: "Video Recordings of Classes",

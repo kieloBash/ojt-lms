@@ -6,12 +6,18 @@ import React from "react";
 import { SelectedProvider } from "./non-accepted/context/useSelected";
 import ParentMain from "./main";
 
-const ParentComponent = ({ userInfo }: { userInfo: ParentType }) => {
+const ParentComponent = ({
+  userInfo,
+  manage_link,
+}: {
+  userInfo: ParentType;
+  manage_link: string;
+}) => {
   console.log(userInfo);
   return (
     <>
       <SelectedProvider>
-        <ParentMain parent={userInfo} />
+        <ParentMain parent={userInfo} manage_link={manage_link} />
       </SelectedProvider>
     </>
   );

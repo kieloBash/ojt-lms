@@ -11,4 +11,5 @@ export interface ParentType {
   isEnrolled: boolean;
   role?: string;
   clerkId: string;
+  stripe_customer_id?: string;
 }

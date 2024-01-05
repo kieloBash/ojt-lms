@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 
 // UI
 import {
@@ -22,29 +22,52 @@ import { useSelectedChild } from "@/components/global/context/useSelectedChild";
 import useUserInfo from "@/components/hooks/useUserInfo";
 import { createNewTransactionSubscription } from "@/lib/actions/transaction.action";
 import AdditionalInfo from "./cards/additional-info";
+import {
+  createCheckoutLink,
+  hasSubscription,
+} from "@/utils/helpers/stripe/billing";
+import { isParent } from "@/utils/helpers/isParent";
+import {
+  AdvanceMO,
+  AdvanceYR,
+  DiscoverMO,
+  DiscoverYR,
+  UltimateMO,
+  UltimateYR,
+} from "@/utils/helpers/stripe/prices";
 
 const SubscriptionMain = () => {
   //   const [isLoading, setIsLoading] = useState<boolean>(false);
   const { selectedChild } = useSelectedChild();
   const userInfo = useUserInfo();
+  const router = useRouter();
 
   async function OpenDiscoverySubscription(plan: "mo" | "yr") {
-    window.open(
-      "https://checkout.umonicsplus.com/b/8wMdUgbGL6TB4XS003?locale=en&__embed_source=buy_btn_1OFCYgJdrjeVG3h12HCb9Z3C",
-      "_blank"
+    const checkout_link = await createCheckoutLink(
+      isParent(userInfo) ? userInfo?.stripe_customer_id || "" : "",
+      plan === "mo" ? DiscoverMO : DiscoverYR,
+      selectedChild?._id as string
     );
+
+    router.push(checkout_link + "");
   }
   async function OpenAdvanceSubscription(plan: "mo" | "yr") {
-    window.open(
-      "https://checkout.umonicsplus.com/b/aEUdUg1275PxfCw9AC?locale=en&__embed_source=buy_btn_1OFCUVJdrjeVG3h14v8ccxp1",
-      "_blank"
+    const checkout_link = await createCheckoutLink(
+      isParent(userInfo) ? userInfo?.stripe_customer_id || "" : "",
+      plan === "mo" ? AdvanceMO : AdvanceYR,
+      selectedChild?._id as string
     );
+
+    router.push(checkout_link + "");
   }
   async function OpenUltimateSubscription(plan: "mo" | "yr") {
-    window.open(
-      "https://checkout.umonicsplus.com/b/aEUdUg1275PxfCw9AC?locale=en&__embed_source=buy_btn_1OFCUVJdrjeVG3h14v8ccxp1",
-      "_blank"
+    const checkout_link = await createCheckoutLink(
+      isParent(userInfo) ? userInfo?.stripe_customer_id || "" : "",
+      plan === "mo" ? UltimateMO : UltimateYR,
+      selectedChild?._id as string
     );
+
+    router.push(checkout_link + "");
   }
 
   async function newTransaction({
@@ -62,25 +85,15 @@ const SubscriptionMain = () => {
       package: packageType,
       classSchedule: [],
     };
-    const { success } = await createNewTransactionSubscription({
-      NewTransaction,
-    });
-    return success;
-    // return true;
+    // const { success } = await createNewTransactionSubscription({
+    //   NewTransaction,
+    // });
+    // return success;
+    return true;
   }
 
   return (
     <section className="relative flex flex-col w-full h-full pb-8">
-      {/* <header className="flex flex-col items-center justify-center w-full bg-gradient-to-r from-blue-800 to-indigo-900 h-[16rem]">
-        <h1 className="text-3xl font-bold text-white">
-          {`🚀 Exclusive Learning Packages: An Unveiling of Value 🚀`}
-        </h1>
-        <p className="w-full max-w-[56rem] text-sm text-center text-white mt-6">
-          {`We hope this newsletter finds you well. At The Umonics Method, we're
-          delighted to share some exciting news that will shape your child's
-          educational journey like never before!`}
-        </p>
-      </header> */}
       <div className="flex items-start justify-center w-full gap-4 -mt-10">
         {PACKAGES.map((p, index) => {
           return (
@@ -144,7 +157,7 @@ const SubscriptionMain = () => {
                               break;
                           }
                         // setIsLoading(false);
-                        window.location.reload();
+                        // window.location.reload();
                       }}
                       type="button"
                       className="h-[11rem] relative flex flex-col gap-2 items-center justify-between w-full p-4 py-8 text-xl shadow-lg hover: bg-gradient-to-r from-blue-800 to-indigo-900 hover:bg-gradient-to-r hover:from-blue-700 hover:to-indigo-800 rounded-2xl"
@@ -194,6 +207,35 @@ const SubscriptionMain = () => {
                     <button
                       type="button"
                       className="h-[11rem] relative flex flex-col gap-2 items-center justify-between w-full p-4 py-8 text-xl transition-colors shadow-lg hover:bg-gradient-to-r hover:from-blue-500 hover:to-violet-500 bg-gradient-to-r from-blue-600 to-violet-600 rounded-2xl"
+                      onClick={async () => {
+                        const PACKAGE_TYPE = [
+                          "Discover",
+                          "Advance",
+                          "Ultimate",
+                        ];
+
+                        const res = await newTransaction({
+                          price:
+                            (p.discounted ? p.discountedPriceMo : p.priceMo) ||
+                            0,
+                          package: PACKAGE_TYPE[index],
+                        });
+
+                        if (res)
+                          switch (index) {
+                            case 0:
+                              OpenDiscoverySubscription("yr");
+                              break;
+                            case 1:
+                              OpenAdvanceSubscription("yr");
+                              break;
+                            case 2:
+                              OpenUltimateSubscription("yr");
+                              break;
+                            default:
+                              break;
+                          }
+                      }}
                     >
                       <div className="-mt-4">
                         <CrownIcon className="w-10 h-10" />
