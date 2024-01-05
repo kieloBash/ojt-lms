@@ -18,7 +18,7 @@ export async function authUserClerk() {
   const { userId: clerkId } = auth();
   if (!clerkId) return null;
 
-  let result: any;
+  let result: ParentType | UserType;
 
   result = await fetchSingleParentClerkId({ clerkId });
   if (!result) {
@@ -89,6 +89,48 @@ export async function createNewParent({
     };
   } catch (error: any) {
     throw new Error(`Error creating new parent: ${error.message}`);
+  }
+}
+
+export async function updatePassword(userId: string, newPassword: string) {
+  try {
+    connectDB();
+
+    const saltRounds = 10;
+    const salt = bcrypt.genSaltSync(saltRounds);
+    const hashedPassword = bcrypt.hashSync(newPassword, salt);
+
+    await Parent.findByIdAndUpdate(userId, {
+      password: hashedPassword,
+    });
+
+    return {
+      message: "Password updated successfully",
+      success: true,
+    };
+  } catch (error: any) {
+    throw new Error(`Error updating password: ${error.message}`);
+  }
+}
+
+export async function updateStripeId(
+  userId: string,
+  stripe_customer_id: string
+) {
+  try {
+    connectDB();
+
+    const data = await Parent.findByIdAndUpdate(userId, {
+      stripe_customer_id,
+    });
+
+    return {
+      message: "StripeId updated successfully",
+      success: true,
+      data,
+    };
+  } catch (error: any) {
+    throw new Error(`Error updating password: ${error.message}`);
   }
 }
 
@@ -305,7 +347,7 @@ export async function fetchSingleParentClerkId({
 
     const single: any = await Parent.findOne({ clerkId })
       .lean()
-      .select("_id name email profileURL isEnrolled clerkId")
+      .select("_id name email profileURL isEnrolled clerkId stripe_customer_id")
       .populate({
         path: "children",
         model: Student,
@@ -321,7 +363,7 @@ export async function fetchSingleParentClerkId({
     console.log(single);
 
     if (!single) {
-      return undefined;
+      throw new Error(`Error in fetching single Parent`);
     }
     console.log(single);
 
