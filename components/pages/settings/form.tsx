@@ -70,22 +70,27 @@ export function ProfileForm({ userInfo }: { userInfo: UserType | ParentType }) {
     mode: "onChange",
   });
 
-  function onSubmit(data: ProfileFormValues) {
-    if (data.new_password && !data.initial_password) {
-      toast({
-        title: "Enter your previous password to change to your new password",
-        variant: "destructive",
+  async function onSubmit(data: ProfileFormValues) {
+    try {
+      if (data.new_password && !data.initial_password) {
+        
+        toast({
+          title: "Enter your previous password to change to your new password",
+          variant: "destructive",
+        });
+        return null;
+      }
+      await toast({
+        title: "You submitted the following values:",
+        description: (
+          <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+            <code className="text-white">{JSON.stringify(data, null, 2)}</code>
+          </pre>
+        ),
       });
-      return null;
+    } catch (error) {
+      console.error("Error while displaying toast:", error);
     }
-    toast({
-      title: "You submitted the following values:",
-      description: (
-        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-        </pre>
-      ),
-    });
   }
 
   return (
