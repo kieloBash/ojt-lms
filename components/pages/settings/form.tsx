@@ -58,7 +58,7 @@ type ProfileFormValues = z.infer<typeof profileFormSchema>;
 export function ProfileForm({ userInfo }: { userInfo: UserType | ParentType }) {
   const [showPasswordNew, setShowPasswordNew] = useState<boolean>(false);
   const [showPasswordPrev, setShowPasswordPrev] = useState<boolean>(false);
-
+  console.log(showPasswordNew);
   const form = useForm<ProfileFormValues>({
     resolver: zodResolver(profileFormSchema),
     defaultValues: {
@@ -69,11 +69,10 @@ export function ProfileForm({ userInfo }: { userInfo: UserType | ParentType }) {
     },
     mode: "onChange",
   });
-
+  
   async function onSubmit(data: ProfileFormValues) {
     try {
       if (data.new_password && !data.initial_password) {
-        
         toast({
           title: "Enter your previous password to change to your new password",
           variant: "destructive",
