@@ -6,6 +6,9 @@ const studentSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    stripe_customer_id: {
+      type: String,
+    },
     profileURL: {
       type: String,
     },

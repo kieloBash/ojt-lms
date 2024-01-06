@@ -14,9 +14,11 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import Link from "next/link";
 
 const ParentAvatarButton = ({ parent }: { parent: ParentType }) => {
-  const { selectedChild, setSelectedChild } = useSelectedChild();
+  const { selectedChild, setSelectedChild, billingLink, updateBillLink } =
+    useSelectedChild();
   console.log(selectedChild);
   if (!selectedChild) return null;
 
@@ -37,7 +39,15 @@ const ParentAvatarButton = ({ parent }: { parent: ParentType }) => {
           <DropdownMenuLabel className="flex items-center justify-start">
             <div className="flex flex-col">
               <span className="font-semibold">{parent?.email}</span>
-              <span className="font-normal text-slate-600">Parent</span>
+              <div className="flex items-center justify-start gap-2">
+                <span className="font-normal text-slate-600">Parent</span>
+                <Link href={billingLink} className="text-xs hover:underline">
+                  Manage Billing
+                </Link>
+                <Link href={updateBillLink} className="text-xs hover:underline">
+                  Update Package
+                </Link>
+              </div>
             </div>
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
@@ -72,7 +82,9 @@ const ParentAvatarButton = ({ parent }: { parent: ParentType }) => {
                         <span className="font-normal text-slate-600">
                           {child.status}
 
-                          {child.status !== "Enrolling" ? ` - ${child?.package} Package` : ""}
+                          {child.status !== "Enrolling"
+                            ? ` - ${child?.package} Package`
+                            : ""}
                         </span>
                       </div>
                     </div>

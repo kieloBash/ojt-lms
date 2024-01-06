@@ -10,11 +10,9 @@ import NotAcceptedComponent from "./non-accepted/component";
 import { useSelectedChild } from "@/components/global/context/useSelectedChild";
 import StudentAcceptedScetion from "./accepted/main";
 import SubscriptionMain from "../subscription/component";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
-import { isParent } from "@/utils/helpers/isParent";
+
 import {
-  generateCustomerPortalLink,
+  createChildStripeAccount,
   getCheckoutInfo,
 } from "@/utils/helpers/stripe/billing";
 import { createNewTransactionSubscription } from "@/lib/actions/transaction.action";
@@ -34,7 +32,8 @@ const ParentMain = ({
   status: boolean;
 }) => {
   const { clear } = useSelected();
-  const { setSelectedChild, selectedChild } = useSelectedChild();
+  const { setSelectedChild, selectedChild, updateBillLink } =
+    useSelectedChild();
   const router = useRouter();
   console.log(selectedChild);
 
@@ -42,14 +41,6 @@ const ParentMain = ({
     console.log(sel);
     setSelectedChild(sel);
     clear();
-  }
-
-  async function customerPortalLink() {
-    const manage_link = await generateCustomerPortalLink(
-      isParent(parent) ? parent?.stripe_customer_id || "" : "",
-      isParent(parent)
-    );
-    console.log(manage_link);
   }
 
   async function checkOutInfo() {
@@ -88,12 +79,22 @@ const ParentMain = ({
     }
   }
 
+  async function createStripeAcc() {
+    const res = await createChildStripeAccount({
+      parentEmail: parent.email,
+      childId: selectedChild?._id as string,
+    });
+    console.log(res);
+  }
+
   useEffect(() => {
-    if (parent) {
+    if (parent && selectedChild) {
       // customerPortalLink();
-      checkOutInfo();
+      if (sessionId && studentId) checkOutInfo();
+
+      createStripeAcc();
     }
-  }, [sessionId, studentId, status, parent]);
+  }, [sessionId, studentId, status, parent, selectedChild]);
 
   if (!selectedChild) return null;
   if (parent?.children?.length === 0 && parent?.children) return null;
@@ -107,9 +108,9 @@ const ParentMain = ({
               <h2 className="text-3xl font-bold tracking-tight text-white">
                 Subscriptions
               </h2>
-              <Link href={manage_link}>
+              {/* <Link href={manage_link}>
                 <Button>Billing</Button>
-              </Link>
+              </Link> */}
             </div>
             <ChildSwitcher
               parent={parent}
@@ -144,7 +145,11 @@ const ParentMain = ({
           handleSelectChild={handleSelectChild}
         />
       </div>
-      <StudentAcceptedScetion userInfo={parent} selectedChild={selectedChild} />
+      <StudentAcceptedScetion
+        userInfo={parent}
+        selectedChild={selectedChild}
+        billingLink={updateBillLink}
+      />
     </section>
   );
 };

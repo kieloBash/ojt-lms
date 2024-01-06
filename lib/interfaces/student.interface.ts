@@ -14,6 +14,8 @@ export interface StudentType {
   // package?: TransactionPackageType;
   package?: NewTransactionPackageType;
   status: StudentStatus;
+  stripe_customer_id?: string;
+
 }
 
 export type StudentStatus = "Paid" | "Not Paid" | "Enrolling";

@@ -139,178 +139,178 @@ export default function ChildSwitcher({
 
   if (students.length === 0) return null;
 
-  return null;
+  // return null;
 
-  // return (
-  //   <Dialog open={showNewTeamDialog} onOpenChange={setShowNewTeamDialog}>
-  //     <Popover open={open} onOpenChange={setOpen}>
-  //       <PopoverTrigger asChild>
-  //         <Button
-  //           variant="outline"
-  //           role="combobox"
-  //           aria-expanded={open}
-  //           aria-label="Select a team"
-  //           className={cn("w-[250px] justify-between", className)}
-  //         >
-  //           <Avatar className="w-5 h-5 mr-2">
-  //             <AvatarImage
-  //               src={selectedChild?.profileURL || ""}
-  //               alt={selectedChild?.name}
-  //             />
-  //             <AvatarFallback>{selectedChild?.name[0]}</AvatarFallback>
-  //           </Avatar>
-  //           {selectedChild.name}
-  //           <ChevronsUpDown className="w-4 h-4 ml-auto opacity-50 shrink-0" />
-  //         </Button>
-  //       </PopoverTrigger>
-  //       <PopoverContent className="w-[250px] p-0">
-  //         <Command>
-  //           <CommandList>
-  //             {students.map((single) => (
-  //               <CommandItem
-  //                 key={single._id}
-  //                 onSelect={() => {
-  //                   handleSelectChild(single);
-  //                   setOpen(false);
-  //                 }}
-  //                 className="text-sm"
-  //               >
-  //                 <Avatar className="w-5 h-5 mr-2">
-  //                   <AvatarImage
-  //                     src={single?.profileURL || ""}
-  //                     alt={single.name}
-  //                     className="grayscale"
-  //                   />
-  //                   <AvatarFallback>{single?.name[0]}</AvatarFallback>
-  //                 </Avatar>
-  //                 {single.name} - {single.age}yrs. old
-  //                 <CheckIcon
-  //                   className={cn(
-  //                     "ml-auto h-4 w-4",
-  //                     selectedChild._id === single._id
-  //                       ? "opacity-100"
-  //                       : "opacity-0"
-  //                   )}
-  //                 />
-  //               </CommandItem>
-  //             ))}
-  //           </CommandList>
-  //           <CommandSeparator />
-  //           <CommandList>
-  //             <CommandGroup>
-  //               <DialogTrigger asChild>
-  //                 <CommandItem
-  //                   onSelect={() => {
-  //                     setOpen(false);
-  //                     setShowNewTeamDialog(true);
-  //                   }}
-  //                 >
-  //                   <PlusCircle className="w-5 h-5 mr-2" />
-  //                   Add Student
-  //                 </CommandItem>
-  //               </DialogTrigger>
-  //             </CommandGroup>
-  //           </CommandList>
-  //         </Command>
-  //       </PopoverContent>
-  //     </Popover>
-  //     <DialogContent>
-  //       <DialogHeader>
-  //         <DialogTitle>Create a new student</DialogTitle>
-  //         <DialogDescription>
-  //           Add a new student to enroll in the Umonics.
-  //         </DialogDescription>
-  //       </DialogHeader>
-  //       <div>
-  //         <Form {...form}>
-  //           <form
-  //             onSubmit={form.handleSubmit(onSubmit)}
-  //             className="flex flex-col gap-4"
-  //           >
-  //             <FormField
-  //               control={form.control}
-  //               name="child_name"
-  //               render={({ field }) => (
-  //                 <FormItem>
-  //                   <FormControl>
-  //                     <div className="space-y-2">
-  //                       <Label htmlFor="name">{`Child's full name`}</Label>
-  //                       <Input id="name" placeholder="John Doe" {...field} />
-  //                     </div>
-  //                   </FormControl>
-  //                   <FormMessage />
-  //                 </FormItem>
-  //               )}
-  //             />
-  //             <div className="space-y-2">
-  //               <Label htmlFor="plan">{`Child's date of birth`}</Label>
-  //               <Input
-  //                 id="dob"
-  //                 type="date"
-  //                 value={child_bday}
-  //                 onChange={(e) => setchild_bday(e.target.value)}
-  //               />
-  //             </div>
-  //             <FormField
-  //               control={form.control}
-  //               name="gradeLevel"
-  //               render={({ field }) => (
-  //                 <FormItem>
-  //                   <Select
-  //                     onValueChange={field.onChange}
-  //                     defaultValue={field.value}
-  //                   >
-  //                     <FormControl>
-  //                       <div className="space-y-2">
-  //                         <Label htmlFor="name">{`Child's Grade Level`}</Label>
-  //                         <SelectTrigger className="flex-1 w-full px-4 py-2 text-base text-gray-700 placeholder-gray-400 bg-white border border-gray-300 rounded-none shadow-sm appearance-none focus:outline-none focus:ring-2 focus:ring-main-600 focus:border-transparent">
-  //                           <SelectValue placeholder="Select a grade level for your child" />
-  //                         </SelectTrigger>
-  //                       </div>
-  //                     </FormControl>
-  //                     <SelectContent>
-  //                       {gradeOption.length === 0 ? (
-  //                         <div className="w-full text-sm text-center">
-  //                           No Options
-  //                         </div>
-  //                       ) : (
-  //                         <>
-  //                           {gradeOption.map((d: string) => {
-  //                             const label =
-  //                               GRADE_LEVEL[d as keyof typeof GRADE_LEVEL];
-  //                             return (
-  //                               <SelectItem key={d} value={d}>
-  //                                 {label}
-  //                               </SelectItem>
-  //                             );
-  //                           })}
-  //                         </>
-  //                       )}
-  //                     </SelectContent>
-  //                   </Select>
+  return (
+    <Dialog open={showNewTeamDialog} onOpenChange={setShowNewTeamDialog}>
+      <Popover open={open} onOpenChange={setOpen}>
+        <PopoverTrigger asChild>
+          <Button
+            variant="outline"
+            role="combobox"
+            aria-expanded={open}
+            aria-label="Select a team"
+            className={cn("w-[250px] justify-between", className)}
+          >
+            <Avatar className="w-5 h-5 mr-2">
+              <AvatarImage
+                src={selectedChild?.profileURL || ""}
+                alt={selectedChild?.name}
+              />
+              <AvatarFallback>{selectedChild?.name[0]}</AvatarFallback>
+            </Avatar>
+            {selectedChild.name}
+            <ChevronsUpDown className="w-4 h-4 ml-auto opacity-50 shrink-0" />
+          </Button>
+        </PopoverTrigger>
+        <PopoverContent className="w-[250px] p-0">
+          <Command>
+            <CommandList>
+              {students.map((single) => (
+                <CommandItem
+                  key={single._id}
+                  onSelect={() => {
+                    handleSelectChild(single);
+                    setOpen(false);
+                  }}
+                  className="text-sm"
+                >
+                  <Avatar className="w-5 h-5 mr-2">
+                    <AvatarImage
+                      src={single?.profileURL || ""}
+                      alt={single.name}
+                      className="grayscale"
+                    />
+                    <AvatarFallback>{single?.name[0]}</AvatarFallback>
+                  </Avatar>
+                  {single.name} - {single.age}yrs. old
+                  <CheckIcon
+                    className={cn(
+                      "ml-auto h-4 w-4",
+                      selectedChild._id === single._id
+                        ? "opacity-100"
+                        : "opacity-0"
+                    )}
+                  />
+                </CommandItem>
+              ))}
+            </CommandList>
+            <CommandSeparator />
+            <CommandList>
+              <CommandGroup>
+                <DialogTrigger asChild>
+                  <CommandItem
+                    onSelect={() => {
+                      setOpen(false);
+                      setShowNewTeamDialog(true);
+                    }}
+                  >
+                    <PlusCircle className="w-5 h-5 mr-2" />
+                    Add Student
+                  </CommandItem>
+                </DialogTrigger>
+              </CommandGroup>
+            </CommandList>
+          </Command>
+        </PopoverContent>
+      </Popover>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Create a new student</DialogTitle>
+          <DialogDescription>
+            Add a new student to enroll in the Umonics.
+          </DialogDescription>
+        </DialogHeader>
+        <div>
+          <Form {...form}>
+            <form
+              onSubmit={form.handleSubmit(onSubmit)}
+              className="flex flex-col gap-4"
+            >
+              <FormField
+                control={form.control}
+                name="child_name"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <div className="space-y-2">
+                        <Label htmlFor="name">{`Child's full name`}</Label>
+                        <Input id="name" placeholder="John Doe" {...field} />
+                      </div>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <div className="space-y-2">
+                <Label htmlFor="plan">{`Child's date of birth`}</Label>
+                <Input
+                  id="dob"
+                  type="date"
+                  value={child_bday}
+                  onChange={(e) => setchild_bday(e.target.value)}
+                />
+              </div>
+              <FormField
+                control={form.control}
+                name="gradeLevel"
+                render={({ field }) => (
+                  <FormItem>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+                      <FormControl>
+                        <div className="space-y-2">
+                          <Label htmlFor="name">{`Child's Grade Level`}</Label>
+                          <SelectTrigger className="flex-1 w-full px-4 py-2 text-base text-gray-700 placeholder-gray-400 bg-white border border-gray-300 rounded-none shadow-sm appearance-none focus:outline-none focus:ring-2 focus:ring-main-600 focus:border-transparent">
+                            <SelectValue placeholder="Select a grade level for your child" />
+                          </SelectTrigger>
+                        </div>
+                      </FormControl>
+                      <SelectContent>
+                        {gradeOption.length === 0 ? (
+                          <div className="w-full text-sm text-center">
+                            No Options
+                          </div>
+                        ) : (
+                          <>
+                            {gradeOption.map((d: string) => {
+                              const label =
+                                GRADE_LEVEL[d as keyof typeof GRADE_LEVEL];
+                              return (
+                                <SelectItem key={d} value={d}>
+                                  {label}
+                                </SelectItem>
+                              );
+                            })}
+                          </>
+                        )}
+                      </SelectContent>
+                    </Select>
 
-  //                   <FormMessage />
-  //                 </FormItem>
-  //               )}
-  //             />
-  //             <DialogFooter className="mt-6">
-  //               <Button
-  //                 variant="outline"
-  //                 onClick={() => setShowNewTeamDialog(false)}
-  //               >
-  //                 Cancel
-  //               </Button>
-  //               <Button disabled={isLoading} type="submit">
-  //                 Continue
-  //                 {isLoading && (
-  //                   <Loader2 className="w-5 h-5 ml-2 animate-spin" />
-  //                 )}
-  //               </Button>
-  //             </DialogFooter>
-  //           </form>
-  //         </Form>
-  //       </div>
-  //     </DialogContent>
-  //   </Dialog>
-  // );
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <DialogFooter className="mt-6">
+                <Button
+                  variant="outline"
+                  onClick={() => setShowNewTeamDialog(false)}
+                >
+                  Cancel
+                </Button>
+                <Button disabled={isLoading} type="submit">
+                  Continue
+                  {isLoading && (
+                    <Loader2 className="w-5 h-5 ml-2 animate-spin" />
+                  )}
+                </Button>
+              </DialogFooter>
+            </form>
+          </Form>
+        </div>
+      </DialogContent>
+    </Dialog>
+  );
 }
