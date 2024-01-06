@@ -117,6 +117,7 @@ export async function updatePassword(userId: string, newPassword: string) {
   }
 }
 
+
 export async function updateStripeId(
   userId: string,
   stripe_customer_id: string

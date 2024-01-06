@@ -81,7 +81,6 @@ export function ProfileForm({ userInfo }: { userInfo: UserType | ParentType }) {
       }
   
       const updateResult = await updatePassword(userInfo?._id || "", data.new_password || "");
-      console.log(updateResult)
       if (updateResult.success) {
         toast({
           title: updateResult.message,
