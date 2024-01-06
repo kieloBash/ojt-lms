@@ -108,10 +108,15 @@ export async function updatePassword(userId: string, newPassword: string) {
       message: "Password updated successfully",
       success: true,
     };
-  } catch (error: any) {
-    throw new Error(`Error updating password: ${error.message}`);
+  } catch (error) {
+    console.error("Error updating password:", error);
+    return {
+      message: 'Error updating password',
+      success: false,
+    };
   }
 }
+
 
 export async function updateStripeId(
   userId: string,

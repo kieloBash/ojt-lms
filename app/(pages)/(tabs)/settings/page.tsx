@@ -1,9 +1,6 @@
 import { ProfileForm } from "@/components/pages/settings/form";
 import { Separator } from "@/components/ui/separator";
 import { authUserClerk } from "@/lib/actions/parent.action";
-import { ParentType } from "@/lib/interfaces/parent.interface";
-import { UserType } from "@/lib/interfaces/user.interface";
-import { authOptions } from "@/utils/authOptions";
 import { Metadata } from "next";
 import React from "react";
 

@@ -24,7 +24,6 @@ import { Label } from "@/components/ui/label";
 import { UserType } from "@/lib/interfaces/user.interface";
 import { ParentType } from "@/lib/interfaces/parent.interface";
 import { useState } from "react";
-import { updatePassword } from "@/lib/actions/parent.action";
 
 const profileFormSchema = z.object({
   username: z
@@ -59,6 +58,7 @@ type ProfileFormValues = z.infer<typeof profileFormSchema>;
 export function ProfileForm({ userInfo }: { userInfo: UserType | ParentType }) {
   const [showPasswordNew, setShowPasswordNew] = useState<boolean>(false);
   const [showPasswordPrev, setShowPasswordPrev] = useState<boolean>(false);
+
   const form = useForm<ProfileFormValues>({
     resolver: zodResolver(profileFormSchema),
     defaultValues: {
@@ -70,32 +70,22 @@ export function ProfileForm({ userInfo }: { userInfo: UserType | ParentType }) {
     mode: "onChange",
   });
 
-  async function onSubmit(data: ProfileFormValues) {
-    try {
-      if (data.new_password && !data.initial_password) {
-        toast({
-          title: "Enter your previous password to change to your new password",
-          variant: "destructive",
-        });
-        return null;
-      }
-  
-      const updateResult = await updatePassword(userInfo?._id || "", data.new_password || "");
-      if (updateResult.success) {
-        toast({
-          title: updateResult.message,
-          variant: "default",
-        });
-      } else {
-        toast({
-          title: "Error updating password",
-          description: updateResult.message,
-          variant: "destructive",
-        });
-      }
-    } catch (error) {
-      console.error("Error while updating password:", error);
+  function onSubmit(data: ProfileFormValues) {
+    if (data.new_password && !data.initial_password) {
+      toast({
+        title: "Enter your previous password to change to your new password",
+        variant: "destructive",
+      });
+      return null;
     }
+    toast({
+      title: "You submitted the following values:",
+      description: (
+        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+          <code className="text-white">{JSON.stringify(data, null, 2)}</code>
+        </pre>
+      ),
+    });
   }
 
   return (
