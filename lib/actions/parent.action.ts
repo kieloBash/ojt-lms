@@ -111,7 +111,7 @@ export async function updatePassword(userId: string, newPassword: string) {
       dataBeforeUpdate && dataAfterUpdate &&
       dataBeforeUpdate.password !== dataAfterUpdate.password
     );
-
+      console.log(isPasswordChanged);
     return {
       message: "Password updated successfully",
       success: true,
