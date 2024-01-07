@@ -235,7 +235,9 @@ export async function fetchSingleChildId({ _id }: { _id: string }) {
 
     const query = Student.findById({ _id })
       .lean()
-      .select("_id name age status profileURL package gradeLevel")
+      .select(
+        "_id name age status profileURL package gradeLevel stripe_customer_id"
+      )
       .exec();
 
     const single: any = await query;
@@ -248,6 +250,8 @@ export async function fetchSingleChildId({ _id }: { _id: string }) {
       ...single,
       _id: single._id.toString(),
     };
+
+    console.log(plainData);
 
     return plainData;
   } catch (error) {
@@ -357,7 +361,7 @@ export async function fetchSingleParentClerkId({
       .populate({
         path: "children",
         model: Student,
-        select: "_id name age status profileURL package gradeLevel",
+        select: "_id name age status profileURL package gradeLevel stripe_customer_id",
       })
       .populate({
         path: "transactions",
