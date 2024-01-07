@@ -115,7 +115,8 @@ export async function updatePassword(userId: string, newPassword: string) {
     return {
       message: "Password updated successfully",
       success: true,
-      data
+      data,
+      isPasswordChanged
     };
   } catch (error) {
     console.error("Error updating password:", error);
