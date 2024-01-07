@@ -102,7 +102,6 @@ export async function updatePassword(userId: string, newPassword: string) {
 
     const data = await Parent.findByIdAndUpdate(userId, {
       password: hashedPassword,
-      passwordUpdated: true,
       
     });
 
