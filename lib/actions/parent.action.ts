@@ -95,7 +95,6 @@ export async function createNewParent({
 export async function updatePassword(userId: string, newPassword: string) {
   try {
     connectDB();
-    const dataBeforeUpdate = await Parent.findById(userId);
 
     const saltRounds = 10;
     const salt = bcrypt.genSaltSync(saltRounds);
@@ -103,20 +102,14 @@ export async function updatePassword(userId: string, newPassword: string) {
 
     const data = await Parent.findByIdAndUpdate(userId, {
       password: hashedPassword,
+      passwordUpdated: true,
+      
     });
 
-    const dataAfterUpdate = await Parent.findById(userId);
-
-    const isPasswordChanged = (
-      dataBeforeUpdate && dataAfterUpdate &&
-      dataBeforeUpdate.password !== dataAfterUpdate.password
-    );
-      console.log("isPasswordChanged: ", isPasswordChanged);
     return {
       message: "Password updated successfully",
       success: true,
       data,
-      isPasswordChanged
     };
   } catch (error) {
     console.error("Error updating password:", error);
