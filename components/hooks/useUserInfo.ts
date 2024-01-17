@@ -10,21 +10,27 @@ const useUserInfo = () => {
   const { user, isLoaded } = useUser();
   const [userInfo, setUserInfo] = useState<ParentType | UserType>();
 
+  console.log(user);
   console.log(userInfo);
 
-  async function getParent() {
-    if (!user || !isLoaded) return null;
-    const parentInfo = await fetchSingleParentClerkId({
-      clerkId: user.id,
-    });
-    setUserInfo(parentInfo);
-  }
-
   useEffect(() => {
-    if (user) {
-      getParent();
+    async function getParent() {
+      if (!user || !isLoaded) return null;
+      const parentInfo = await fetchSingleParentClerkId({
+        clerkId: user.id,
+      });
+      console.log(parentInfo);
+      return parentInfo;
     }
-  }, [user]);
+
+    if (user && !userInfo) {
+      getParent().then((res) => {
+        if (res) {
+          setUserInfo(res);
+        }
+      });
+    }
+  }, [user, userInfo]);
 
   return userInfo;
 };
