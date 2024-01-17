@@ -20,6 +20,7 @@ const parentSchema = new mongoose.Schema(
       required: true,
       unique: true,
     },
+    
     profileURL: {
       type: String,
     },

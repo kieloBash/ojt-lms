@@ -100,13 +100,13 @@ export async function updatePassword(userId: string, newPassword: string) {
     const salt = bcrypt.genSaltSync(saltRounds);
     const hashedPassword = bcrypt.hashSync(newPassword, salt);
 
-    await Parent.findByIdAndUpdate(userId, {
-      password: hashedPassword,
-    });
+    const data = await Parent.findByIdAndUpdate(userId, { password: hashedPassword }, { new: true });
+
 
     return {
       message: "Password updated successfully",
       success: true,
+      data,
     };
   } catch (error) {
     console.error("Error updating password:", error);
