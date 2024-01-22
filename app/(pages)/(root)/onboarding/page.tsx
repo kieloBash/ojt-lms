@@ -17,8 +17,9 @@ const OnboardingPage = () => {
   const router = useRouter();
 
   const PAGES = [
-    <StepOne />,
+    <StepOne key={1} />,
     <StepTwo
+      key={2}
       name={name}
       dob={dob}
       setName={(e: string) => setName(e)}
