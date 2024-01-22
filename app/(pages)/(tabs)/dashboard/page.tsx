@@ -11,6 +11,7 @@ import {
   getCheckoutInfo,
   hasSubscription,
 } from "@/utils/helpers/stripe/billing";
+import { auth } from "@clerk/nextjs";
 import { Metadata } from "next";
 import { redirect } from "next/navigation";
 import React from "react";
@@ -22,7 +23,7 @@ export const metadata: Metadata = {
 
 const DashboardPage = async ({ searchParams }: PageProps) => {
   const user = await authUserClerk();
-  
+  const { userId: clerkId } = auth();
 
   // const manage_link = await generateCustomerPortalLink(
   //   isParent(user) ? session?.stripe_customer_id : "",
@@ -66,7 +67,8 @@ const DashboardPage = async ({ searchParams }: PageProps) => {
   //   console.log(NewTransaction);
   // }
 
-  if (!user) return redirect("/");
+  if (!user && clerkId) redirect("/onboarding");
+  if (!user) redirect("/");
 
   return (
     <>

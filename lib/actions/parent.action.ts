@@ -25,6 +25,8 @@ export async function authUserClerk() {
     result = await fetchSingleUserClerkId({ clerkId });
   }
 
+  console.log(result);
+
   return result;
 }
 
@@ -100,8 +102,11 @@ export async function updatePassword(userId: string, newPassword: string) {
     const salt = bcrypt.genSaltSync(saltRounds);
     const hashedPassword = bcrypt.hashSync(newPassword, salt);
 
-    const data = await Parent.findByIdAndUpdate(userId, { password: hashedPassword }, { new: true });
-
+    const data = await Parent.findByIdAndUpdate(
+      userId,
+      { password: hashedPassword },
+      { new: true }
+    );
 
     return {
       message: "Password updated successfully",
@@ -111,12 +116,11 @@ export async function updatePassword(userId: string, newPassword: string) {
   } catch (error) {
     console.error("Error updating password:", error);
     return {
-      message: 'Error updating password',
+      message: "Error updating password",
       success: false,
     };
   }
 }
-
 
 export async function updateStripeId(
   userId: string,
@@ -360,7 +364,8 @@ export async function fetchSingleParentClerkId({
       .populate({
         path: "children",
         model: Student,
-        select: "_id name age status profileURL package gradeLevel stripe_customer_id",
+        select:
+          "_id name age status profileURL package gradeLevel stripe_customer_id",
       })
       .populate({
         path: "transactions",
@@ -416,7 +421,8 @@ export async function fetchSingleUserClerkId({ clerkId }: { clerkId: string }) {
       .exec();
 
     if (!single) {
-      throw new Error("User not Found");
+      return;
+      // throw new Error("User not Found");
     }
 
     const plainData: UserType = {
@@ -426,6 +432,7 @@ export async function fetchSingleUserClerkId({ clerkId }: { clerkId: string }) {
 
     return plainData;
   } catch (error) {
+    return;
     throw new Error(`Error in fetching single User`);
   }
 }
