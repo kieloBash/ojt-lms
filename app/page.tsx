@@ -1,11 +1,5 @@
-"use client";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Mail } from "lucide-react";
 
-// VID
-import { CldVideoPlayer } from "next-cloudinary";
-import "next-cloudinary/dist/cld-video-player.css";
 import Image from "next/image";
 
 // IMG
@@ -15,12 +9,15 @@ import onlineClass from "@/public/pics/online-class.jpg";
 import schedule from "@/public/pics/schedule.jpg";
 import recording from "@/public/pics/recording.jpg";
 
-import { redirect } from "next/navigation";
 import Link from "next/link";
+import VideoPlayer from "@/components/opt-in/player";
+import { auth } from "@clerk/nextjs";
+import { redirect } from "next/navigation";
+import { PageProps } from "@/lib/interfaces/page.props";
 
-export default function Home() {
+export default function Home({ searchParams }: PageProps) {
   // redirect("/auth/sign-in")
-
+  console.log(searchParams);
   const INFO = [
     {
       img: childOnline,
@@ -48,6 +45,12 @@ export default function Home() {
       p: "Enjoy the convenience of reviewing class content anytime, fostering better understanding and reinforcement of concepts.",
     },
   ];
+
+  const user = auth();
+  console.log(user);
+  if (user.userId || searchParams.__clerk_created_session)
+    redirect("/dashboard");
+
   return (
     <main className="flex flex-col items-center justify-center min-h-screen bg-white">
       <header className="flex items-center justify-between w-full h-20 px-20 bg-white">
@@ -59,49 +62,7 @@ export default function Home() {
           <p className="">need help? temporary@umonics.com</p>
         </div>
       </header>
-      <section className="grid w-full h-[calc(100vh-6rem)] grid-cols-5 gap-20 px-20">
-        <div className="flex items-center justify-center col-span-2">
-          <div className="border-2 shadow-md w-full h-[17rem]">
-            <CldVideoPlayer
-              id="sea-turtle"
-              width={"1920"}
-              height={"1080"}
-              src="umonics/sample1"
-              logo={{
-                imageUrl:
-                  "https://res.cloudinary.com/colbycloud-next-cloudinary/image/upload/v1676058142/assets/space-jelly-cosmo-helmet.svg",
-                onClickUrl: "/",
-              }}
-            />
-          </div>
-        </div>
-        <div className="flex flex-col items-start justify-center col-span-3">
-          <h4 className="text-base font-medium uppercase text-main-500">
-            The Ultimate learning experience specialized for your child
-          </h4>
-          <h1 className="mt-1 text-6xl font-extrabold">
-            The Umonics Method Learning Management System
-          </h1>
-          <p className="mt-8 text-lg text-medium">
-            Discover new learning materials{" "}
-            <span className="font-bold text-main-500">specially made</span> for
-            your child. We specialize in giving only the{" "}
-            <span className="font-bold text-main-500">best experience</span> and
-            platform for your child to grow!
-          </p>
-          <form className="w-full mt-8 space-y-4">
-            <Input
-              name="email"
-              type="email"
-              placeholder="Enter your email here"
-              className="h-16 text-xl"
-            />
-            <Button type="submit" className="h-16 px-10 text-2xl font-bold">
-              Sign Up Now!
-            </Button>
-          </form>
-        </div>
-      </section>
+      <VideoPlayer />
       <section className="w-full -mt-4">
         <div className="flex flex-col w-full h-full px-10 py-8 text-white bg-main-700 rounded-t-2xl">
           <h2 className="mt-10 text-6xl font-extrabold text-center">{`Here's what you can get`}</h2>
