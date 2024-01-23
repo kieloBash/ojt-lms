@@ -3,15 +3,13 @@ import React from "react";
 
 // BACKEND
 import { useQuery } from "@tanstack/react-query";
+import { fetchChildrenId } from "@/lib/actions/parent.action";
+import { StudentType } from "@/lib/interfaces/student.interface";
+import useGetUserInfo from "@/components/hooks/useGetUserInfo";
 
 // UI
 import { Checkbox } from "@/components/ui/checkbox";
-import { fetchChildrenId } from "@/lib/actions/parent.action";
-import { StudentType } from "@/lib/interfaces/student.interface";
-import { useSession } from "next-auth/react";
-import { UserType } from "@/lib/interfaces/user.interface";
-import useUserInfo from "@/components/hooks/useUserInfo";
-import useGetUserInfo from "@/components/hooks/useGetUserInfo";
+
 
 const children = [
   {
@@ -25,8 +23,6 @@ const children = [
 ] as const;
 
 const ChildrenCheckboxes = () => {
-  // const userInfo = useUserInfo();
-
   const { data: userInfo } = useGetUserInfo();
   const userId = userInfo?._id as string;
 

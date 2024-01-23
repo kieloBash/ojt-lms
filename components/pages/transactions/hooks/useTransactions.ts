@@ -7,7 +7,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
 
 const useTransactions = () => {
-  const userInfo = useUserInfo() as ParentType;
+  const { data: userInfo } = useUserInfo();
   let transactionIds: string[] = [];
 
   transactionIds =

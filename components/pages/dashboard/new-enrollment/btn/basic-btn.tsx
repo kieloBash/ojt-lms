@@ -15,7 +15,7 @@ import { useSelectedChild } from "@/components/global/context/useSelectedChild";
 import useUserInfo from "@/components/hooks/useUserInfo";
 
 const LessonsOnlyBtn = ({ close }: { close: (e: string) => void }) => {
-  const userInfo = useUserInfo() as UserType;
+  const { data: userInfo } = useUserInfo();
   const router = useRouter();
 
   // if (!userInfo) return null;

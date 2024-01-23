@@ -15,7 +15,7 @@ import { useSelectedChild } from "@/components/global/context/useSelectedChild";
 import useUserInfo from "@/components/hooks/useUserInfo";
 
 const AllInclusiveBtn = ({ close }: { close: (e: string) => void }) => {
-  const userInfo = useUserInfo();
+  const { data: userInfo } = useUserInfo();
   const router = useRouter();
 
   const { selected } = useSelected();
