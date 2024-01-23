@@ -70,6 +70,8 @@ const SubscriptionMain = () => {
                 : links?.ultimate.year;
           }
 
+          console.log(link);
+
           return (
             <PricingCard
               key={index}
@@ -78,7 +80,7 @@ const SubscriptionMain = () => {
               description={p.description}
               offers={p.offers}
               duration={duration}
-              link={link as string}
+              link={link as string || ""}
               discounted={p.discounted}
               discountedPrice={
                 p.discounted

@@ -60,7 +60,7 @@ const ParentMain = ({
       const { success } = await createNewTransactionSubscription({
         NewTransaction,
       });
-      if (success) window.location.replace("/dashboard");
+      if (success) window.location.replace(`/dashboard?new=${true}`);
     } else if (sessionId !== "" && !status) {
       // User has cancelled the payment process
       console.log("cancelled");

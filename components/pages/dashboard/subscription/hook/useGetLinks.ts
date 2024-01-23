@@ -20,9 +20,8 @@ const useGetLinks = ({
 }) => {
   const { data, isLoading } = useQuery({
     enabled: customerId !== "",
-    queryKey: [`checkout-link`,childId],
+    queryKey: [`checkout-link:${childId}`, childId],
     queryFn: async () => {
-      console.log("load");
       const discoverMO = await createCheckoutLink(
         customerId,
         DiscoverMO,
