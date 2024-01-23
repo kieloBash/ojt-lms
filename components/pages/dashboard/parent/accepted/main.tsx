@@ -1,5 +1,5 @@
+"use client";
 import React from "react";
-import { ParentType } from "@/lib/interfaces/parent.interface";
 import { StudentType } from "@/lib/interfaces/student.interface";
 
 // UI
@@ -11,7 +11,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import CardGridSection from "./card-grid";
 import CalendarAttendance from "./cards/calendar-attendance";
 import dayjs from "dayjs";
 import Image from "next/image";
@@ -20,18 +19,21 @@ import { Button } from "@/components/ui/button";
 import { ShoppingBag } from "lucide-react";
 import Link from "next/link";
 
+import IntroComponent from "../../help/intro";
+import Announcemment from "../../announcement/announcement";
+
 const StudentAcceptedScetion = ({
-  userInfo,
   selectedChild,
   billingLink,
 }: {
-  userInfo: ParentType;
   selectedChild: StudentType;
   billingLink: string;
 }) => {
   return (
-    <div className="min-h-[calc(100vh-6rem)] p-8 pt-0 space-y-4">
-      <div className="space-y-4">
+    <div className="min-h-[calc(100vh-6rem)] p-8 pt-0 space-y-4 flex flex-col">
+      <Announcemment />
+      <IntroComponent />
+      <div className="pb-4 space-y-4 ">
         <div className="space-y-4">
           {selectedChild.package !== "Discover" ? (
             <>
@@ -40,8 +42,8 @@ const StudentAcceptedScetion = ({
                   <CardHeader>
                     <CardTitle>Progress Tracker</CardTitle>
                     <CardDescription>
-                      Here are the classes you have signed up for the month of{" "}
-                      {dayjs().format("MMMM")}.
+                      Here you can view all the classes you have enrolled in for
+                      the month of {dayjs().format("MMMM")}.
                     </CardDescription>
                   </CardHeader>
                   <CardContent className="pl-2">
@@ -52,7 +54,10 @@ const StudentAcceptedScetion = ({
                   <Card className="col-span-3">
                     <CardHeader>
                       <CardTitle>Class Materials</CardTitle>
-                      <CardDescription>Class Materials for you</CardDescription>
+                      <CardDescription>
+                        Here you can view all the materials made available for
+                        you whenever you attended the class.
+                      </CardDescription>
                     </CardHeader>
                     <CardContent>
                       <MaterialsTable selectedChild={selectedChild} />
@@ -62,7 +67,7 @@ const StudentAcceptedScetion = ({
               </div>
             </>
           ) : (
-            <div className="absolute flex flex-col items-center justify-center overflow-hidden -translate-x-1/2 -translate-y-1/2 left-1/2 top-1/2">
+            <div className="flex flex-col items-center justify-center w-full h-screen">
               <Image src={LOGO} alt="Umonics Logo" width={900} />
               <Link href={billingLink}>
                 <Button>
