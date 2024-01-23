@@ -149,7 +149,6 @@ const ParentMain = ({
         />
       </header>
       <StudentAcceptedScetion
-        userInfo={parent}
         selectedChild={selectedChild}
         billingLink={updateBillLink}
       />
