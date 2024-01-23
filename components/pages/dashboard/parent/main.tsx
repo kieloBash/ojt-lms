@@ -37,7 +37,7 @@ const ParentMain = ({
   const router = useRouter();
 
   function handleSelectChild(sel: StudentType) {
-    console.log(sel);
+    // console.log(sel);
     setSelectedChild(sel);
     clear();
   }
@@ -129,17 +129,25 @@ const ParentMain = ({
 
   return (
     <section className="flex flex-col w-full h-screen overflow-y-auto bg-white">
-      <div className="flex items-center justify-between w-full p-10 py-5">
-        <h2 className="text-3xl font-bold tracking-tight text-main-500">
-          Dashboard
-        </h2>
+      <header className="flex items-center justify-between w-full h-24 p-10 py-5">
+        <div className="flex flex-col">
+          <h2 className="text-3xl font-bold tracking-tight text-main-500">
+            Dashboard
+          </h2>
+          {selectedChild.package !== "Discover" && (
+            <p className="text-sm text-muted-foreground">
+              Welcome to your dashboard! Here you can quickly view everything
+              within your package!
+            </p>
+          )}
+        </div>
         <ChildSwitcher
           parent={parent}
           students={parent?.children as StudentType[]}
           selectedChild={selectedChild}
           handleSelectChild={handleSelectChild}
         />
-      </div>
+      </header>
       <StudentAcceptedScetion
         userInfo={parent}
         selectedChild={selectedChild}

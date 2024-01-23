@@ -19,7 +19,7 @@ const ParentComponent = ({
   studentId: string;
   status: boolean;
 }) => {
-  console.log(userInfo);
+  // console.log(userInfo);
   return (
     <>
       <SelectedProvider>

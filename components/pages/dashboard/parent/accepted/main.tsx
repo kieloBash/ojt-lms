@@ -30,12 +30,9 @@ const StudentAcceptedScetion = ({
   billingLink: string;
 }) => {
   return (
-    <div className="flex-1 p-8 pt-0 space-y-4">
+    <div className="min-h-[calc(100vh-6rem)] p-8 pt-0 space-y-4">
       <div className="space-y-4">
         <div className="space-y-4">
-          {/* <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-            <CardGridSection />
-          </div> */}
           {selectedChild.package !== "Discover" ? (
             <>
               <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">

@@ -18,7 +18,7 @@ const DashboardPage = async ({ searchParams }: PageProps) => {
   const user = await authUserClerk();
   const { userId: clerkId } = auth();
 
-  console.log(searchParams);
+  // console.log(searchParams);
 
   if (!user && clerkId) redirect("/onboarding");
   if (!user) redirect("/");
