@@ -8,15 +8,23 @@ import useDebounce from "@/components/hooks/useDebounce";
 import { Skeleton } from "@/components/ui/skeleton";
 import { usePathname } from "next/navigation";
 import useUserInfo from "@/components/hooks/useUserInfo";
+import { Loader2 } from "lucide-react";
 
 const ChatSidebar = () => {
-  const userInfo = useUserInfo();
+  const { data: userInfo, isLoading } = useUserInfo();
   const pathname = usePathname();
 
   const [searchString, setSearchString] = useState("");
   const debouncedString = useDebounce(searchString, 500);
   const chats = useFetchChats(1, 10, debouncedString, userInfo?._id as string);
   console.log(chats);
+
+  if (isLoading)
+    return (
+      <div className="flex items-center justify-center w-full h-full">
+        <Loader2 className="w-6 h-6 animate-spin" />
+      </div>
+    );
 
   return (
     <main className="flex flex-col flex-1 gap-1 px-2">
