@@ -6,7 +6,7 @@ import { Card } from "@/components/ui/card";
 const IntroComponent = () => {
   return (
     <Card className="flex flex-col p-4">
-      <h2 className="text-2xl font-semibold">Let's Get Started!</h2>
+      <h2 className="text-2xl font-semibold">{`Let's Get Started!`}</h2>
       <p className="text-sm text-muted-foreground">
         {`Welcome to our new Umonics Method Learning System! Here is a quick guide to get you
         started. Follow the video below.`}
