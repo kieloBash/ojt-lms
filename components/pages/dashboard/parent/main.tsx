@@ -35,7 +35,6 @@ const ParentMain = ({
   const { setSelectedChild, selectedChild, updateBillLink } =
     useSelectedChild();
   const router = useRouter();
-  console.log(selectedChild);
 
   function handleSelectChild(sel: StudentType) {
     console.log(sel);
@@ -84,7 +83,6 @@ const ParentMain = ({
       parentEmail: parent.email,
       childId: selectedChild?._id as string,
     });
-    console.log(res);
   }
 
   useEffect(() => {
@@ -108,9 +106,6 @@ const ParentMain = ({
               <h2 className="text-3xl font-bold tracking-tight text-white">
                 Subscriptions
               </h2>
-              {/* <Link href={manage_link}>
-                <Button>Billing</Button>
-              </Link> */}
             </div>
             <ChildSwitcher
               parent={parent}
@@ -122,10 +117,10 @@ const ParentMain = ({
           <h1 className="text-3xl font-bold text-white">
             {`🚀 Exclusive Learning Packages: An Unveiling of Value 🚀`}
           </h1>
-          <p className="w-full max-w-[56rem] text-sm text-center text-white mt-6">
-            {`We hope this newsletter finds you well. At The Umonics Method, we're
+          <p className="w-full max-w-[56rem] text-sm text-center text-white mt-6 h-12">
+            {/* {`We hope this newsletter finds you well. At The Umonics Method, we're
           delighted to share some exciting news that will shape your child's
-          educational journey like never before!`}
+          educational journey like never before!`} */}
           </p>
         </header>
         <SubscriptionMain />;

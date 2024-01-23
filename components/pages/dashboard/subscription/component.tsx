@@ -1,109 +1,95 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 
 // UI
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import { PACKAGES } from "@/utils/constants/plans";
-import { Separator } from "@/components/ui/separator";
-import useUserInfo from "@/components/hooks/useUserInfo";
 import AdditionalInfo from "./cards/additional-info";
-import DiscoverMOButton from "./buttons/discover-mo";
-import DiscoverYRButton from "./buttons/discover-yr";
-import AdvanceMOButton from "./buttons/advance-mo";
-import AdvanceYRButton from "./buttons/advance-yr";
-import UltimateMOButton from "./buttons/ultimate-mo";
-import UltimateYRButton from "./buttons/ultimate-yr";
+import { Loader2 } from "lucide-react";
+import { Switch } from "@/components/ui/switch";
+
+import useGetLinks from "./hook/useGetLinks";
+import { useSelectedChild } from "@/components/global/context/useSelectedChild";
+import PricingCard from "./cards/pricing";
 
 const SubscriptionMain = () => {
-  const userInfo = useUserInfo();
+  const { selectedChild } = useSelectedChild();
+  const [duration, setDuration] = useState<"month" | "year">("month");
+
+  const { data: links, isLoading } = useGetLinks({
+    customerId: selectedChild?.stripe_customer_id || "",
+    childId: selectedChild?._id || "",
+  });
+
+  if (isLoading)
+    return (
+      <div className="flex items-center justify-center w-full h-[calc(100vh-17.5rem)]">
+        <Loader2 className="w-6 h-6 animate-spin" />
+      </div>
+    );
+
   return (
-    <section className="relative flex flex-col w-full h-full pb-8">
-      <div className="flex items-start justify-center w-full gap-4 -mt-10">
+    <section className="relative flex flex-col w-full h-full px-20 pb-8 -mt-8">
+      <div className="absolute grid grid-cols-5 gap-4 font-bold text-white translate-x-1/2 -top-16 right-1/2">
+        <div className="flex items-center justify-end col-span-2">
+          <span className={`${duration !== "month" && "text-slate-400"}`}>
+            Monthly
+          </span>
+        </div>
+        <div className="flex items-center justify-center">
+          <Switch
+            onCheckedChange={(e) => {
+              if (e) setDuration("year");
+              else setDuration("month");
+            }}
+          />
+        </div>
+        <div
+          className={`flex flex-col items-center justify-center col-span-2 ${
+            duration !== "year" && "text-slate-400"
+          }`}
+        >
+          <span className={``}>Annually</span>
+          <span className="text-xs font-normal">Enjoy a 20% Discount</span>
+        </div>
+      </div>
+      <div className="grid w-full min-h-screen grid-cols-3 gap-4 overflow-hidden bg-white border divide-x shadow-md rounded-2xl">
         {PACKAGES.map((p, index) => {
-          const PACKAGE_TYPE = ["Discover", "Advance", "Ultimate"];
+          let link;
+          if (p.label === "Discovery") {
+            link =
+              duration === "month"
+                ? links?.discover.month
+                : links?.discover.year;
+          } else if (p.label === "Advancement") {
+            link =
+              duration === "month" ? links?.advance.month : links?.advance.year;
+          } else {
+            link =
+              duration === "month"
+                ? links?.ultimate.month
+                : links?.ultimate.year;
+          }
+
           return (
-            <Card
+            <PricingCard
               key={index}
-              className="w-full max-w-[25rem] h-full flex flex-col justify-between p-4 relative"
-            >
-              {p.discounted && (
-                <div className="absolute flex items-center justify-center p-4 text-center rounded-full aspect-square -top-6 -right-6 bg-main-500">
-                  <span className="font-bold text-white">
-                    Limited <br /> Time
-                  </span>
-                </div>
-              )}
-              <div className="">
-                <CardHeader className="h-[13rem]">
-                  <CardTitle>{p.label}</CardTitle>
-                  <CardDescription>{p.description}</CardDescription>
-                </CardHeader>
-                <CardContent className="flex flex-col w-full">
-                  <div className="flex items-center justify-center w-full gap-2 my-4 text-xs text-black">
-                    <div className="flex-1">
-                      <Separator />
-                    </div>
-                    <p className="text-muted-foreground">
-                      {`Enjoy a 20% Discount in Yearly Packages`}
-                    </p>
-                    <div className="flex-1">
-                      <Separator />
-                    </div>
-                  </div>
-                  <div className="flex items-center justify-center w-full gap-4 text-white">
-                    {PACKAGE_TYPE[index] === "Discover" && (
-                      <>
-                        <DiscoverMOButton p={p as any} userInfo={userInfo} />
-                        <DiscoverYRButton p={p as any} userInfo={userInfo} />
-                      </>
-                    )}
-                    {PACKAGE_TYPE[index] === "Advance" && (
-                      <>
-                        <AdvanceMOButton p={p as any} userInfo={userInfo} />
-                        <AdvanceYRButton p={p as any} userInfo={userInfo} />
-                      </>
-                    )}
-                    {PACKAGE_TYPE[index] === "Ultimate" && (
-                      <>
-                        <UltimateMOButton p={p as any} userInfo={userInfo} />
-                        <UltimateYRButton p={p as any} userInfo={userInfo} />
-                      </>
-                    )}
-                  </div>
-                  <div className="mt-10 font-bold">Benefits</div>
-                  <ul className="pl-2 text-xs">
-                    {p.offers.map((offer, index) => {
-                      return (
-                        <li className="pb-4 list-decimal" key={index}>
-                          <div className="font-bold">{offer.title}</div>
-                          <div className="">{offer.details}</div>
-                        </li>
-                      );
-                    })}
-                  </ul>
-                </CardContent>
-              </div>
-              <CardFooter className="flex flex-col w-full">
-                <div className="flex items-center justify-center w-full gap-2 my-4 text-sm text-black">
-                  <div className="flex-1">
-                    <Separator />
-                  </div>
-                  <p className="text-muted-foreground">
-                    Prices are in US Dollars
-                  </p>
-                  <div className="flex-1">
-                    <Separator />
-                  </div>
-                </div>
-              </CardFooter>
-            </Card>
+              title={p.label}
+              price={duration === "month" ? p.priceMo : p.priceYr}
+              description={p.description}
+              offers={p.offers}
+              duration={duration}
+              link={link as string}
+              discounted={p.discounted}
+              discountedPrice={
+                p.discounted
+                  ? duration === "month"
+                    ? p.discountedPriceMo
+                    : p.discountedPriceYr
+                  : duration === "month"
+                  ? p.discountedPriceMo
+                  : p.discountedPriceYr
+              }
+            />
           );
         })}
       </div>

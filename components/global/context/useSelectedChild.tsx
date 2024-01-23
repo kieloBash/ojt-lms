@@ -1,4 +1,5 @@
 "use client";
+import useGetUserInfo from "@/components/hooks/useGetUserInfo";
 import useUserInfo from "@/components/hooks/useUserInfo";
 import { fetchSingleChildId } from "@/lib/actions/parent.action";
 import { ParentType } from "@/lib/interfaces/parent.interface";
@@ -29,7 +30,8 @@ export const SelectedChildProvider = ({
 }) => {
   const [selectedChild, setSelectedChild] = useState<StudentType | undefined>();
 
-  const userInfo: ParentType = useUserInfo() as ParentType;
+  const { data: userInfo } = useGetUserInfo();
+  // const userInfo: ParentType = useUserInfo() as ParentType;
 
   async function fetchStudent(_id: string) {
     const student = await fetchSingleChildId({ _id });
