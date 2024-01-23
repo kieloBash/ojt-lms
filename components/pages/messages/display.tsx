@@ -24,7 +24,7 @@ const MessageDisplay = ({
   const queryClient = useQueryClient();
 
   const initialMessages = useFetchMessages(1, 20, chatId);
-  const userInfo = useUserInfo()
+  const { data: userInfo } = useUserInfo();
 
   React.useEffect(() => {
     if (MessagesEndRef.current) {
