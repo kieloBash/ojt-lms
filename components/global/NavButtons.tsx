@@ -8,6 +8,7 @@ import {
   Backpack,
   BookOpen,
   Calendar,
+  Info,
   LayoutGrid,
   MessagesSquareIcon,
   Settings,
@@ -38,6 +39,7 @@ const NavButtons = ({ user }: { user: ParentType | UserType }) => {
     { label: "messages", href: "/messages" },
     { label: "transactions", href: "/transactions" },
     { label: "settings", href: "/settings" },
+    { label: "help", href: "/help" },
   ];
   const TeacherNavLinks = [
     { label: "dashboard", href: "/dashboard" },
@@ -46,6 +48,7 @@ const NavButtons = ({ user }: { user: ParentType | UserType }) => {
     { label: "courses", href: "/courses" },
     { label: "messages", href: "/messages" },
     { label: "settings", href: "/settings" },
+    { label: "help", href: "/help" },
   ];
 
   const { setSelectedChild, selectedChild } = useSelectedChild();
@@ -95,6 +98,7 @@ const NavButtons = ({ user }: { user: ParentType | UserType }) => {
                   {nav.label === "settings" && (
                     <Settings className={iconClassName} />
                   )}
+                  {nav.label === "help" && <Info className={iconClassName} />}
                 </Button>
               </TooltipButton>
             </Link>
@@ -169,6 +173,7 @@ const NavButtons = ({ user }: { user: ParentType | UserType }) => {
                 {nav.label === "materials" && (
                   <BookOpen className={iconClassName} />
                 )}
+                {nav.label === "help" && <Info className={iconClassName} />}
               </Button>
             </TooltipButton>
           </Link>

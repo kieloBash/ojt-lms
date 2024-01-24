@@ -8,7 +8,7 @@ const StepOne = () => {
   return (
     <div className="relative flex flex-col items-center justify-between col-span-5">
       <div className="flex items-center justify-center flex-1">
-        <p className="w-full max-w-[34rem] text-lg text-center text-main-500">
+        <p className="w-full max-w-[34rem] text-3xl text-center text-main-500">
           {`We are the Umonics Method here to lead your children's future to the
       next success.`}
         </p>
