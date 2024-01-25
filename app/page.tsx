@@ -57,10 +57,6 @@ export default function Home({ searchParams }: PageProps) {
         <div className="text-3xl font-bold">
           UMONICS <span className="text-main-500">METHOD</span>
         </div>
-        <div className="flex">
-          <Mail className="w-6 h-6 mr-2" />
-          <p className="">need help? temporary@umonics.com</p>
-        </div>
       </header>
       <VideoPlayer />
       <section className="w-full -mt-4">
