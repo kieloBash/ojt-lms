@@ -12,12 +12,12 @@ const CountdownTimer: React.FC<Props> = ({ duration, onComplete }) => {
 
   useEffect(() => {
     if (timeLeft > 0) {
-      const timer = setTimeout(() => {
+      const intervalId = setInterval(() => {
         setTimeLeft(prevTimeLeft => prevTimeLeft - 1000);
         setMillisecondCounter(prevCounter => (prevCounter + 1) % 100);
       }, 1000);
 
-      return () => clearTimeout(timer);
+      return () => clearInterval(intervalId);
     } else {
       setExpired(true);
       onComplete();
