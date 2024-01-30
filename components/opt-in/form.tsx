@@ -7,6 +7,9 @@ import { Button } from "../ui/button";
 
 // CLERK
 import { useSignUp } from "@clerk/nextjs";
+import Image from "next/image";
+
+import ARROW from "@/public/arrow1.png";
 
 const OptInForm = () => {
   const [email, setEmail] = useState("");
@@ -56,14 +59,17 @@ const OptInForm = () => {
 
   return (
     <>
-      <form className="w-full mt-8 space-y-4" onSubmit={onSubmit}>
+      <form className="relative w-full mt-8 space-y-4" onSubmit={onSubmit}>
+        <div className="absolute -right-40 rotate-[-45deg] h-[8rem] w-64 -top-20">
+          <Image src={ARROW} alt="arrow" fill objectFit={"cover"} />
+        </div>
         <Input
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           name="email"
           type="email"
           placeholder="Enter your email here"
-          className="h-16 text-xl"
+          className="h-16 text-xl shadow border-main-500"
         />
         <Button type="submit" className="h-16 px-10 text-2xl font-bold">
           Sign Up Now!

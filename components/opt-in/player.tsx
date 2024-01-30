@@ -6,11 +6,12 @@ import { CldVideoPlayer } from "next-cloudinary";
 import "next-cloudinary/dist/cld-video-player.css";
 
 import OptInForm from "./form";
+import CountdownTimer from "./timer";
 
 const VideoPlayer = () => {
   return (
     <section className="grid w-full h-[calc(100vh-6rem)] grid-cols-5 gap-20 px-20">
-      <div className="flex items-center justify-center col-span-2">
+      <div className="flex flex-col items-center justify-center col-span-2">
         <div className="w-full h-[17rem]">
           <CldVideoPlayer
             id="sea-turtle"
@@ -24,8 +25,12 @@ const VideoPlayer = () => {
             }}
           />
         </div>
+        <div className="flex flex-col items-center justify-center mt-4 space-y-0">
+          <p className="text-xl font-medium text-black">Limited Promo Time</p>
+          <CountdownTimer duration={3 * 60 * 1000} />
+        </div>
       </div>
-      <div className="flex flex-col items-start justify-center col-span-3">
+      <div className="relative flex flex-col items-start justify-center col-span-3">
         <h4 className="text-base font-medium uppercase text-main-500">
           The Ultimate learning experience specialized for your child
         </h4>

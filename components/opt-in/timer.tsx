@@ -1,57 +1,66 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 
-interface Props {
-  duration: number; 
-  onComplete: () => void;
-}
+type Props = {
+  duration: number;
+  type?: "Small" | "Normal";
+};
 
-const CountdownTimer: React.FC<Props> = ({ duration, onComplete }) => {
-  const [timeLeft, setTimeLeft] = useState(duration * 1000); 
-  const [expired, setExpired] = useState(false);
-  const [millisecondCounter, setMillisecondCounter] = useState(0);
+const CountdownTimer: React.FC<Props> = ({ duration, type = "Normal" }) => {
+  const [timeRemainingInMilliseconds, setTimeRemainingInMilliseconds] =
+    useState(duration);
 
   useEffect(() => {
-    if (timeLeft > 0) {
-      const intervalId = setInterval(() => {
-        setTimeLeft(prevTimeLeft => prevTimeLeft - 1000);
-        setMillisecondCounter(prevCounter => (prevCounter + 1) % 100);
+    if (timeRemainingInMilliseconds > 0) {
+      const timerId = setTimeout(() => {
+        setTimeRemainingInMilliseconds(timeRemainingInMilliseconds - 1000);
       }, 1000);
 
-      return () => clearInterval(intervalId);
-    } else {
-      setExpired(true);
-      onComplete();
+      return () => clearTimeout(timerId); // cleanup on unmount
     }
-  }, [timeLeft, onComplete]);
+  }, [timeRemainingInMilliseconds]);
 
-  const seconds = Math.floor(timeLeft / 1000);
+  const minutes = Math.floor(timeRemainingInMilliseconds / (1000 * 60));
+  const seconds = Math.floor((timeRemainingInMilliseconds / 1000) % 60);
+  const milliseconds = Math.floor((timeRemainingInMilliseconds / 100) % 10);
+
+  if (type === "Normal")
+    return (
+      <div className="flex gap-4 mt-8">
+        <div className="flex flex-col items-center justify-center -space-y-2">
+          <span className="font-bold text-8xl text-main-500">
+            {String(minutes).padStart(2, "0")}
+          </span>
+          <span className="">MINUTES</span>
+        </div>
+        <div className="flex items-center justify-center font-bold text-8xl text-main-500">
+          :
+        </div>
+        <div className="flex flex-col items-center justify-center -space-y-2">
+          <span className="font-bold text-8xl text-main-500">
+            {String(seconds).padStart(2, "0")}
+          </span>
+          <span className="">SECONDS</span>
+        </div>
+      </div>
+    );
 
   return (
-    <div style={{
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      justifyContent: 'center',
-      fontFamily: 'Helvetica, Arial, sans-serif',
-      fontSize: '3rem',
-      fontWeight: 'bold',
-      color: '#333',
-      textShadow: '1px 1px #fff, -1px -1px #fff',
-    }}>
-      {expired ? (
-        <div>expire</div>
-      ) : (
-        <div style={{ display: 'flex' }}>
-          <div style={{ marginRight: '0.5rem' }}>
-            <span style={{ display: 'block', marginBottom: '0.25rem' }}>{seconds.toString().padStart(2, '0')}</span>
-            <span style={{ fontSize: '1.5rem' }}>Seconds</span>
-          </div>
-          <div>
-            <span style={{ display: 'block', marginBottom: '0.25rem' }}>{millisecondCounter.toString().padStart(2, '0')}</span>
-            <span style={{ fontSize: '1.5rem' }}>Milliseconds</span>
-          </div>
-        </div>
-      )}
+    <div className="flex gap-4 mt-8">
+      <div className="flex flex-col items-center justify-center -space-y-2">
+        <span className="font-bold text-white text-8xl">
+          {String(minutes).padStart(2, "0")}
+        </span>
+        <span className="">MINUTES</span>
+      </div>
+      <div className="flex items-center justify-center font-bold text-8xl text-main-500">
+        :
+      </div>
+      <div className="flex flex-col items-center justify-center -space-y-2">
+        <span className="font-bold text-white text-8xl">
+          {String(seconds).padStart(2, "0")}
+        </span>
+        <span className="">SECONDS</span>
+      </div>
     </div>
   );
 };
