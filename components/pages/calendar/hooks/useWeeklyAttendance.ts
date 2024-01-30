@@ -19,20 +19,30 @@ const useWeeklyAttendance = (
   const temp = dayjs(prevDateAttendance);
   const currDate = temp.set("month", monthIndex);
 
+  console.log(
+    currDate
+      .startOf("week")
+      .set("date", currDate.startOf("week").get("date") - 1)
+      .format("MMM DD YYYY, dddd")
+  );
+
   let StartOfWeek: dayjs.Dayjs;
   if (currDate.date() < 7) {
     StartOfWeek = currDate.startOf("month");
   } else {
-    if (currDate.day() === 6)
+    if (currDate.day() === 6) {
       StartOfWeek = dayjs().set(
         "date",
         currDate.startOf("week").get("date") + 6
       );
-    else
-      StartOfWeek = dayjs().set(
-        "date",
-        currDate.startOf("week").get("date") - 1
-      );
+      // console.log(StartOfWeek.format("MMM DD YYYY, dddd"));
+    } else {
+      StartOfWeek = currDate
+        .startOf("week")
+        .set("date", currDate.startOf("week").get("date") - 1)
+        .set("month", monthIndex);
+      // console.log(StartOfWeek.format("MMM DD YYYY, dddd"));
+    }
   }
   let EndOfWeek: dayjs.Dayjs;
   if (currDate.date() > 26) {
@@ -43,7 +53,8 @@ const useWeeklyAttendance = (
         .set("date", currDate.endOf("week").get("date") + 6)
         .set("month", monthIndex);
     else
-      EndOfWeek = dayjs()
+      EndOfWeek = currDate
+        .startOf("week")
         .set("date", currDate.endOf("week").get("date") - 1)
         .set("month", monthIndex);
   }
