@@ -17,7 +17,7 @@ const IntroComponent = () => {
             id="sea-turtle"
             width={"1920"}
             height={"1080"}
-            src="umonics/sample1"
+            src="umonics/tutorial"
             logo={{
               imageUrl:
                 "https://res.cloudinary.com/colbycloud-next-cloudinary/image/upload/v1676058142/assets/space-jelly-cosmo-helmet.svg",

@@ -12,8 +12,8 @@ const CountdownTimer: React.FC<Props> = ({ duration, type = "Normal" }) => {
   useEffect(() => {
     if (timeRemainingInMilliseconds > 0) {
       const timerId = setTimeout(() => {
-        setTimeRemainingInMilliseconds(timeRemainingInMilliseconds - 1000);
-      }, 1000);
+        setTimeRemainingInMilliseconds(timeRemainingInMilliseconds - 10);
+      }, 10);
 
       return () => clearTimeout(timerId); // cleanup on unmount
     }
@@ -21,13 +21,48 @@ const CountdownTimer: React.FC<Props> = ({ duration, type = "Normal" }) => {
 
   const minutes = Math.floor(timeRemainingInMilliseconds / (1000 * 60));
   const seconds = Math.floor((timeRemainingInMilliseconds / 1000) % 60);
-  const milliseconds = Math.floor((timeRemainingInMilliseconds / 100) % 10);
+  const milliseconds = Math.floor((timeRemainingInMilliseconds / 10) % 1000);
 
   if (type === "Normal")
     return (
+      <div className="flex flex-col">
+        <div className="flex gap-4 mt-8">
+          <div className="flex flex-col items-center justify-center -space-y-2 w-28">
+            <span className="font-bold text-8xl text-main-500">
+              {String(minutes).padStart(2, "0")}
+            </span>
+            <span className="">MINUTES</span>
+          </div>
+          <div className="flex items-center justify-center font-bold text-8xl text-main-500">
+            :
+          </div>
+          <div className="flex flex-col items-center justify-center -space-y-2 w-28">
+            <span className="font-bold text-8xl text-main-500">
+              {String(seconds).padStart(2, "0")}
+            </span>
+            <span className="">SECONDS</span>
+          </div>
+          <div className="flex items-center justify-center font-bold text-8xl text-main-500">
+            :
+          </div>
+          <div className="flex flex-col items-center justify-center -space-y-2 w-28">
+            <span className="font-bold text-8xl text-main-500">
+              {String(milliseconds).substring(1, 3).padStart(2, "0")}
+            </span>
+            <span className="">MILLISECONDS</span>
+          </div>
+        </div>
+        <p className="mt-4 text-sm text-center text-muted-foreground">
+          Get it now to receive a discount just for you!
+        </p>
+      </div>
+    );
+
+  return (
+    <div className="flex flex-col">
       <div className="flex gap-4 mt-8">
-        <div className="flex flex-col items-center justify-center -space-y-2">
-          <span className="font-bold text-8xl text-main-500">
+        <div className="flex flex-col items-center justify-center -space-y-2 w-28">
+          <span className="font-bold text-white text-8xl">
             {String(minutes).padStart(2, "0")}
           </span>
           <span className="">MINUTES</span>
@@ -35,32 +70,25 @@ const CountdownTimer: React.FC<Props> = ({ duration, type = "Normal" }) => {
         <div className="flex items-center justify-center font-bold text-8xl text-main-500">
           :
         </div>
-        <div className="flex flex-col items-center justify-center -space-y-2">
-          <span className="font-bold text-8xl text-main-500">
+        <div className="flex flex-col items-center justify-center -space-y-2 w-28">
+          <span className="font-bold text-white text-8xl">
             {String(seconds).padStart(2, "0")}
           </span>
           <span className="">SECONDS</span>
         </div>
+        <div className="flex items-center justify-center font-bold text-8xl text-main-500">
+          :
+        </div>
+        <div className="flex flex-col items-center justify-center -space-y-2 w-28">
+          <span className="font-bold text-white text-8xl">
+            {String(milliseconds).substring(1, 3).padStart(2, "0")}
+          </span>
+          <span className="">MILLISECONDS</span>
+        </div>
       </div>
-    );
-
-  return (
-    <div className="flex gap-4 mt-8">
-      <div className="flex flex-col items-center justify-center -space-y-2">
-        <span className="font-bold text-white text-8xl">
-          {String(minutes).padStart(2, "0")}
-        </span>
-        <span className="">MINUTES</span>
-      </div>
-      <div className="flex items-center justify-center font-bold text-8xl text-main-500">
-        :
-      </div>
-      <div className="flex flex-col items-center justify-center -space-y-2">
-        <span className="font-bold text-white text-8xl">
-          {String(seconds).padStart(2, "0")}
-        </span>
-        <span className="">SECONDS</span>
-      </div>
+      <p className="mt-4 text-sm text-center text-white">
+        Get it now to receive a discount just for you!
+      </p>
     </div>
   );
 };
