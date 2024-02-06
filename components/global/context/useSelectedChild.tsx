@@ -4,6 +4,7 @@ import useUserInfo from "@/components/hooks/useUserInfo";
 import { fetchSingleChildId } from "@/lib/actions/parent.action";
 import { ParentType } from "@/lib/interfaces/parent.interface";
 import { StudentType } from "@/lib/interfaces/student.interface";
+import { isParent } from "@/utils/helpers/isParent";
 import {
   generateStudentCustomerPortalLink,
   generateStudentCustomerUpdatePortalLink,
@@ -58,8 +59,8 @@ export const SelectedChildProvider = ({
   }
 
   React.useEffect(() => {
-    if (userInfo && userInfo?.children && !selectedChild) {
-      fetchStudent(userInfo?.children[0]._id as string);
+    if (userInfo && !selectedChild && isParent(userInfo)) {
+      if (userInfo.children) fetchStudent(userInfo?.children[0]._id as string);
     }
   }, [userInfo, selectedChild]);
 

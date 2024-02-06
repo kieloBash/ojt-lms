@@ -17,7 +17,7 @@ const ChatSidebar = () => {
   const [searchString, setSearchString] = useState("");
   const debouncedString = useDebounce(searchString, 500);
   const chats = useFetchChats(1, 10, debouncedString, userInfo?._id as string);
-  console.log(chats);
+  // console.log(chats);
 
   if (isLoading)
     return (
@@ -26,7 +26,7 @@ const ChatSidebar = () => {
       </div>
     );
 
-    console.log(chats.isLoading || chats?.data === undefined);
+    // console.log(chats.isLoading || chats?.data === undefined);
 
   return (
     <main className="flex flex-col flex-1 gap-1 px-2">

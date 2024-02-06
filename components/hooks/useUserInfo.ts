@@ -23,7 +23,7 @@ const useUserInfo = () => {
     },
   });
 
-  console.log(data);
+  // console.log(data);
 
   return { data, isLoading };
 };

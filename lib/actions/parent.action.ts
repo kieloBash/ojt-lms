@@ -378,11 +378,11 @@ export async function fetchSingleParentClerkId({
 
     if (!single) {
       const userInfo = await fetchSingleUserClerkId({ clerkId });
-      console.log(userInfo);
+      // console.log(userInfo);
       return userInfo;
       // throw new Error(`Error in fetching single Parent`);
     }
-    console.log(single);
+    // console.log(single);
 
     const plainData: ParentType = {
       ...single,
