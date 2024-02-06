@@ -6,9 +6,9 @@ import InfoSection from "@/components/opt-in/info";
 
 export default function Home({ searchParams }: PageProps) {
   // redirect("/auth/sign-in")
-  console.log(searchParams);
+  // console.log(searchParams);
   const user = auth();
-  console.log(user);
+  // console.log(user);
   if (user.userId || searchParams.__clerk_created_session)
     redirect("/dashboard");
 

@@ -69,9 +69,9 @@ const OptInForm = () => {
           name="email"
           type="email"
           placeholder="Enter your email here"
-          className="h-16 text-xl shadow border-main-500"
+          className="h-16 text-xl border-4 shadow-md border-main-500"
         />
-        <Button type="submit" className="h-16 px-10 text-2xl font-bold">
+        <Button type="submit" className="h-20 px-10 text-3xl font-bold">
           Sign Up Now!
         </Button>
       </form>

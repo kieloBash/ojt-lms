@@ -26,7 +26,7 @@ const CountdownTimer: React.FC<Props> = ({ duration, type = "Normal" }) => {
   if (type === "Normal")
     return (
       <div className="flex flex-col">
-        <div className="flex gap-4 mt-8">
+        <div className="flex gap-4 mt-2">
           <div className="flex flex-col items-center justify-center -space-y-2 w-28">
             <span className="font-bold text-8xl text-main-500">
               {String(minutes).padStart(2, "0")}
@@ -60,7 +60,7 @@ const CountdownTimer: React.FC<Props> = ({ duration, type = "Normal" }) => {
 
   return (
     <div className="flex flex-col">
-      <div className="flex gap-4 mt-8">
+      <div className="flex gap-4 mt-2">
         <div className="flex flex-col items-center justify-center -space-y-2 w-28">
           <span className="font-bold text-white text-8xl">
             {String(minutes).padStart(2, "0")}
