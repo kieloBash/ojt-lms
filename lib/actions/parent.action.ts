@@ -377,7 +377,9 @@ export async function fetchSingleParentClerkId({
     console.log(single);
 
     if (!single) {
-      return;
+      const userInfo = await fetchSingleUserClerkId({ clerkId });
+      console.log(userInfo);
+      return userInfo;
       // throw new Error(`Error in fetching single Parent`);
     }
     console.log(single);

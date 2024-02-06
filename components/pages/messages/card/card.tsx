@@ -47,8 +47,10 @@ const ChatCard = ({
             <p className="text-sm line-clamp-1">
               {latestMessage ? (
                 <span>
-                  {latestMessage.sender._id === user?._id ? user?.name?.split(" ")[0] : "You"}:{" "}
-                  {latestMessage.content}
+                  {latestMessage.sender._id === user?._id
+                    ? user?.name?.split(" ")[0]
+                    : "You"}
+                  : {latestMessage.content}
                 </span>
               ) : (
                 "Say hi to new user!"

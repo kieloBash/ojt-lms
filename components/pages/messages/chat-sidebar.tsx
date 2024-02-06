@@ -26,6 +26,8 @@ const ChatSidebar = () => {
       </div>
     );
 
+    console.log(chats.isLoading || chats?.data === undefined);
+
   return (
     <main className="flex flex-col flex-1 gap-1 px-2">
       <Input

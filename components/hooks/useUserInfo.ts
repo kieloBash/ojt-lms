@@ -7,20 +7,18 @@ import { useQuery } from "@tanstack/react-query";
 
 const useUserInfo = () => {
   const { user, isLoaded } = useUser();
+  console.log(user);
 
   const { data, isLoading } = useQuery({
     queryKey: [`userInfo`],
+    enabled: user !== undefined,
     queryFn: async () => {
-      console.log(user);
       if (!user) return null;
-      console.log(user);
 
-      console.log(user.id);
       const parentInfo = await fetchSingleParentClerkId({
         clerkId: user.id,
       });
 
-      console.log(parentInfo);
       return parentInfo as ParentType;
     },
   });

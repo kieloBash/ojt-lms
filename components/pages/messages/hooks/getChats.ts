@@ -19,6 +19,7 @@ const useFetchChats = (
         userId,
         search: searchFilter,
       });
+      console.log(data);
       return data || [];
     },
     // refetchInterval: 60000,
