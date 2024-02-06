@@ -38,10 +38,10 @@ const VideoPlayer = () => {
           Unlock Your Potential with Our LMS!
         </h1>
         <p className="mt-8 text-base text-medium">
-          Transform your learning journey with our cutting-edge Learning
+          {`Transform your learning journey with our cutting-edge Learning
           Management System. By signing up today, you'll gain immediate access
           to exclusive courses, interactive modules, and a community of lifelong
-          learners.
+          learners.`}
         </p>
         {/* <p className="mt-8 text-lg text-medium">
           Discover new learning materials{" "}
