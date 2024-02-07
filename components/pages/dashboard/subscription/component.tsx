@@ -48,7 +48,7 @@ const SubscriptionMain = () => {
             duration !== "year" && "text-slate-400"
           }`}
         >
-          <span className={``}>Annually</span>
+          <span className={``}>Yearly</span>
           <span className="text-xs font-normal">Enjoy a 20% Discount</span>
         </div>
       </div>
