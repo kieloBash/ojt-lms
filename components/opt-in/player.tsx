@@ -32,14 +32,13 @@ const VideoPlayer = () => {
       </div>
       <div className="relative flex flex-col items-start justify-center col-span-3">
         <h4 className="text-lg font-medium uppercase text-main-500">
-          The Ultimate learning experience specialized for your child
+          The Ultimate learning experience specialised for preschoolers
         </h4>
         <h1 className="mt-1 text-6xl font-extrabold">
-          Unlock Your Potential with Our LMS!
+          Unlock Your Potential with the Umonics Method!
         </h1>
         <p className="mt-8 text-base text-medium">
-          {`Transform your learning journey with our cutting-edge Learning
-          Management System. By signing up today, you'll gain immediate access
+          {`Transform your learning journey with our cutting-edge perschool memory training. By signing up today, you'll gain immediate access
           to exclusive courses, interactive modules, and a community of lifelong
           learners.`}
         </p>
