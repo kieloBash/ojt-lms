@@ -12,7 +12,7 @@ const VideoPlayer = () => {
   return (
     <section className="grid w-full h-[calc(100vh-6rem)] grid-cols-5 gap-20 px-20">
       <div className="flex flex-col items-center justify-center col-span-2 gap-4">
-        <div className="w-full h-[17rem]">
+        <div className="w-full max-w-[30rem] h-[17rem]">
           <CldVideoPlayer
             id="sea-turtle"
             width={"1920"}

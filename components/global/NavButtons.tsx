@@ -127,7 +127,7 @@ const NavButtons = ({ user }: { user: ParentType | UserType }) => {
               <div className="flex flex-col">
                 <span className="text-lg font-semibold">{user.name}</span>
                 <span className="font-semibold">{user.email}</span>
-                <span className="font-normal text-slate-600">Teacher</span>
+                <span className="font-normal capitalize text-slate-600">{user.role}</span>
               </div>
             </DropdownMenuLabel>
           </DropdownMenuContent>
