@@ -31,7 +31,7 @@ export async function getUserOptions({
     let results;
 
     if (isParent) {
-      const emails = ["eugune@umonics.com", "teacher@umonics.com"];
+      const emails = ["eugene@umonics.com", "teacher@umonics.com"];
       results = await User.find({ email: { $in: emails } })
         .sort({ createdAt: "desc" })
         .limit(5)
