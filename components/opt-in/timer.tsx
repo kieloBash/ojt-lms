@@ -52,7 +52,7 @@ const CountdownTimer: React.FC<Props> = ({ duration, type = "Normal" }) => {
             <span className="">MILLISECONDS</span>
           </div>
         </div>
-        <p className="mt-4 text-sm text-center text-muted-foreground">
+        <p className="mt-4 text-sm font-bold text-center text-green-500">
           Sign up now to receive a discount just for you!
         </p>
       </div>

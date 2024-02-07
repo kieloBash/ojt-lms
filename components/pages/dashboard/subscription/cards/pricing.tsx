@@ -28,7 +28,7 @@ const PricingCard = ({
     <div className="relative flex flex-col px-10 pt-20 pb-16 text-center">
       {title === "Ultimate" && (
         <Badge className="absolute text-base translate-x-1/2 top-8 right-1/2">
-          Recommended
+          Most Registered
         </Badge>
       )}
       <h2 className="text-3xl font-bold">{title}</h2>

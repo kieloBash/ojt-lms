@@ -26,7 +26,13 @@ const VideoPlayer = () => {
           />
         </div>
         <div className="flex flex-col items-center justify-center space-y-0">
-          <p className="text-xl font-medium text-black">Limited Promo Time</p>
+          <div className="flex items-center justify-center gap-4">
+            <p className="text-xl font-medium text-black">Limited Promo Time</p>
+            <div className="flex items-center justify-center space-x-1 text-green-500">
+              <h2 className="text-4xl text-red-400 line-through">$120</h2>
+              <h2 className="text-5xl font-bold">$57</h2>
+            </div>
+          </div>
           <CountdownTimer duration={3 * 60 * 1000} />
         </div>
       </div>

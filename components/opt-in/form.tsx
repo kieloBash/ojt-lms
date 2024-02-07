@@ -63,6 +63,7 @@ const OptInForm = () => {
         <div className="absolute -right-40 rotate-[-45deg] h-[8rem] w-64 -top-20">
           <Image src={ARROW} alt="arrow" fill objectFit={"cover"} />
         </div>
+
         <Input
           value={email}
           onChange={(e) => setEmail(e.target.value)}
@@ -71,9 +72,14 @@ const OptInForm = () => {
           placeholder="Enter your email here"
           className="h-16 text-xl border-4 shadow-md border-main-500"
         />
-        <Button type="submit" className="h-20 px-10 text-3xl font-bold">
-          Sign Up Now!
-        </Button>
+        <div className="flex items-center justify-start w-full gap-8">
+          <Button
+            type="submit"
+            className="h-20 px-10 text-3xl font-bold shadow-md"
+          >
+            Sign Up Now!
+          </Button>
+        </div>
       </form>
       {pending && (
         <p className="mt-2">Please check your email and verify your account!</p>

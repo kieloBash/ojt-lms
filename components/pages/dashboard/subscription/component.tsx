@@ -70,7 +70,7 @@ const SubscriptionMain = () => {
                 : links?.ultimate.year;
           }
 
-          console.log(link);
+          // console.log(link);
 
           return (
             <PricingCard
