@@ -11,7 +11,7 @@ import CountdownTimer from "./timer";
 const VideoPlayer = () => {
   return (
     <section className="grid w-full h-[calc(100vh-6rem)] grid-cols-5 gap-20 px-20">
-      <div className="flex flex-col items-center justify-center col-span-2 gap-10">
+      <div className="flex flex-col items-center justify-center col-span-2 gap-4">
         <div className="w-full h-[17rem]">
           <CldVideoPlayer
             id="sea-turtle"
@@ -30,14 +30,14 @@ const VideoPlayer = () => {
           <CountdownTimer duration={3 * 60 * 1000} />
         </div>
       </div>
-      <div className="relative flex flex-col items-start justify-center col-span-3">
+      <div className="relative flex flex-col items-start justify-center col-span-3 pb-2">
         <h4 className="text-lg font-medium uppercase text-main-500">
           The Ultimate learning experience specialised for preschoolers
         </h4>
-        <h1 className="mt-1 text-6xl font-extrabold">
+        <h1 className="mt-1 text-5xl font-extrabold">
           {`Unlock Your Child's Potential with The Umonics Method!`}
         </h1>
-        <p className="mt-8 text-base text-medium">
+        <p className="mt-6 text-base text-medium">
           {`Transform your learning journey with our cutting-edge perschool memory training programme. By signing up today, you'll gain immediate access
           to exclusive courses, interactive modules, and a community of lifelong
           learners.`}

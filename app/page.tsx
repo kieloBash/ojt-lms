@@ -16,7 +16,7 @@ export default function Home({ searchParams }: PageProps) {
     <main className="flex flex-col items-center justify-center min-h-screen overflow-hidden bg-white">
       <header className="flex items-center justify-between w-full h-20 px-20 bg-white">
         <div className="text-3xl font-bold">
-          THE UMONICS <span className="text-main-500">METHOD</span>
+          THE  <span className="text-main-500">UMONICS</span> METHOD
         </div>
       </header>
       <VideoPlayer />

@@ -59,7 +59,7 @@ const OptInForm = () => {
 
   return (
     <>
-      <form className="relative w-full mt-8 space-y-4" onSubmit={onSubmit}>
+      <form className="relative w-full mt-10 space-y-4" onSubmit={onSubmit}>
         <div className="absolute -right-40 rotate-[-45deg] h-[8rem] w-64 -top-20">
           <Image src={ARROW} alt="arrow" fill objectFit={"cover"} />
         </div>

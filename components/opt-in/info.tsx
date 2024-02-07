@@ -43,7 +43,7 @@ const InfoSection = () => {
       <div className="flex flex-col w-full h-full px-10 py-8 text-white bg-main-700 rounded-t-2xl">
         <h2 className="mt-10 text-6xl font-extrabold text-center">{`Here's what you can get`}</h2>
         <p className="mt-6 text-xl font-medium text-center uppercase">
-          When you subscribe to Umonics Method...
+          When you subscribe to The Umonics Method...
         </p>
         <div className="grid grid-cols-5 gap-4 mt-8">
           {INFO.map((d, index) => {
