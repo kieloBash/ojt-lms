@@ -53,7 +53,7 @@ const CountdownTimer: React.FC<Props> = ({ duration, type = "Normal" }) => {
           </div>
         </div>
         <p className="mt-4 text-sm text-center text-muted-foreground">
-          Get it now to receive a discount just for you!
+          Sign up now to receive a discount just for you!
         </p>
       </div>
     );
@@ -87,7 +87,7 @@ const CountdownTimer: React.FC<Props> = ({ duration, type = "Normal" }) => {
         </div>
       </div>
       <p className="mt-4 text-sm text-center text-white">
-        Get it now to receive a discount just for you!
+        Sign up now to receive a discount just for you!
       </p>
     </div>
   );
