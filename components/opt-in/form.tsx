@@ -10,31 +10,33 @@ import { useSignUp } from "@clerk/nextjs";
 import Image from "next/image";
 
 import ARROW from "@/public/arrow1.png";
+import { Loader2 } from "lucide-react";
 
 const OptInForm = () => {
   const [email, setEmail] = useState("");
   const [pending, setPending] = useState(false);
+  const [pendingLoading, setPendingLoading] = useState(false);
 
   const { isLoaded, signUp, setActive } = useSignUp();
 
   async function onSubmit(e: FormEvent) {
     e.preventDefault();
 
-    if (!isLoaded) return null;
-
-    // console.log(email);
+    if (!isLoaded || email === "") return null;
 
     try {
-      setPending(true);
+      setPendingLoading(true);
       await signUp.create({
-        username: "User",
+        username: "user",
         emailAddress: email,
         password: "Umonics1234",
       });
 
-      const { startEmailLinkFlow, cancelEmailLinkFlow } =
+      const { startEmailLinkFlow, cancelEmailLinkFlow,  } =
         signUp.createEmailLinkFlow();
 
+      console.log("done");
+      setPending(true);
       const res = await startEmailLinkFlow({
         redirectUrl: process.env.NEXT_PUBLIC_SITE_URL || "",
       });
@@ -43,18 +45,22 @@ const OptInForm = () => {
 
       if (res.status === "complete") {
         // sign up completed
-        console.log("complete");
+        // console.log("complete");
         window.location.assign("/onboarding");
       } else {
-        console.log("pending");
+        // console.log("pending");
+        setPendingLoading(false);
+
         // sign up still pending
       }
 
       // Cleanup
       cancelEmailLinkFlow();
-
-      console.log(signUp);
-    } catch (error: any) {}
+    } catch (error: any) {
+      console.log(error);
+      setPendingLoading(false);
+      setPending(false);
+    }
   }
 
   return (
@@ -76,13 +82,20 @@ const OptInForm = () => {
           <Button
             type="submit"
             className="h-20 px-10 text-3xl font-bold shadow-md"
+            disabled={pendingLoading}
           >
-            Sign Up Now!
+            Sign Up Now!{" "}
+            {pendingLoading && (
+              <Loader2 className="w-8 h-8 ml-2 animate-spin" />
+            )}
           </Button>
         </div>
       </form>
       {pending && (
-        <p className="mt-2">Please check your email and verify your account!</p>
+        <p className="mt-2">
+          {`Please check your email and verify your account! If no email hasn't been
+          sent, please wait a few minutes or refresh this page.`}
+        </p>
       )}
     </>
   );
