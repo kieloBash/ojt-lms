@@ -4,7 +4,8 @@ import "./globals.css";
 import { QueryProvider } from "@/components/providers/QueryProvider";
 import AuthProvider from "@/components/providers/AuthProvider";
 import { Toaster } from "@/components/ui/toaster";
-import { ClerkProvider } from '@clerk/nextjs'
+import { ClerkProvider } from "@clerk/nextjs";
+import Head from "next/head";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -24,6 +25,12 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en">
+        <Head>
+          <meta
+            name="google-site-verification"
+            content="7IMyrx9OT57x4ZSjmgBFyiZRfNfXPaLbM1GF9R0_SMY"
+          />
+        </Head>
         <body className={poppins.className}>
           <main className="flex flex-col w-full min-h-screen bg-slate-50">
             <Toaster />
