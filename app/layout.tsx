@@ -15,6 +15,9 @@ const poppins = Poppins({
 export const metadata: Metadata = {
   title: "Umonics LMS",
   description: "Created by interns",
+  verification: {
+    google: "7IMyrx9OT57x4ZSjmgBFyiZRfNfXPaLbM1GF9R0_SMY",
+  },
 };
 
 export default function RootLayout({
@@ -25,12 +28,12 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en">
-        <head>
+        {/* <head>
           <meta
             name="google-site-verification"
             content="7IMyrx9OT57x4ZSjmgBFyiZRfNfXPaLbM1GF9R0_SMY"
           />
-        </head>
+        </head> */}
         <body className={poppins.className}>
           <main className="flex flex-col w-full min-h-screen bg-slate-50">
             <Toaster />
