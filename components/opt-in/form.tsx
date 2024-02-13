@@ -25,37 +25,38 @@ const OptInForm = () => {
     if (!isLoaded || email === "") return null;
 
     try {
+      console.log(email);
       setPendingLoading(true);
       await signUp.create({
-        username: "user",
+        // username: "user",
         emailAddress: email,
         password: "Umonics1234",
       });
+      window.location.assign("/onboarding");
+      // const { startEmailLinkFlow, cancelEmailLinkFlow,  } =
+      //   signUp.createEmailLinkFlow();
 
-      const { startEmailLinkFlow, cancelEmailLinkFlow,  } =
-        signUp.createEmailLinkFlow();
+      // console.log("done");
+      // setPending(true);
+      // const res = await startEmailLinkFlow({
+      //   redirectUrl: process.env.NEXT_PUBLIC_SITE_URL || "",
+      // });
 
-      console.log("done");
-      setPending(true);
-      const res = await startEmailLinkFlow({
-        redirectUrl: process.env.NEXT_PUBLIC_SITE_URL || "",
-      });
+      // console.log(res);
 
-      console.log(res);
+      // if (res.status === "complete") {
+      //   // sign up completed
+      //   // console.log("complete");
+      //   window.location.assign("/onboarding");
+      // } else {
+      //   // console.log("pending");
+      //   setPendingLoading(false);
 
-      if (res.status === "complete") {
-        // sign up completed
-        // console.log("complete");
-        window.location.assign("/onboarding");
-      } else {
-        // console.log("pending");
-        setPendingLoading(false);
+      //   // sign up still pending
+      // }
 
-        // sign up still pending
-      }
-
-      // Cleanup
-      cancelEmailLinkFlow();
+      // // Cleanup
+      // cancelEmailLinkFlow();
     } catch (error: any) {
       console.log(error);
       setPendingLoading(false);
