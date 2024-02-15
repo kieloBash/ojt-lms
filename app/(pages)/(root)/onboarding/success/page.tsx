@@ -29,7 +29,7 @@ const OnboardingSuccessPage = ({ searchParams }: PageProps) => {
 
     const newDataParent: ParentType = {
       clerkId: user.id,
-      name: user.username || "",
+      name: user.username || "User",
       email: user.emailAddresses[0].emailAddress as string,
       isEnrolled: false,
     };
@@ -42,6 +42,8 @@ const OnboardingSuccessPage = ({ searchParams }: PageProps) => {
       status: "Enrolling",
       classSchedule: [],
     };
+
+    console.log(newDataParent,newDataStudent);
 
     const res = await createNewParent({
       newDataParent,
@@ -87,7 +89,7 @@ const OnboardingSuccessPage = ({ searchParams }: PageProps) => {
         <div className="flex flex-col items-center justify-start">
           <div className="font-black text-white">
             <div className="flex items-center justify-center p-4 rounded-full w-36 h-36 bg-main-700">
-              <h2 className="text-8xl">{3}</h2>
+              <h2 className="text-8xl">{2}</h2>
             </div>
           </div>
           <h1 className="mt-8 text-5xl font-bold text-white">{"Finish!"}</h1>

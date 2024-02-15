@@ -61,11 +61,13 @@ export async function createNewParent({
         success: false,
       };
 
+
     const saltRounds = 10;
     const defaultPassword = password || "1234";
     const salt = bcrypt.genSaltSync(saltRounds);
 
     const hashedPassword = bcrypt.hashSync(defaultPassword, salt);
+
     const createdParent = await Parent.create({
       ...newDataParent,
       password: hashedPassword,
