@@ -94,7 +94,7 @@ const NewAddClassModal = ({
                     return (
                       <SelectItem key={a._id} value={a._id as string}>
                         {dayjs(a.date).format("dddd")} -{" "}
-                        {dayjs(a.date).format(format)} - {a.class.class} -{" "}
+                        {dayjs(a.date).format(format)} || {" "}
                         {convertTime(a.startTime, a.endTime)}
                       </SelectItem>
                     );

@@ -150,9 +150,9 @@ const MonthlyView = ({
                                 <div
                                   className={`w-full flex justify-between ${colorClass} mb-1 p-1 transition-colors`}
                                 >
-                                  <div className="text-xs font-medium">
+                                  {/* <div className="text-xs font-medium">
                                     {dayAttendance.class.class}
-                                  </div>
+                                  </div> */}
                                   <p className="text-xs line-clamp-1">
                                     {convertTime(
                                       dayAttendance.startTime,

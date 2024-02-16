@@ -37,7 +37,7 @@ export function NextClassCard({
           </CardDescription>
         </div>
         <div className="flex items-center space-x-1 rounded-md bg-secondary text-secondary-foreground">
-          <GoingBtn attendance={attendance}/>
+          <GoingBtn attendance={attendance} />
           <Separator orientation="vertical" className="h-[20px]" />
           {index >= 0 && (
             <ChangeClassModal index={index} attendance={attendance} />
@@ -47,8 +47,8 @@ export function NextClassCard({
       <CardContent>
         <div className="flex items-center justify-between w-full space-x-4 text-sm text-muted-foreground">
           <div className="flex items-center">
-            <CircleIcon className="w-3 h-3 mr-1 fill-main-400 text-main-400" />
-            {attendance.class.class} ({attendance.ageGroup})
+            <CircleIcon className="w-3 h-3 mr-1 fill-main-400 text-main-400" />(
+            {attendance.ageGroup})
           </div>
 
           <div>{attendance.date.toDateString()}</div>

@@ -144,7 +144,7 @@ export function CalendarSheet({
         <SheetHeader>
           <SheetTitle>Class Details</SheetTitle>
           <SheetDescription>
-            Details for {selectedAttendance?.class.class} class at{" "}
+            Details for the class at{" "}
             {selectedAttendance?.date.toDateString()}
           </SheetDescription>
         </SheetHeader>
