@@ -13,7 +13,6 @@ import React from "react";
 
 const GoingBtn = ({ attendance }: { attendance: AttendanceType }) => {
   const { selectedChild } = useSelectedChild();
-  console.log(attendance);
   const going = attendance.studentsPresent?.find(
     (a) => a._id === selectedChild?._id
   )

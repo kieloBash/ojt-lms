@@ -21,7 +21,7 @@ import {
 
 import useWeeklyAttendance from "../hooks/useWeeklyAttendance";
 import { convertTime } from "@/utils/helpers/convertTime";
-import dayjs from "dayjs";
+import dayjs, { Dayjs } from "dayjs";
 import { useEffect, useState } from "react";
 import { updateClassSchedule } from "@/lib/actions/attendance.action";
 import { useSelectedChild } from "@/components/global/context/useSelectedChild";
@@ -32,13 +32,24 @@ export function AddClassScheduleModal({
   open,
   setOpen,
   prevDateAttendance,
+  selectedWeek,
 }: {
   indexMonth: number;
   open: boolean;
   setOpen: (bol: boolean) => void;
   prevDateAttendance: Date | undefined;
+  selectedWeek:
+    | {
+        start: Dayjs;
+        end: Dayjs;
+      }
+    | undefined;
 }) {
   const format = "MM/DD";
+
+  console.log(selectedWeek?.start.format(format) + "-" + selectedWeek?.end.format(format));
+
+
   const [weekIndex, setWeekIndex] = useState<number>(indexMonth);
   const [dateAttendance, setDateAttendance] = useState<Date | undefined>(
     prevDateAttendance
