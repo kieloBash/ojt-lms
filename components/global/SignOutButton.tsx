@@ -12,9 +12,8 @@ const SignOutButton = () => {
   const router = useRouter();
 
   const handleSignOut = () => {
-    console.log("Sign oUt");
     signOut().then(() => {
-      router.push("/");
+      router.push("/auth/sign-in");
     });
   };
   return (
