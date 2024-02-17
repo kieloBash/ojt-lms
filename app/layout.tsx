@@ -6,6 +6,7 @@ import AuthProvider from "@/components/providers/AuthProvider";
 import { Toaster } from "@/components/ui/toaster";
 import { ClerkProvider } from "@clerk/nextjs";
 import Script from "next/script";
+import Head from "next/head";
 // import Head from "next/head";
 
 const poppins = Poppins({
@@ -21,6 +22,8 @@ export const metadata: Metadata = {
   },
 };
 
+// const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_MEASUREMENT_ID;
+
 export default function RootLayout({
   children,
 }: {
@@ -29,7 +32,7 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en">
-        <Script
+        {/* <Script
           strategy="afterInteractive"
           src="https://www.googletagmanager.com/gtag/js?id=G-7WQ6XS45Y1"
         />
@@ -46,7 +49,21 @@ export default function RootLayout({
           });
         `,
           }}
-        />
+        /> */}
+        {/* <Head>
+          <Script
+            src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
+            strategy="afterInteractive"
+          />
+          <Script id="google-analytics" strategy="afterInteractive">
+            {`
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){window.dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', '${GA_MEASUREMENT_ID}');
+  `}
+          </Script>
+        </Head> */}
         <body className={poppins.className}>
           <main className="flex flex-col w-full min-h-screen bg-slate-50">
             <Toaster />

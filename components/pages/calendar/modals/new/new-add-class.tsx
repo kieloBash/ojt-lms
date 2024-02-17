@@ -25,6 +25,7 @@ import useNewFetchWeekly from "../../hooks/new/useNewFetchWeekly";
 import { convertTime } from "@/utils/helpers/convertTime";
 import { useSelectedChild } from "@/components/global/context/useSelectedChild";
 import { updateClassSchedule } from "@/lib/actions/attendance.action";
+import { Loader2 } from "lucide-react";
 
 const NewAddClassModal = ({
   indexMonth,
@@ -47,12 +48,14 @@ const NewAddClassModal = ({
   // ATTENDANCES
   const attendancesOptions = useNewFetchWeekly({ indexMonth, selectedWeek });
   const [selectedAttendance, setSelectedAttendance] = useState<string>("");
+  const [isLoading, setIsLoading] = useState(false);
 
   // STUDENT
   const { selectedChild } = useSelectedChild();
 
   async function handleAddClassSchedule() {
     if (selectedAttendance === "" && !selectedChild) return null;
+    setIsLoading(true);
 
     const res = await updateClassSchedule({
       childId: (selectedChild?._id as string) || "",
@@ -62,6 +65,7 @@ const NewAddClassModal = ({
     if (res) {
       setOpen(false);
       window.location.reload();
+      setIsLoading(false);
     }
   }
 
@@ -94,7 +98,7 @@ const NewAddClassModal = ({
                     return (
                       <SelectItem key={a._id} value={a._id as string}>
                         {dayjs(a.date).format("dddd")} -{" "}
-                        {dayjs(a.date).format(format)} || {" "}
+                        {dayjs(a.date).format(format)} ||{" "}
                         {convertTime(a.startTime, a.endTime)}
                       </SelectItem>
                     );
@@ -111,15 +115,17 @@ const NewAddClassModal = ({
             variant={"outline"}
             type="button"
             onClick={() => setOpen(false)}
+            disabled={isLoading}
           >
             Cancel
           </Button>
           <Button
             type="button"
             onClick={handleAddClassSchedule}
-            disabled={selectedAttendance === ""}
+            disabled={selectedAttendance === "" || isLoading}
           >
-            Save changes
+            Save changes{" "}
+            {isLoading && <Loader2 className="w-5 h-5 ml-2 animate-spin" />}
           </Button>
         </DialogFooter>
       </DialogContent>
