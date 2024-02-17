@@ -43,7 +43,13 @@ export function FullCourseCard({
           <h4 className="font-medium">Classes Time Slots</h4>
           <div className="grid gap-6">
             {timeslots?.map((single) => {
-              return <Single data={single} handleSelected={handleSelected} />;
+              return (
+                <Single
+                  key={single._id}
+                  data={single}
+                  handleSelected={handleSelected}
+                />
+              );
             })}
           </div>
         </div>
