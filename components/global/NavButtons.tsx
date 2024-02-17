@@ -50,6 +50,16 @@ const NavButtons = ({ user }: { user: ParentType | UserType }) => {
     { label: "settings", href: "/settings" },
     // { label: "help", href: "/help" },
   ];
+  const AdminNavLinks = [
+    { label: "dashboard", href: "/dashboard" },
+    { label: "calendar", href: "/calendar" },
+    { label: "materials", href: "/materials" },
+    { label: "courses", href: "/courses" },
+    { label: "messages", href: "/messages" },
+    { label: "settings", href: "/settings" },
+    { label: "users", href: "/users" },
+    // { label: "help", href: "/help" },
+  ];
 
   const { setSelectedChild, selectedChild } = useSelectedChild();
 

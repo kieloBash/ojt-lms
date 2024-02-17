@@ -25,8 +25,6 @@ export async function authUserClerk() {
     result = await fetchSingleUserClerkId({ clerkId });
   }
 
-  console.log(result);
-
   return result;
 }
 

@@ -8,6 +8,7 @@ import { Metadata } from "next";
 import { redirect } from "next/navigation";
 import React from "react";
 import { NewUserPopup } from "./new-popup";
+import AdminMain from "@/components/pages/dashboard/admin/main";
 
 export const metadata: Metadata = {
   title: "Umonics LMS | Dashboard",
@@ -17,8 +18,6 @@ export const metadata: Metadata = {
 const DashboardPage = async ({ searchParams }: PageProps) => {
   const user = await authUserClerk();
   const { userId: clerkId } = auth();
-
-  // console.log(searchParams);
 
   if (!user && clerkId) redirect("/onboarding");
   if (!user) redirect("/");
@@ -40,7 +39,15 @@ const DashboardPage = async ({ searchParams }: PageProps) => {
         </>
       ) : (
         <>
-          <TeacherSection userInfo={user} />
+          {user.role === "teacher" ? (
+            <>
+              <TeacherSection userInfo={user} />
+            </>
+          ) : (
+            <>
+              <AdminMain userInfo={user} />
+            </>
+          )}
         </>
       )}
     </>
