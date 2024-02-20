@@ -180,7 +180,9 @@ export function CalendarSheet({
                   .map((tz, index) => {
                     return (
                       <li className="" key={index}>
-                        <span className="font-medium mr-2 text-lg">{tz[index]}</span>
+                        <span className="font-medium mr-2 text-lg">
+                          {tz[index]}
+                        </span>
                         {convertToTimeZone(startDateTime, tz[index])} -{" "}
                         {convertToTimeZone(endDateTime, tz[index])}{" "}
                       </li>
@@ -290,18 +292,18 @@ export function CalendarSheet({
           ) : (
             <>
               <div className="grid items-center grid-cols-6 gap-4">
-                <span className="font-medium text-right">Participants</span>
+                <span className="font-medium text-left">Participants</span>
                 <span className="col-span-5" />
 
                 {selectedAttendance &&
                 selectedAttendance?.classParticipants &&
                 selectedAttendance?.classParticipants?.length > 0 ? (
-                  <>
+                  <div className="col-span-6 flex justify-start items-center gap-2">
                     {selectedAttendance?.classParticipants?.map((student) => {
                       const found = selectedAttendance.studentsPresent?.find(
                         (present) => {
                           const temp: any = present;
-                          return temp === student._id;
+                          return temp._id === student._id;
                         }
                       );
 
@@ -344,7 +346,7 @@ export function CalendarSheet({
                         );
                       }
                     })}
-                  </>
+                  </div>
                 ) : (
                   <span className="col-span-6 text-center">
                     No Participants
