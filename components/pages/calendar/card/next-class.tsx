@@ -13,7 +13,7 @@ import { CircleIcon } from "lucide-react";
 // BACKEND
 import { AttendanceType } from "@/lib/interfaces/attendance.interface";
 import { convertTime } from "@/utils/helpers/convertTime";
-import dayjs from "dayjs";
+import dayjs, { Dayjs } from "dayjs";
 import React from "react";
 
 import ChangeClassModal from "../modals/change-class";
@@ -23,12 +23,19 @@ import GoingBtn from "../btn/going";
 export function NextClassCard({
   attendance,
   index,
+  selectedWeek,
 }: {
   index: number;
   attendance: AttendanceType;
+  selectedWeek:
+    | {
+        start: Dayjs;
+        end: Dayjs;
+      }
+    | undefined;
 }) {
   return (
-    <Card className="w-full max-w-xs">
+    <Card className="w-full max-w-xs hover:bg-slate-100 transition-colors">
       <CardHeader className="grid grid-cols-[1fr_110px] items-start gap-4 space-y-0">
         <div className="space-y-1">
           <CardTitle>{dayjs(attendance.date).format("dddd")}</CardTitle>
@@ -36,13 +43,27 @@ export function NextClassCard({
             {convertTime(attendance.startTime, attendance.endTime)}
           </CardDescription>
         </div>
-        <div className="flex items-center space-x-1 rounded-md bg-secondary text-secondary-foreground">
+        {/* CLASS EDITING */}
+        {/* <div className="flex items-center justify-end">
+          {index >= 0 && (
+            <ChangeClassModal
+              selectedWeek={selectedWeek}
+              index={index}
+              attendance={attendance}
+            />
+          )}
+        </div> */}
+        {/* <div className="flex items-center justify-end space-x-1 rounded-md bg-secondary text-secondary-foreground">
           <GoingBtn attendance={attendance} />
           <Separator orientation="vertical" className="h-[20px]" />
           {index >= 0 && (
-            <ChangeClassModal index={index} attendance={attendance} />
+            <ChangeClassModal
+              selectedWeek={selectedWeek}
+              index={index}
+              attendance={attendance}
+            />
           )}
-        </div>
+        </div> */}
       </CardHeader>
       <CardContent>
         <div className="flex items-center justify-between w-full space-x-4 text-sm text-muted-foreground">

@@ -1,5 +1,5 @@
 "use client";
-import React, { use, useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 
 // UI
 import { NextClassCard } from "./card/next-class";
@@ -13,13 +13,9 @@ import { PlusCircle } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { useCalendarContext } from "@/components/providers/CalendarProvider";
 import dayjs, { Dayjs } from "dayjs";
-import { AddClassScheduleModal } from "./modals/add-class-schedule";
 import { AlertHoliday } from "./modals/propt-holiday";
 import { getWeek } from "@/utils/helpers/getWeek";
-import {
-  classClosedChecker,
-  classUpcomingChecker,
-} from "@/utils/helpers/calendar/helpers";
+import { classUpcomingChecker } from "@/utils/helpers/calendar/helpers";
 import { Label } from "@/components/ui/label";
 import {
   getWeeklyDatesInAMonth,
@@ -27,6 +23,7 @@ import {
   isDateInWeek,
 } from "@/utils/helpers/getWeeksInMonth";
 import NewAddClassModal from "./modals/new/new-add-class";
+import { CalendarSheet } from "@/components/global/CalendarSideSheet";
 
 const CalendarSideBar = ({
   userInfo,
@@ -99,9 +96,18 @@ const CalendarSideBar = ({
   }
 
   // PRINTS
-  console.log(weeklyDates);
-  console.log(filteredAttendance);
-  console.log(upcomingClasses);
+  // console.log(weeklyDates);
+  // console.log(filteredAttendance);
+  // console.log(upcomingClasses);
+
+  // SIDESHEET FOR CLASS DETAILS
+  const [sheetTrigger, setSheetTrigger] = useState(false);
+  const [selectedAttendance, setSelectedAttendance] =
+    useState<AttendanceType>();
+  function closeSheet(col: boolean) {
+    setSheetTrigger(false);
+    setSelectedAttendance(undefined);
+  }
 
   if (!toggleSidebar) return null;
   return (
@@ -125,18 +131,14 @@ const CalendarSideBar = ({
         />
       )}
 
-      {/* {open && (
-        <AddClassScheduleModal
-          open={open}
-          setOpen={(e) => {
-            setSelectedIndex(-1);
-            setOpen(e);
-          }}
-          selectedWeek={selectedWeek}
-          indexMonth={selectedIndex}
-          prevDateAttendance={prevDateAttendance}
+      {sheetTrigger && selectedAttendance && (
+        <CalendarSheet
+          isParent={true}
+          trigger={sheetTrigger}
+          setTrigger={closeSheet}
+          selectedAttendance={selectedAttendance}
         />
-      )} */}
+      )}
       <article className="flex flex-col items-start justify-center w-full max-w-xs p-1 bg-white">
         {upcomingClasses.length > 0 ? (
           <Label className="w-full text-xl font-bold text-center">
@@ -161,11 +163,21 @@ const CalendarSideBar = ({
               );
               if (attendanceFound)
                 return (
-                  <NextClassCard
+                  <button
+                    type="button"
                     key={attendanceFound._id}
-                    attendance={attendanceFound}
-                    index={index}
-                  />
+                    className="text-left p-0"
+                    onClick={() => {
+                      setSelectedAttendance(attendanceFound);
+                      setSheetTrigger(true);
+                    }}
+                  >
+                    <NextClassCard
+                      attendance={attendanceFound}
+                      index={monthIndex}
+                      selectedWeek={week}
+                    />
+                  </button>
                 );
 
               return (
@@ -203,45 +215,6 @@ const CalendarSideBar = ({
               );
             })}
           </main>
-
-          {/* <main className="flex flex-col items-start justify-start gap-2 px-2 py-4">
-            {upcomingClasses?.map((attendance: AttendanceType, index) => {
-              return (
-                <NextClassCard
-                  key={attendance._id}
-                  attendance={attendance}
-                  index={index}
-                />
-              );
-            })}
-            {filteredAttendance.length <= 3 && (
-              <Card
-                className="flex items-center justify-center w-full h-20 max-w-xs transition-colors cursor-pointer hover:bg-slate-100"
-                onClick={() => {
-                  setSelectedIndex(filteredAttendance.length);
-                  setOpen(true);
-                  if (filteredAttendance.length === 0)
-                    setPrevDateAttendance(new Date());
-                  else {
-                    const temp = dayjs(
-                      filteredAttendance[filteredAttendance.length - 1].date
-                    );
-                    setPrevDateAttendance(
-                      temp.set("date", temp.get("date") + 7).toDate()
-                    );
-                  }
-                }}
-              >
-                <div className="flex flex-col items-center justify-center">
-                  <div className="flex">
-                    <PlusCircle className="w-5 h-5 mr-2" />
-                    Add Class
-                  </div>
-                  <p className="">{weeklyDates[filteredAttendance.length].start.format("DD/MM")} - {weeklyDates[filteredAttendance.length].end.format("DD/MM")}</p>
-                </div>
-              </Card>
-            )}
-          </main> */}
         </ScrollArea>
       </article>
     </>

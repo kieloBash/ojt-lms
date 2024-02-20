@@ -56,20 +56,19 @@ export function CalendarSheet({
   startDateTime.setHours(Number(hours), Number(minutes));
   [hours, minutes] = selectedAttendance.endTime.split(":");
   endDateTime.setHours(Number(hours), Number(minutes));
-  console.log(selectedAttendance);
 
+  console.log(selectedAttendance);
   const queryClient = useQueryClient();
   const { selectedChild } = useSelectedChild();
   let foundPresent = false;
   if (selectedChild) {
     foundPresent = selectedAttendance.studentsPresent?.find((present) => {
       const temp: any = present;
-      return temp === selectedChild._id;
+      return temp._id === selectedChild._id;
     })
       ? true
       : false;
   }
-
   const today = dayjs();
   const time = selectedAttendance.endTime.split(":");
   const endTime = dayjs(selectedAttendance.date)
@@ -144,8 +143,7 @@ export function CalendarSheet({
         <SheetHeader>
           <SheetTitle>Class Details</SheetTitle>
           <SheetDescription>
-            Details for the class at{" "}
-            {selectedAttendance?.date.toDateString()}
+            Details for the class on {selectedAttendance?.date.toDateString()}
           </SheetDescription>
         </SheetHeader>
         <div className="grid gap-4 py-4">
@@ -159,32 +157,32 @@ export function CalendarSheet({
                 />
               )}
             </div>
-            <div className="flex items-center justify-start">
-              <a
+            <div className="flex items-center justify-start overflow-hidden">
+              <Link
                 href={
                   selectedAttendance?.class.zoomLink ||
                   "https://umonicsplus.com"
                 }
                 target="_blank"
-                className="transition hover:underline"
+                className="transition hover:underline line-clamp-1 overflow-hidden"
               >
                 {selectedAttendance?.class.zoomLink ||
                   "https://umonicsplus.com"}
-              </a>
+              </Link>
             </div>
           </div>
           <div className="flex flex-col gap-2">
             <span className="font-medium text-left">Time Zones</span>
             {selectedAttendance && (
               <ul className="flex flex-col gap-2">
-                {Array(3)
-                  .fill(["ET", "IST", "JST"])
+                {Array(2)
+                  .fill(["SGT", "IST"])
                   .map((tz, index) => {
                     return (
                       <li className="" key={index}>
+                        <span className="font-medium mr-2 text-lg">{tz[index]}</span>
                         {convertToTimeZone(startDateTime, tz[index])} -{" "}
                         {convertToTimeZone(endDateTime, tz[index])}{" "}
-                        <span className="font-medium">{tz[index]}</span>
                       </li>
                     );
                   })}
@@ -193,9 +191,12 @@ export function CalendarSheet({
           </div>
           {isParent ? (
             <>
-              <div className="grid items-center grid-cols-6 gap-4">
-                <span className="font-medium text-right">Going?</span>
+              <div className="grid items-center grid-cols-6 gap-4 w-full">
+                <span className="font-medium text-left">Going?</span>
                 <span className="col-span-5" />
+                <p className="col-span-6 -mt-4 text-sm text-muted-foreground">
+                  By clicking no, your class will be canceled.
+                </p>
                 <div className="flex items-center justify-start col-span-6 gap-2">
                   <Button
                     disabled={foundPresent || closedAttendance}

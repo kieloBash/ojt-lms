@@ -101,6 +101,11 @@ export async function fetchSingleAttendanceById({
         model: Student,
       })
       .populate({
+        path: "studentsPresent",
+        select: "_id name",
+        model: Student,
+      })
+      .populate({
         path: "class",
         select: "_id class zoomLink",
         model: Classes,
@@ -371,8 +376,6 @@ export async function fetchStudentAttendances({
       .exec();
 
     const data: any = await query;
-    console.log("object");
-    console.log(data);
 
     const attendancePromises: any[] = data.classSchedule.map(
       (attendanceId: string) => {
@@ -391,7 +394,7 @@ export async function fetchStudentAttendances({
           })
           .populate({
             path: "class",
-            select: "_id class",
+            select: "_id class zoomLink",
             model: Classes,
           })
           .populate({
@@ -785,6 +788,11 @@ export async function updateClassSchedule({
     });
     const newData = await Attendance.findByIdAndUpdate(newAttendanceId, {
       $push: { classParticipants: childId },
+    });
+
+    await updateStudentYes({
+      studentId: childId,
+      attendanceId: newAttendanceId,
     });
 
     return { message: "Student updated schedule" };

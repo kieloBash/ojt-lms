@@ -150,15 +150,28 @@ const MonthlyView = ({
                                 <div
                                   className={`w-full flex justify-between ${colorClass} mb-1 p-1 transition-colors`}
                                 >
-                                  {/* <div className="text-xs font-medium">
-                                    {dayAttendance.class.class}
-                                  </div> */}
-                                  <p className="text-xs line-clamp-1">
+                                  <p className="text-xs">
+                                    {dayAttendance.ageGroup} |{" "}
+                                    {dayjs(new Date(dayAttendance.date)).format(
+                                      "dddd"
+                                    )}{" "}
+                                    -{" "}
+                                    {dayjs(new Date(dayAttendance.date)).format(
+                                      "MM/DD"
+                                    )}{" "}
+                                    |{" "}
                                     {convertTime(
                                       dayAttendance.startTime,
                                       dayAttendance.endTime
                                     )}
                                   </p>
+
+                                  {/* <p className="text-xs line-clamp-1">
+                                    {convertTime(
+                                      dayAttendance.startTime,
+                                      dayAttendance.endTime
+                                    )}
+                                  </p> */}
                                 </div>
                               </button>
                             );

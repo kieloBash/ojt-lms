@@ -8,6 +8,7 @@ import {
   Check,
   ChevronDownIcon,
   Delete,
+  Edit,
   Loader2,
   Lock,
   Replace,
@@ -42,7 +43,7 @@ import {
 } from "@/components/ui/select";
 
 // BACKEND
-import dayjs from "dayjs";
+import dayjs, { Dayjs } from "dayjs";
 import { convertTime } from "@/utils/helpers/convertTime";
 import { AttendanceType } from "@/lib/interfaces/attendance.interface";
 import { useSelectedChild } from "@/components/global/context/useSelectedChild";
@@ -52,40 +53,32 @@ import {
 } from "@/lib/actions/attendance.action";
 import { classClosedChecker } from "@/utils/helpers/calendar/helpers";
 import useAttendancePerWeek from "../hooks/useAttendancePerWeek";
+import useNewFetchWeekly from "../hooks/new/useNewFetchWeekly";
 
 const ChangeClassModal = ({
-  index,
+  index: indexMonth,
   attendance,
+  selectedWeek,
 }: {
   index: number;
   attendance: AttendanceType;
+  selectedWeek:
+    | {
+        start: Dayjs;
+        end: Dayjs;
+      }
+    | undefined;
 }) => {
-  const format = "MM/DD";
   const { selectedChild } = useSelectedChild();
   const [show, setShow] = React.useState(false);
   const [open, setOpen] = React.useState(false);
   const [selectedAttendance, setSelectedAttendance] =
     React.useState<string>("");
-
-  // GET THE ATTENDANCE TIME DATE
-  const [selectedIndexToChange, setSelectedIndexToChange] =
-    useState<number>(-1);
-  const WeekAttendance = useAttendancePerWeek(
-    selectedIndexToChange,
-    dayjs(attendance.date),
-    attendance
-  );
-  console.log(WeekAttendance);
-
-  const dayLimit = 3;
-  const time = attendance.startTime.split(":");
-  const attDate = dayjs(attendance.date)
-    .set("hour", Number(time[0]))
-    .set("minute", Number(time[1]));
-  const closed = classClosedChecker({ dayLimit, attDate });
+  const [isLoading, setisLoading] = useState(false);
 
   async function handleAddClassSchedule() {
     if (selectedAttendance === "" && !selectedChild) return null;
+    setisLoading(true);
 
     const res = await updateClassScheduleIndex({
       childId: (selectedChild?._id as string) || "",
@@ -95,7 +88,7 @@ const ChangeClassModal = ({
 
     if (res) {
       setShow(false);
-      setSelectedIndexToChange(-1);
+      setisLoading(false);
       window.location.reload();
     }
   }
@@ -103,12 +96,24 @@ const ChangeClassModal = ({
     (d) => d._id === selectedChild?._id
   );
 
+  // NEW FOR ATTENDANCE OPTIONS
+  const attendancesOptions = useNewFetchWeekly({ indexMonth, selectedWeek });
+  const today = new Date();
+  today.setHours(0, 0, 0, 0); // set the time to  00:00:00.000
+
+  const filtered = attendancesOptions?.data?.filter((item) => {
+    const itemDate = new Date(item.date);
+    itemDate.setHours(0, 0, 0, 0);
+    return itemDate >= today && item._id !== attendance._id;
+  });
+
   return (
     <Dialog open={show} onOpenChange={setShow}>
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
-          <Button variant="secondary" className="px-2 shadow-none">
-            <ChevronDownIcon className="w-4 h-4 text-secondary-foreground" />
+          <Button variant="secondary" className="px-3 shadow-none">
+            <span className="">Edit</span>
+            <Edit className="ml-2 w-4 h-4 text-secondary-foreground" />
           </Button>
         </PopoverTrigger>
         <PopoverContent className="w-[250px] p-0">
@@ -120,7 +125,7 @@ const ChangeClassModal = ({
                     onSelect={() => {
                       setOpen(false);
                       setShow(true);
-                      setSelectedIndexToChange(index + 1);
+                      // setSelectedIndexToChange(index + 1);
                     }}
                     disabled={closed}
                   >
@@ -203,21 +208,21 @@ const ChangeClassModal = ({
                   <SelectValue placeholder="New Class" />
                 </SelectTrigger>
                 <SelectContent>
-                  {WeekAttendance.isLoading ? (
+                  {attendancesOptions.isLoading ? (
                     <Label className="flex items-center justify-center w-full px-2 py-1">
                       <Loader2 className="w-5 h-5 animate-spin" />
                     </Label>
                   ) : (
                     <>
-                      {WeekAttendance.data &&
-                      WeekAttendance.data?.length > 0 ? (
+                      {filtered && filtered?.length > 0 ? (
                         <>
-                          {WeekAttendance.data.map((a) => {
+                          {filtered.map((a) => {
                             return (
                               <SelectItem key={a._id} value={a._id as string}>
-                                {dayjs(a.date).format("dddd")} -{" "}
-                                {dayjs(a.date).format(format)} - {a.class.class}{" "}
-                                - {convertTime(a.startTime, a.endTime)}
+                                {a.ageGroup} |{" "}
+                                {dayjs(new Date(a.date)).format("dddd")} -{" "}
+                                {dayjs(new Date(a.date)).format("MM/DD")} |{" "}
+                                {convertTime(a.startTime, a.endTime)}
                               </SelectItem>
                             );
                           })}
@@ -240,8 +245,13 @@ const ChangeClassModal = ({
               >
                 Cancel
               </Button>
-              <Button type="button" onClick={handleAddClassSchedule}>
-                Save changes
+              <Button
+                type="button"
+                disabled={isLoading}
+                onClick={handleAddClassSchedule}
+              >
+                Save changes{" "}
+                {isLoading && <Loader2 className="w-6 h-6 animate-spin" />}
               </Button>
             </DialogFooter>
           </DialogContent>

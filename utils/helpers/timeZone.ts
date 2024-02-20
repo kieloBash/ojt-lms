@@ -42,6 +42,7 @@ export const timeZoneOffsets = {
   AEST: 10,
   IST: 5.5,
   JST: 9,
+  SGT: 8, // Added Singapore Time offset
 };
 
 const timeZones = {

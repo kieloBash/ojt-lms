@@ -97,8 +97,8 @@ const NewAddClassModal = ({
                   {attendancesOptions.data.map((a) => {
                     return (
                       <SelectItem key={a._id} value={a._id as string}>
-                        {dayjs(a.date).format("dddd")} -{" "}
-                        {dayjs(a.date).format(format)} ||{" "}
+                        {a.ageGroup} | {dayjs(new Date(a.date)).format("dddd")}{" "}
+                        - {dayjs(new Date(a.date)).format("MM/DD")} |{" "}
                         {convertTime(a.startTime, a.endTime)}
                       </SelectItem>
                     );
