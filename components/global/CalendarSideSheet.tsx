@@ -137,6 +137,27 @@ export function CalendarSheet({
 
   console.log(selectedAttendance.materials);
 
+  // TIMEZONE
+  // Convert to Singapore time
+  // Convert to Singapore time
+  const singaporeOptions: Intl.DateTimeFormatOptions = {
+    timeZone: "Asia/Singapore",
+    hour: "2-digit",
+    minute: "2-digit",
+  };
+  const singaporeFormatter = new Intl.DateTimeFormat("en-US", singaporeOptions);
+  const singaporeTimeStart = singaporeFormatter.format(startDateTime);
+  const singaporeTimeEnd = singaporeFormatter.format(endDateTime);
+  // Convert to India time
+  const indiaOptions: Intl.DateTimeFormatOptions = {
+    timeZone: "Asia/Kolkata",
+    hour: "2-digit",
+    minute: "2-digit",
+  };
+  const indiaFormatter = new Intl.DateTimeFormat("en-US", indiaOptions);
+  const indiaTimeStart = indiaFormatter.format(startDateTime);
+  const indiaTimeEnd = indiaFormatter.format(endDateTime);
+
   return (
     <Sheet open={trigger} onOpenChange={setTrigger}>
       <SheetContent>
@@ -175,7 +196,15 @@ export function CalendarSheet({
             <span className="font-medium text-left">Time Zones</span>
             {selectedAttendance && (
               <ul className="flex flex-col gap-2">
-                {Array(2)
+                <li className="">
+                  <span className="font-medium mr-2 text-lg">SGT</span>
+                  {singaporeTimeStart} - {singaporeTimeEnd}{" "}
+                </li>
+                <li className="">
+                  <span className="font-medium mr-2 text-lg">IST</span>
+                  {indiaTimeStart} - {indiaTimeEnd}{" "}
+                </li>
+                {/* {Array(2)
                   .fill(["SGT", "IST"])
                   .map((tz, index) => {
                     return (
@@ -187,7 +216,7 @@ export function CalendarSheet({
                         {convertToTimeZone(endDateTime, tz[index])}{" "}
                       </li>
                     );
-                  })}
+                  })} */}
               </ul>
             )}
           </div>
