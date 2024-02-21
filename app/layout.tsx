@@ -14,7 +14,7 @@ const poppins = Poppins({
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
 });
 
-import { GoogleTagManager } from '@next/third-parties/google'
+import { GoogleAnalytics } from '@next/third-parties/google'
 
 export const metadata: Metadata = {
   title: "The Umonics Method | LMS",
@@ -83,7 +83,7 @@ export default function RootLayout({
             </AuthProvider>
           </main>
         </body>
-        <GoogleTagManager gtmId="G-7WQ6XS45Y1" />
+        <GoogleAnalytics gaId="G-7WQ6XS45Y1" />
       </html>
     </ClerkProvider>
   );
