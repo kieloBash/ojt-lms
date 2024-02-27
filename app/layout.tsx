@@ -14,7 +14,7 @@ const poppins = Poppins({
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
 });
 
-import { GoogleAnalytics } from '@next/third-parties/google'
+import { GoogleAnalytics } from "@next/third-parties/google";
 
 export const metadata: Metadata = {
   title: "The Umonics Method | LMS",
@@ -34,47 +34,18 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en">
-        {/* <Script id="google-tag-manager" strategy="afterInteractive">
-          {`
-        (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-        })(window,document,'script','dataLayer','${GTM_ID}');
-        `}
-        </Script> */}
-        {/* <Script
-          strategy="afterInteractive"
-          src="https://www.googletagmanager.com/gtag/js?id=G-7WQ6XS45Y1"
-        />
-        <Script
-          id="google-analytics"
-          strategy="afterInteractive"
-          dangerouslySetInnerHTML={{
-            __html: `
-          window.dataLayer = window.dataLayer || [];
-          functiongtag(){dataLayer.push(arguments);}
-          gtag('js', newDate());
-          gtag('config', 'G-7WQ6XS45Y1', {
-            page_path: window.location.pathname,
-          });
-        `,
-          }}
-        /> */}
-        {/* <Head>
-          <Script
-            src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
-            strategy="afterInteractive"
-          />
-          <Script id="google-analytics" strategy="afterInteractive">
-            {`
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){window.dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', '${GA_MEASUREMENT_ID}');
-  `}
-          </Script>
-        </Head> */}
+        <Head>
+          <script>
+            {`(function(h,o,t,j,a,r){
+        h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+        h._hjSettings={hjid:3882899,hjsv:6};
+        a=o.getElementsByTagName('head')[0];
+        r=o.createElement('script');r.async=1;
+        r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+        a.appendChild(r);
+    })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');`}
+          </script>
+        </Head>
         <body className={poppins.className}>
           <main className="flex flex-col w-full min-h-screen bg-slate-50">
             <Toaster />
