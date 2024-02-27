@@ -751,6 +751,11 @@ export async function updateStudentNo({
       throw new Error("No Attendance Found");
     }
 
+    await updateRemoveClass({
+      childId: studentId,
+      oldAttendance: attendanceId,
+    });
+
     return { message: "Student Confirmed Successfully" };
   } catch (error: any) {
     throw new Error("Error in updating student attendance", error.message);

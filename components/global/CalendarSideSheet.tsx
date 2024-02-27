@@ -107,6 +107,18 @@ export function CalendarSheet({
         });
       }
     } else {
+      const twoDaysFromNow = dayjs().set("date", today.get("date") + 2);
+      const invalid =
+        twoDaysFromNow.isSame(dayjs(selectedAttendance.date)) ||
+        twoDaysFromNow.isAfter(dayjs(selectedAttendance.date));
+      if (invalid) {
+        toast({
+          title:
+            "Can not cancel class anymore. You can only cancel class 3 days before the scheduled class. Thank you!",
+          variant: "destructive",
+        });
+        return;
+      }
       const res = await updateStudentNo({
         attendanceId: selectedAttendance._id as string,
         studentId: sel._id as string,
@@ -185,7 +197,7 @@ export function CalendarSheet({
                   "https://umonicsplus.com"
                 }
                 target="_blank"
-                className="transition hover:underline line-clamp-1 overflow-hidden"
+                className="overflow-hidden transition hover:underline line-clamp-1"
               >
                 {selectedAttendance?.class.zoomLink ||
                   "https://umonicsplus.com"}
@@ -197,11 +209,11 @@ export function CalendarSheet({
             {selectedAttendance && (
               <ul className="flex flex-col gap-2">
                 <li className="">
-                  <span className="font-medium mr-2 text-lg">SGT</span>
+                  <span className="mr-2 text-lg font-medium">SGT</span>
                   {singaporeTimeStart} - {singaporeTimeEnd}{" "}
                 </li>
                 <li className="">
-                  <span className="font-medium mr-2 text-lg">IST</span>
+                  <span className="mr-2 text-lg font-medium">IST</span>
                   {indiaTimeStart} - {indiaTimeEnd}{" "}
                 </li>
                 {/* {Array(2)
@@ -209,7 +221,7 @@ export function CalendarSheet({
                   .map((tz, index) => {
                     return (
                       <li className="" key={index}>
-                        <span className="font-medium mr-2 text-lg">
+                        <span className="mr-2 text-lg font-medium">
                           {tz[index]}
                         </span>
                         {convertToTimeZone(startDateTime, tz[index])} -{" "}
@@ -222,7 +234,7 @@ export function CalendarSheet({
           </div>
           {isParent ? (
             <>
-              <div className="grid items-center grid-cols-6 gap-4 w-full">
+              <div className="grid items-center w-full grid-cols-6 gap-4">
                 <span className="font-medium text-left">Going?</span>
                 <span className="col-span-5" />
                 <p className="col-span-6 -mt-4 text-sm text-muted-foreground">
@@ -327,7 +339,7 @@ export function CalendarSheet({
                 {selectedAttendance &&
                 selectedAttendance?.classParticipants &&
                 selectedAttendance?.classParticipants?.length > 0 ? (
-                  <div className="col-span-6 flex justify-start items-center gap-2">
+                  <div className="flex items-center justify-start col-span-6 gap-2">
                     {selectedAttendance?.classParticipants?.map((student) => {
                       const found = selectedAttendance.studentsPresent?.find(
                         (present) => {

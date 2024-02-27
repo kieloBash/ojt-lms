@@ -20,12 +20,16 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { isDateInWeek } from "@/utils/helpers/getWeeksInMonth";
+import {
+  getNextWeekDates,
+  isDateInWeek,
+} from "@/utils/helpers/getWeeksInMonth";
 import useNewFetchWeekly from "../../hooks/new/useNewFetchWeekly";
 import { convertTime } from "@/utils/helpers/convertTime";
 import { useSelectedChild } from "@/components/global/context/useSelectedChild";
 import { updateClassSchedule } from "@/lib/actions/attendance.action";
 import { Loader2 } from "lucide-react";
+import { CLASSES_BY_LEVEL } from "@/utils/constants/ClassesByLevel";
 
 const NewAddClassModal = ({
   indexMonth,
@@ -44,9 +48,13 @@ const NewAddClassModal = ({
     | undefined;
 }) => {
   const format = "MM/DD";
+  const [chosenWeek, setChosenWeek] = useState(selectedWeek);
 
   // ATTENDANCES
-  const attendancesOptions = useNewFetchWeekly({ indexMonth, selectedWeek });
+  const attendancesOptions = useNewFetchWeekly({
+    indexMonth,
+    selectedWeek: chosenWeek,
+  });
   const [selectedAttendance, setSelectedAttendance] = useState<string>("");
   const [isLoading, setIsLoading] = useState(false);
 
@@ -69,64 +77,132 @@ const NewAddClassModal = ({
     }
   }
 
+  const info = CLASSES_BY_LEVEL[selectedChild?.gradeLevel || "N1"];
+
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle>
             Add Class Schedule (
-            {selectedWeek?.start.format(format) +
+            {chosenWeek?.start.format(format) +
               " - " +
-              selectedWeek?.end.format(format)}
+              chosenWeek?.end.format(format)}
             )
           </DialogTitle>
           <DialogDescription>
             <>{`Please enroll to only of one the choices. Week starts on Saturdays and ends on Fridays`}</>
           </DialogDescription>
         </DialogHeader>
-        <div className="flex flex-col gap-2 mb-4">
-          <Label>Class</Label>
-          <Select onValueChange={setSelectedAttendance}>
-            <SelectTrigger className="w-full">
-              <SelectValue placeholder="New Class" />
-            </SelectTrigger>
-            <SelectContent>
+        {attendancesOptions.isLoading ? (
+          <div className="flex items-center justify-center w-full h-20">
+            <Loader2 className="w-6 h-6 animate-spin" />
+          </div>
+        ) : (
+          <>
+            <div className="flex flex-col gap-2 mb-4">
               {attendancesOptions.data &&
-              attendancesOptions.data?.length > 0 ? (
+              attendancesOptions.data?.length === 0 ? (
                 <>
-                  {attendancesOptions.data.map((a) => {
-                    return (
-                      <SelectItem key={a._id} value={a._id as string}>
-                        {a.ageGroup} | {dayjs(new Date(a.date)).format("dddd")}{" "}
-                        - {dayjs(new Date(a.date)).format("MM/DD")} |{" "}
-                        {convertTime(a.startTime, a.endTime)}
-                      </SelectItem>
-                    );
-                  })}
+                  <p className="text-sm">{`There are no more available meetings to schedule for this week. Please try to enroll for the next week's class.`}</p>
+                  <div className="flex flex-col items-center justify-center gap-2 mt-6">
+                    <Label>
+                      {selectedChild?.gradeLevel} Weekly Class Schedule
+                    </Label>
+                    <ul className="flex flex-col items-center justify-center">
+                      {info?.map((cl, index) => {
+                        return (
+                          <li
+                            className="grid w-full grid-cols-2 gap-8 text-sm text-left"
+                            key={index}
+                          >
+                            <span className="font-bold text-left">
+                              {cl.day}
+                            </span>
+                            <p className="text-right">{cl.time}</p>
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  </div>
                 </>
               ) : (
-                <>No available classes for the week</>
+                <>
+                  <Label>Class</Label>
+                  <Select onValueChange={setSelectedAttendance}>
+                    <SelectTrigger className="w-full">
+                      <SelectValue placeholder="New Class" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {attendancesOptions.data &&
+                      attendancesOptions.data?.length > 0 ? (
+                        <>
+                          {attendancesOptions.data.map((a) => {
+                            return (
+                              <SelectItem key={a._id} value={a._id as string}>
+                                {a.ageGroup} |{" "}
+                                {dayjs(new Date(a.date)).format("dddd")} -{" "}
+                                {dayjs(new Date(a.date)).format("MM/DD")} |{" "}
+                                {convertTime(a.startTime, a.endTime)}
+                              </SelectItem>
+                            );
+                          })}
+                        </>
+                      ) : (
+                        <>No available classes for the week</>
+                      )}
+                    </SelectContent>
+                  </Select>
+                </>
               )}
-            </SelectContent>
-          </Select>
-        </div>
+            </div>
+          </>
+        )}
         <DialogFooter>
-          <Button
-            variant={"outline"}
-            type="button"
-            onClick={() => setOpen(false)}
-            disabled={isLoading}
-          >
-            Cancel
-          </Button>
-          <Button
-            type="button"
-            onClick={handleAddClassSchedule}
-            disabled={selectedAttendance === "" || isLoading}
-          >
-            Save changes{" "}
-            {isLoading && <Loader2 className="w-5 h-5 ml-2 animate-spin" />}
-          </Button>
+          {attendancesOptions.data && attendancesOptions.data?.length > 0 ? (
+            <>
+              <Button
+                variant={"outline"}
+                type="button"
+                onClick={() => setOpen(false)}
+                disabled={isLoading}
+              >
+                Cancel
+              </Button>
+              <Button
+                type="button"
+                onClick={handleAddClassSchedule}
+                disabled={selectedAttendance === "" || isLoading}
+              >
+                Save changes{" "}
+                {isLoading && <Loader2 className="w-5 h-5 ml-2 animate-spin" />}
+              </Button>
+            </>
+          ) : (
+            <>
+              <Button
+                variant={"outline"}
+                type="button"
+                onClick={() => setOpen(false)}
+                disabled={isLoading}
+              >
+                Cancel
+              </Button>
+              <Button
+                type="button"
+                onClick={() => {
+                  const nextWeek = getNextWeekDates(selectedWeek);
+                  if (!nextWeek) return;
+                  setChosenWeek(nextWeek);
+                }}
+                // onClick={handleAddClassSchedule}
+                disabled={isLoading}
+              >
+                Enroll for Next Week{" "}
+                {isLoading && <Loader2 className="w-5 h-5 ml-2 animate-spin" />}
+              </Button>
+            </>
+          )}
         </DialogFooter>
       </DialogContent>
     </Dialog>

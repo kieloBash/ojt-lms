@@ -1,12 +1,12 @@
 "use client";
 import { useCalendarContext } from "@/components/providers/CalendarProvider";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import MonthlyView from "./month-view";
 import WeeklyView from "./week-view";
 import { AttendanceType } from "@/lib/interfaces/attendance.interface";
 import { Loader2 } from "lucide-react";
 import { useSelectedChild } from "@/components/global/context/useSelectedChild";
-import dayjs from "dayjs";
+import dayjs, { Dayjs } from "dayjs";
 import { isParent } from "@/utils/helpers/isParent";
 import { UserType } from "@/lib/interfaces/user.interface";
 import { ParentType } from "@/lib/interfaces/parent.interface";
@@ -16,6 +16,13 @@ import { MissedAlert } from "./modals/missed-alert";
 import Attendance from "@/lib/models/attendance.model";
 import useAttendanceFinal from "./hooks/useAttendancesFinal";
 import { AskAlert } from "./modals/ask-alert";
+import {
+  getWeeklyDatesInAMonth,
+  isDateAfterWeekEnd,
+  isDateInWeek,
+} from "@/utils/helpers/getWeeksInMonth";
+import useNewFetchWeekly from "./hooks/new/useNewFetchWeekly";
+import { AgeGroupType } from "@/lib/interfaces/class.interface";
 
 const CalendarComponent = ({
   userInfo,
@@ -23,7 +30,6 @@ const CalendarComponent = ({
   userInfo: UserType | ParentType;
 }) => {
   const { calendarType, monthIndex } = useCalendarContext();
-  const currDate = dayjs().year(dayjs().year()).month(monthIndex);
   const { selectedChild } = useSelectedChild();
   const [alertMissed, setAlertMissed] = useState(false);
   const [alertAsk, setAlertAsk] = useState(false);
@@ -35,40 +41,50 @@ const CalendarComponent = ({
     monthIndex,
   });
 
+  function checkArrayForDateInWeek(weekStart: Dayjs, weekEnd: Dayjs) {
+    for (const item of ATTENDANCES?.data) {
+      const itemDate = dayjs(item.date);
+      if (isDateInWeek(itemDate, weekStart, weekEnd)) {
+        return item; // Found an item in the array within the week
+      }
+    }
+    return null; // No items found within the week
+  }
+
+  const currentWeek = useMemo(() => {
+    const weeks = getWeeklyDatesInAMonth(monthIndex);
+    let currentWeek: { start: Dayjs; end: Dayjs } | undefined;
+    const today = dayjs();
+    weeks.forEach((week) => {
+      if (
+        today.isSame(week.start) ||
+        today.isSame(week.end) ||
+        (today.isAfter(week.start) && today.isBefore(week.end))
+      ) {
+        currentWeek = week;
+      }
+    });
+    return currentWeek;
+  }, [monthIndex]);
+
+  const attendancesOptions = useNewFetchWeekly({
+    indexMonth: monthIndex,
+    selectedWeek: currentWeek,
+  });
+
+  console.log(attendancesOptions);
+
   useEffect(() => {
-    if (ATTENDANCES?.data && (!alertMissed || !alertAsk)) {
-      const temp = currDate.startOf("week");
-      const temp2 = currDate.endOf("week");
-      const thisStartWeek = temp
-        .set("date", temp.get("date") - 1)
-        .format("MM-DD-YYYY");
-      const thisEndWeek = temp2
-        .set("date", temp2.get("date") - 1)
-        .format("MM-DD-YYYY");
+    if (ATTENDANCES?.data && (!alertMissed || !alertAsk) && currentWeek) {
+      const attendanceFound = checkArrayForDateInWeek(
+        currentWeek.start,
+        currentWeek.end
+      );
 
-      const prompt = ATTENDANCES.data.find((d: AttendanceType) => {
-        const comparedWeek = dayjs(d.date).startOf("week").format("MM-DD-YYYY");
-        if (
-          (dayjs(comparedWeek).isAfter(dayjs(thisStartWeek), "year") &&
-            dayjs(comparedWeek).isBefore(dayjs(thisEndWeek), "year")) ||
-          dayjs(comparedWeek).isSame(dayjs(thisStartWeek), "year") ||
-          dayjs(comparedWeek).isSame(dayjs(thisEndWeek), "year")
-        )
-          return d;
-      })
-        ? true
-        : false;
-
-      if (prompt) return;
-
-      if (dayjs().get("day") >= 3) {
-        // MISSED
-        // console.log("MISSED");
-        setAlertMissed(true);
-      } else {
-        // ASK TO SCHEDULE
-        // console.log("ASK TO SCHEDULE");
-        setAlertAsk(true);
+      if (!attendanceFound) {
+        if (dayjs().get("day") === 4 || attendancesOptions.data?.length === 0)
+          setAlertMissed(true);
+        else setAlertAsk(true);
       }
     }
   }, [ATTENDANCES?.data]);
@@ -97,7 +113,11 @@ const CalendarComponent = ({
 
   return (
     <>
-      <MissedAlert open={alertMissed} openChange={(e) => setAlertMissed(e)} />
+      <MissedAlert
+        open={alertMissed}
+        openChange={(e) => setAlertMissed(e)}
+        classLevel={selectedChild?.gradeLevel as AgeGroupType}
+      />
       <AskAlert open={alertAsk} openChange={(e) => setAlertAsk(e)} />
       {isParent(userInfo) ? (
         <CalendarSideBar

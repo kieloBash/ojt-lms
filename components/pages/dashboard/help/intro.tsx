@@ -34,22 +34,26 @@ const IntroComponent = () => {
               Go to the <span className="font-medium">{`"Calendar"`}</span> tab
               located on the left side.
             </li>
+            <li className="">{`There will be notifications in case you haven't enrolled for a class that week.`}</li>
             <li className="">
               From there you can click the{" "}
-              <span className="font-medium">{`"Add Class"`}</span> button
-              located on the left hand side.
-              <p className="text-xs text-muted-foreground">
-                {`*Note that you can only schedule one class per week and a day
-                before the actual class. The start of the week is every Saturday
-                and the end is every Friday.`}
-              </p>
+              <span className="font-medium">{`"Add Class"`}</span> button on the
+              date you want to schedule.
             </li>
             <li className="">
-              {`There will be notifications in case you haven't enrolled for a
-              class that week.`}
+              {
+                "Choose a class from the available timeslots based on your preference. Save changes"
+              }
+            </li>
+            <li className="">
+              {
+                "Click on your scheduled class to see the meeting link and time zones for that schedule."
+              }
+            </li>
+            <li className="">
+              {`You can click "No" to request class cancellation 3 days before the actual date.`}
               <p className="text-xs text-muted-foreground">
-                {`*Note that we don't conduct make-up class in the event you
-                missed enrolling for a class that week.`}
+                {`*Note that you can only schedule 1 class per week and 3 days before the actual date. The start of the week is every Saturday and the end is every Friday. Also, we won't conduct make-up classes in the event that you missed enrolling for a class in that week.`}
               </p>
             </li>
             <li className="">

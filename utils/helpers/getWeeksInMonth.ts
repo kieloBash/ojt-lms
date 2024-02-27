@@ -41,9 +41,36 @@ export function getWeeksInAMonth(year: number, month: number) {
   return weeks;
 }
 
+export function getNextWeekDates(
+  currentWeek: { start: Dayjs; end: Dayjs } | undefined
+) {
+  if (!currentWeek) return;
+
+  const format = "MM-DD-YYYY || dddd";
+  const currDate = currentWeek.start; // Use the start date of the current week
+  const endOfMonth = currDate.endOf("month");
+
+  // Calculate the start of the next week
+  let nextWeekStart = currentWeek.end.add(1, "day");
+  let nextWeekEnd = nextWeekStart.add(6, "days");
+
+  // Check if the next week falls into the next month
+  if (nextWeekEnd.isAfter(endOfMonth)) {
+    // If it does, adjust the start and end dates to the next month
+    const nextMonthStart = currDate.add(1, "month").startOf("month");
+    nextWeekStart = nextMonthStart;
+    nextWeekEnd = nextMonthStart.add(6, "days");
+  }
+
+  return {
+    start: nextWeekStart,
+    end: nextWeekEnd,
+  };
+}
+
 export function getWeeklyDatesInAMonth(monthIndex: number) {
   const format = "MM-DD-YYYY || dddd";
-  const currDate = dayjs().set("month", monthIndex); // Current date
+  const currDate = dayjs().month(monthIndex); // Adjusted to use .month() method for setting the month
   const startOfMonth = currDate.startOf("month");
   const endOfMonth = currDate.endOf("month");
 
@@ -64,7 +91,13 @@ export function getWeeklyDatesInAMonth(monthIndex: number) {
   const weeklyDates = [];
   for (let i = 0; i < weekCount; i++) {
     const weekStart = firstSaturday.add(i * 7, "days");
-    const weekEnd = weekStart.add(6, "days");
+    let weekEnd = weekStart.add(6, "days");
+
+    // Adjust weekEnd if it falls into the next month
+    if (weekEnd.isAfter(endOfMonth)) {
+      weekEnd = endOfMonth;
+    }
+
     weeklyDates.push({
       start: weekStart,
       end: weekEnd,

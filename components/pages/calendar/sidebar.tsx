@@ -139,6 +139,7 @@ const CalendarSideBar = ({
           selectedAttendance={selectedAttendance}
         />
       )}
+      
       <article className="flex flex-col items-start justify-center w-full max-w-xs p-1 bg-white">
         {upcomingClasses.length > 0 ? (
           <Label className="w-full text-xl font-bold text-center">
@@ -166,7 +167,7 @@ const CalendarSideBar = ({
                   <button
                     type="button"
                     key={attendanceFound._id}
-                    className="text-left p-0"
+                    className="p-0 text-left"
                     onClick={() => {
                       setSelectedAttendance(attendanceFound);
                       setSheetTrigger(true);

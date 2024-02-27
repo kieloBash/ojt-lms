@@ -42,7 +42,7 @@ const useNewFetchWeekly = ({
       const filtered: AttendanceType[] = attendances.attendances.filter((a) => {
         const attDate = dayjs(a.date);
         const today = dayjs();
-        const filter = attDate.set("date", attDate.date() - 1);
+        const filter = attDate.set("date", attDate.date() - 0);
 
         const closed = today.isAfter(filter) || today.isAfter(attDate);
 

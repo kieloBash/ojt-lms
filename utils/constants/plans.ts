@@ -106,7 +106,7 @@ export const PACKAGES = [
     ],
   },
   {
-    label: "Advancement",
+    label: "Advanced",
     priceMo: 55,
     priceYr: 660,
     discounted: false,
