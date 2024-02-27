@@ -34,10 +34,12 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en">
-        <Script
-          src="https://static.hotjar.com/c/hotjar-3882899.js?sv=6"
-          strategy="afterInteractive"
-        />
+        <Head>
+          <Script
+            src="https://static.hotjar.com/c/hotjar-3882899.js?sv=6"
+            strategy="afterInteractive"
+          />
+        </Head>
         <body className={poppins.className}>
           <main className="flex flex-col w-full min-h-screen bg-slate-50">
             <Toaster />
