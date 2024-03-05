@@ -15,6 +15,7 @@ const poppins = Poppins({
 });
 
 import { GoogleAnalytics } from "@next/third-parties/google";
+import HotJarSnippet from "@/components/global/HotJarSnippet";
 
 export const metadata: Metadata = {
   title: "The Umonics Method | LMS",
@@ -45,6 +46,7 @@ export default function RootLayout({
               <QueryProvider>{children}</QueryProvider>
             </AuthProvider>
           </main>
+          <HotJarSnippet />
         </body>
         <GoogleAnalytics gaId="G-7WQ6XS45Y1" />
       </html>
