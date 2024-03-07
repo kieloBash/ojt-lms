@@ -7,7 +7,6 @@ import flashCards from "@/public/pics/flash-cards.jpg";
 import onlineClass from "@/public/pics/online-class.jpg";
 import schedule from "@/public/pics/schedule.jpg";
 import recording from "@/public/pics/recording.jpg";
-import CountdownTimer from "./timer";
 import Image from "next/image";
 
 const InfoSection = () => {
@@ -39,7 +38,7 @@ const InfoSection = () => {
     },
   ];
   return (
-    <section className="w-full -mt-4">
+    <section className="w-full -mt-4 relative z-20 hidden lg:flex xl:flex md:flex">
       <div className="flex flex-col w-full h-full px-10 py-8 text-white bg-main-700 rounded-t-2xl">
         <h2 className="mt-10 text-6xl font-extrabold text-center">{`Here's what you can get`}</h2>
         <p className="mt-6 text-xl font-medium text-center uppercase">
@@ -61,8 +60,15 @@ const InfoSection = () => {
           })}
         </div>
         <div className="flex flex-col items-center justify-center w-full mt-8 -space-y-0">
-          <p className="text-xl text-white">Limited Promo Time</p>
-          <CountdownTimer duration={3 * 60 * 1000} type="Small" />
+          <p className="mt-4 text-sm text-center text-white-500">
+            *Sign up now to receive a discount just for you!
+          </p>
+          <p className="text-sm text-center text-white-500">
+            *Discounted prices are valid until the next year!
+          </p>
+          <p className="text-sm text-center text-white-500">
+            *Terms and Conditions
+          </p>
         </div>
       </div>
     </section>

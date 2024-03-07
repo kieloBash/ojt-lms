@@ -11,6 +11,8 @@ import Image from "next/image";
 
 import ARROW from "@/public/arrow1.png";
 import { Loader2 } from "lucide-react";
+import { toast } from "../ui/use-toast";
+import Link from "next/link";
 
 const OptInForm = () => {
   const [email, setEmail] = useState("");
@@ -22,7 +24,13 @@ const OptInForm = () => {
   async function onSubmit(e: FormEvent) {
     e.preventDefault();
 
-    if (!isLoaded || email === "") return null;
+    if (!isLoaded || email === "") {
+      toast({
+        description: "Please input your email first!",
+        variant: "destructive",
+      });
+      return null;
+    }
 
     try {
       console.log(email);
@@ -65,40 +73,33 @@ const OptInForm = () => {
   }
 
   return (
-    <>
-      <form className="relative w-full mt-10 space-y-4" onSubmit={onSubmit}>
-        <div className="absolute -right-40 rotate-[-45deg] h-[8rem] w-64 -top-20">
-          <Image src={ARROW} alt="arrow" fill objectFit={"cover"} />
-        </div>
-
-        <Input
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          name="email"
-          type="email"
-          placeholder="Enter your email here"
-          className="h-16 text-xl border-4 shadow-md border-main-500"
-        />
-        <div className="flex items-center justify-start w-full gap-8">
-          <Button
-            type="submit"
-            className="h-20 px-10 text-3xl font-bold shadow-md"
-            disabled={pendingLoading}
-          >
-            Sign Up Now!{" "}
-            {pendingLoading && (
-              <Loader2 className="w-8 h-8 ml-2 animate-spin" />
-            )}
-          </Button>
-        </div>
-      </form>
-      {pending && (
-        <p className="mt-2">
-          {`Please check your email and verify your account! If no email hasn't been
-          sent, please wait a few minutes or refresh this page.`}
-        </p>
-      )}
-    </>
+    <form
+      onSubmit={onSubmit}
+      className="flex flex-col relative lg:mt-5 -mt-14 w-full max-w-lg"
+    >
+      <Input
+        className="w-full h-12 border-4 border-green-600 rounded-lg shadow-md text-xl placeholder:text-green-600 text-center"
+        placeholder="Email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        name="email"
+        type="email"
+      />
+      <Button
+        type="submit"
+        disabled={pendingLoading}
+        className="bg-green-600 hover:bg-green-500 h-14 w-full text-2xl font-bold"
+      >
+        Get My $154 Voucher!{" "}
+        {pendingLoading && <Loader2 className="w-8 h-8 ml-2 animate-spin" />}
+      </Button>
+      <Link
+        href={""}
+        className="hover:underline underline-offset-2 text-muted-foreground text-xs text-center mt-1"
+      >
+        *View Terms and Conditions
+      </Link>
+    </form>
   );
 };
 
