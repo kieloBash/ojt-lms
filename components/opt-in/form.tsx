@@ -75,10 +75,10 @@ const OptInForm = () => {
   return (
     <form
       onSubmit={onSubmit}
-      className="flex flex-col relative lg:mt-5 -mt-14 w-full max-w-lg"
+      className="relative flex flex-col w-full max-w-lg lg:mt-5 -mt-14"
     >
       <Input
-        className="w-full h-12 border-4 border-green-600 rounded-lg shadow-md text-xl placeholder:text-green-600 text-center"
+        className="w-full h-12 text-xl text-center border-4 border-green-600 rounded-lg shadow-md placeholder:text-green-600"
         placeholder="Email"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
@@ -88,16 +88,16 @@ const OptInForm = () => {
       <Button
         type="submit"
         disabled={pendingLoading}
-        className="bg-green-600 hover:bg-green-500 h-14 w-full text-2xl font-bold"
+        className="w-full mt-2 text-2xl font-bold bg-green-600 hover:bg-green-500 h-14"
       >
         Get My $154 Voucher!{" "}
         {pendingLoading && <Loader2 className="w-8 h-8 ml-2 animate-spin" />}
       </Button>
       <Link
         href={""}
-        className="hover:underline underline-offset-2 text-muted-foreground text-xs text-center mt-1"
+        className="mt-1 text-xs text-center hover:underline underline-offset-2 text-muted-foreground"
       >
-        *View Terms and Conditions
+        *View Terms & Conditions
       </Link>
     </form>
   );

@@ -26,55 +26,55 @@ export default function Home({ searchParams }: PageProps) {
     redirect("/dashboard");
 
   const CORE_VALUES = [
-    "Visualization: Turning numbers, words, names into memorable mental pictures",
-    "Association: Linking visuals together into stories",
-    "Facial Encoding: Connecting names to facial features ",
-    "Size Emphasis: Making key parts of images very large for recall",
+    "Visualisation: Turn information into vivid mental images.",
+    "Association: Link visuals into memorable stories.",
+    "Facial Encoding: Connect names with facial features.",
+    "Size Emphasis: Highlight key elements for better recall.",
   ];
 
   return (
-    <main className="flex flex-col min-h-screen overflow-hidden bg-white">
-      <div className="lg:grid md:grid xl:grid grid-cols-6 px-10 py-10 gap-10 h-screen hidden">
-        <section className="bg-main-500 rounded-xl col-span-2 text-white p-6 flex justify-start items-center flex-col">
+    <main className="flex flex-col items-center justify-center min-h-screen overflow-hidden bg-white max-w-screen-2xl">
+      <div className="hidden w-full h-[768px] grid-cols-6 gap-10 px-10 py-10 lg:grid md:grid xl:grid">
+        <section className="flex flex-col items-center justify-start col-span-2 p-6 text-white bg-main-500 rounded-xl">
           <header className="w-full mb-4">
-            <h2 className="text-center text-2xl font-bold">
-              Here is where the title will be placed!
+            <h2 className="text-2xl font-bold text-center">
+              {`Get this Free Training Course for Parents with Preschoolers, Worth $289.99!`}
             </h2>
           </header>
           <VideoLanding />
-          <div className="flex flex-col w-full mt-6 flex-1 gap-4">
-            <h3 className="text-center text-xl">
-              Learn some of the core techniques <br /> in our Webinar!
+          <div className="flex flex-col flex-1 w-full gap-4 mt-6">
+            <h3 className="text-xl text-center">
+              {`In this course, we'll discover memory-enhancement techniques:`}
             </h3>
-            <div className="grid grid-cols-2 grid-rows-2 gap-4 w-full flex-1">
+            <div className="grid flex-1 w-full grid-cols-2 grid-rows-2 gap-4">
               {CORE_VALUES.map((d, i) => {
                 return (
                   <div
                     key={i}
-                    className="bg-white rounded-md shadow-sm w-full h-full flex justify-center items-center p-2"
+                    className="flex items-center justify-center w-full h-full p-2 bg-white rounded-md shadow-sm"
                   >
-                    <h4 className="text-main-600 text-xs text-center">{d}</h4>
+                    <h4 className="text-xs text-center text-main-600">{d}</h4>
                   </div>
                 );
               })}
             </div>
           </div>
         </section>
-        <section className="w-full col-span-4 flex flex-col justify-start items-center relative">
-          <header className="flex items-center justify-center w-full h-20 px-20 bg-transparent z-10 relative">
+        <section className="relative flex flex-col items-center justify-start w-full col-span-4">
+          <header className="relative z-10 flex items-center justify-center w-full h-20 px-20 bg-transparent">
             <div className="text-3xl font-bold">
               THE <span className="text-main-500">UMONICS</span> METHOD
             </div>
           </header>
-          <div className="flex-1 relative">
+          <div className="relative flex-1">
             <div className="absolute -top-24 translate-x-1/2 right-1/2 w-[30rem] h-[30rem]">
               <Image src={PricesGraphic} fill alt="prices" objectFit="cover" />
             </div>
           </div>
-          <div className="flex-1 w-full flex flex-col justify-start items-center">
+          <div className="flex flex-col items-center justify-start flex-1 w-full">
             <OptInForm />
           </div>
-          <div className="w-full absolute -bottom-28 flex justify-center items-center -space-x-20">
+          <div className="absolute flex items-center justify-center w-full -space-x-20 -bottom-28">
             <Image src={Child1} width={180} height={180} alt="child" />
             <Image src={Child2} width={180} height={180} alt="child" />
             <Image src={Child3} width={180} height={180} alt="child" />
@@ -83,7 +83,7 @@ export default function Home({ searchParams }: PageProps) {
         </section>
       </div>
       {/* MOBILE */}
-      <div className="flex xl:hidden lg:hidden md:hidden flex-col justify-start items-center pt-6 px-4">
+      <div className="flex flex-col items-center justify-start px-4 pt-6 xl:hidden lg:hidden md:hidden">
         <header className="flex items-center justify-center w-full mb-4">
           <div className="text-xl font-bold text-center">
             THE <span className="text-main-500">UMONICS</span> METHOD
@@ -95,11 +95,11 @@ export default function Home({ searchParams }: PageProps) {
             <Image src={PricesGraphic} fill alt="prices" objectFit="cover" />
           </div>
         </div>
-        <div className="flex-1 w-full flex flex-col justify-start items-center">
+        <div className="flex flex-col items-center justify-start flex-1 w-full">
           <OptInForm />
         </div>
-        <div className="w-full rounded-xl shadow bg-main-500 p-6 mt-4 flex flex-col justify-center items-center gap-2">
-          <h3 className="text-center text-lg text-white">
+        <div className="flex flex-col items-center justify-center w-full gap-2 p-6 mt-4 shadow rounded-xl bg-main-500">
+          <h3 className="text-lg text-center text-white">
             Learn some of the core techniques in our Webinar!
           </h3>
           {CORE_VALUES.map((d, i) => {
@@ -108,12 +108,12 @@ export default function Home({ searchParams }: PageProps) {
                 key={i}
                 className="bg-white rounded-md shadow-sm w-full h-[4rem] flex justify-center items-center p-2"
               >
-                <h4 className="text-main-600 text-xs text-center">{d}</h4>
+                <h4 className="text-xs text-center text-main-600">{d}</h4>
               </div>
             );
           })}
         </div>
-        <div className="w-full relative flex justify-center items-center -space-x-20">
+        <div className="relative flex items-center justify-center w-full -space-x-20">
           <Image src={Child1} width={180} height={180} alt="child" />
           <Image src={Child2} width={180} height={180} alt="child" />
           <Image src={Child3} width={180} height={180} alt="child" />

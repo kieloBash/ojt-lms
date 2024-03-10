@@ -40,7 +40,7 @@ export default function RootLayout({
           strategy="afterInteractive"
         />
         <body className={poppins.className}>
-          <main className="flex flex-col w-full min-h-screen bg-slate-50">
+          <main className="flex flex-col items-center justify-start w-full min-h-screen bg-slate-50">
             <Toaster />
             <AuthProvider>
               <QueryProvider>{children}</QueryProvider>
