@@ -7,8 +7,8 @@ import SAMPLE2 from "@/public/sample-2.jpg";
 
 const AdditionalInfo = () => {
   return (
-    <section className="flex flex-col items-center justify-center w-full gap-4 px-20 pt-8 mt-6">
-      <h3 className="text-3xl font-bold text-center">
+    <section className="flex flex-col items-center justify-center w-full gap-4 px-4 pt-8 mt-6">
+      <h3 className="text-2xl font-bold text-center">
         Why the Ultimate Learning Experience ($57) is Your Best Choice:
       </h3>
       <div className="grid grid-cols-2 grid-flow-row gap-10 w-full max-w-[60rem] h-[30rem]">
@@ -56,8 +56,8 @@ const AdditionalInfo = () => {
           unparalleled value for your child's educational growth.`}
         </p>
       </article>
-      <div className="flex items-center justify-between pt-10 text-sm font-light text-dark-1">
-        <span className="">
+      <div className="flex items-center justify-between pt-10 text-xs font-light text-dark-1">
+        <span className="text-center">
           {` © Preschool Memory Enrichment Training Programme by The Umonics Method
             All Rights Reserved 2023`}
         </span>
