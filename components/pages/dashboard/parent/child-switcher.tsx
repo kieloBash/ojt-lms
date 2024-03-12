@@ -150,7 +150,10 @@ export default function ChildSwitcher({
             role="combobox"
             aria-expanded={open}
             aria-label="Select a team"
-            className={cn("w-[250px] justify-between", className)}
+            className={cn(
+              "lg:w-[250px] xl:w-[250px] md:w-[250px] w-[80px] justify-between",
+              className
+            )}
           >
             <Avatar className="w-5 h-5 mr-2">
               <AvatarImage
@@ -159,7 +162,9 @@ export default function ChildSwitcher({
               />
               <AvatarFallback>{selectedChild?.name[0]}</AvatarFallback>
             </Avatar>
-            {selectedChild.name}
+            <span className="hidden lg:flex xl:flex md:flex">
+              {selectedChild.name}
+            </span>
             <ChevronsUpDown className="w-4 h-4 ml-auto opacity-50 shrink-0" />
           </Button>
         </PopoverTrigger>

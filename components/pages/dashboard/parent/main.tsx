@@ -154,31 +154,61 @@ const ParentMain = ({
     );
 
   return (
-    <section className="flex flex-col w-full h-screen overflow-y-auto bg-white">
-      <header className="flex items-center justify-between w-full h-24 p-10 py-5">
-        <div className="flex flex-col">
-          <h2 className="text-3xl font-bold tracking-tight text-main-500">
-            Dashboard
-          </h2>
-          {selectedChild.package !== "Discover" && (
-            <p className="text-sm text-muted-foreground">
-              Welcome to your dashboard! Here you can quickly view everything
-              within your package!
-            </p>
-          )}
-        </div>
-        <ChildSwitcher
-          parent={parent}
-          students={parent?.children as StudentType[]}
+    <>
+      {/* MOBILE */}
+      <section className="flex flex-col w-full h-screen overflow-y-auto bg-white lg:hidden xl:hidden md:hidden">
+        <header className="flex items-start justify-between w-full gap-4 px-4 py-8">
+          <div className="flex flex-col w-full max-w-xs">
+            <h2 className="text-3xl font-bold tracking-tight text-main-500">
+              Dashboard
+            </h2>
+            {selectedChild.package !== "Discover" && (
+              <p className="text-xs text-muted-foreground">
+                Welcome to your dashboard! Here you can quickly view everything
+                within your package!
+              </p>
+            )}
+          </div>
+          <ChildSwitcher
+            parent={parent}
+            students={parent?.children as StudentType[]}
+            selectedChild={selectedChild}
+            handleSelectChild={handleSelectChild}
+          />
+        </header>
+        <StudentAcceptedScetion
           selectedChild={selectedChild}
-          handleSelectChild={handleSelectChild}
+          billingLink={updateBillLink}
         />
-      </header>
-      <StudentAcceptedScetion
-        selectedChild={selectedChild}
-        billingLink={updateBillLink}
-      />
-    </section>
+      </section>
+
+      {/* DESKTOP */}
+      <section className="flex-col hidden w-full h-screen overflow-y-auto bg-white lg:flex xl:flex md:flex">
+        <header className="flex items-center justify-between w-full h-24 p-10 py-5">
+          <div className="flex flex-col">
+            <h2 className="text-3xl font-bold tracking-tight text-main-500">
+              Dashboard
+            </h2>
+            {selectedChild.package !== "Discover" && (
+              <p className="text-sm text-muted-foreground">
+                Welcome to your dashboard! Here you can quickly view everything
+                within your package!
+              </p>
+            )}
+          </div>
+          <ChildSwitcher
+            parent={parent}
+            students={parent?.children as StudentType[]}
+            selectedChild={selectedChild}
+            handleSelectChild={handleSelectChild}
+          />
+        </header>
+        <StudentAcceptedScetion
+          selectedChild={selectedChild}
+          billingLink={updateBillLink}
+        />
+      </section>
+    </>
   );
 };
 

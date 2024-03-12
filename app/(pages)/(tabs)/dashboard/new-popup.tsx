@@ -11,7 +11,7 @@ export function NewUserPopup() {
   if (open)
     return (
       <div className="fixed inset-0 z-50 flex items-center justify-center bg-background/80 backdrop-blur-sm">
-        <div className="relative w-full max-w-lg px-6 py-8 bg-white border shadow rounded-xl">
+        <div className="relative w-full max-w-sm px-6 py-8 bg-white border shadow lg:max-w-lg md:max-w-lg xl:max-w-lg rounded-xl">
           <button
             onClick={() => setOpen(false)}
             className="absolute p-0 top-4 right-4"

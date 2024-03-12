@@ -81,7 +81,7 @@ const CalendarAttendance = ({
       </div>
     );
   return (
-    <ScrollArea className="w-full h-[calc(100vh-15rem)]">
+    <ScrollArea className="w-full lg:h-[calc(100vh-15rem)] xl:h-[calc(100vh-15rem)] md:h-[calc(100vh-15rem)]">
       <div className="w-full h-full px-4">
         <Table>
           <TableHeader>
@@ -89,7 +89,14 @@ const CalendarAttendance = ({
               <TableHead className="w-[150px]">Class</TableHead>
               <TableHead>Time</TableHead>
               <TableHead>Date</TableHead>
-              <TableHead className="text-right">Attendance</TableHead>
+              <TableHead className="text-right">
+                <span className="hidden lg:block xl:block md:block">
+                  {"Attendance"}
+                </span>
+                <span className="flex lg:hidden xl:hidden md:hidden">
+                  {"Att."}
+                </span>
+              </TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>

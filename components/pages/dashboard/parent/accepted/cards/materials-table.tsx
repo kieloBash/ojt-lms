@@ -78,10 +78,10 @@ const MaterialsTable = ({ selectedChild }: { selectedChild: StudentType }) => {
       </div>
     );
 
-  console.log(Attendance);
+  // console.log(Attendance);
 
   return (
-    <ScrollArea className="w-full h-[calc(100vh-15rem)]">
+    <ScrollArea className="w-full lg:h-[calc(100vh-15rem)] xl:h-[calc(100vh-15rem)] md:h-[calc(100vh-15rem)] h-[10rem]">
       <div className="w-full h-full px-4">
         <Table>
           <TableHeader>
