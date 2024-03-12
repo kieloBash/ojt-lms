@@ -43,7 +43,7 @@ const OnboardingSuccessPage = ({ searchParams }: PageProps) => {
       classSchedule: [],
     };
 
-    console.log(newDataParent,newDataStudent);
+    console.log(newDataParent, newDataStudent);
 
     const res = await createNewParent({
       newDataParent,
@@ -67,48 +67,108 @@ const OnboardingSuccessPage = ({ searchParams }: PageProps) => {
   }
 
   return (
-    <article className="grid w-full h-screen grid-cols-7">
-      <div className="relative flex flex-col items-center justify-between col-span-5 gap-8 pt-8">
-        <div className="relative z-10 flex flex-col items-center justify-center flex-1 mb-32">
-          <LevelFormCard
-            child_bday={searchParams.dob as string}
-            setGradeLevel={(e: string) => setGradeLevel(e)}
-          />
-        </div>
-        <div className="fixed bottom-0 left-0 h-[28rem] w-[71.5vw] overflow-hidden z-0">
-          <Image
-            className=""
-            src={SVG1}
-            alt="homepage"
-            fill
-            // objectFit={"cover"}
-          />
-        </div>
-      </div>
-      <div className="flex flex-col items-center justify-between col-span-2 px-8 py-20 bg-main-500">
-        <div className="flex flex-col items-center justify-start">
+    <>
+      {/* MOBILE */}
+      <article className="relative flex flex-col items-center justify-start w-full px-8 py-10 lg:hidden xl:hidden md:hidden bg-main-500">
+        <div className="flex flex-col items-center justify-center">
           <div className="font-black text-white">
-            <div className="flex items-center justify-center p-4 rounded-full w-36 h-36 bg-main-700">
-              <h2 className="text-8xl">{2}</h2>
+            <div className="flex items-center justify-center w-20 h-20 p-4 rounded-full bg-main-700">
+              <h2 className="text-4xl">{2}</h2>
             </div>
           </div>
-          <h1 className="mt-8 text-5xl font-bold text-white">{"Finish!"}</h1>
-          <p className="mt-3 text-sm text-center text-white">
+          <h1 className="mt-4 text-2xl font-bold text-white">{"Finish!"}</h1>
+          <p className="mt-1 text-sm text-center text-white">
             {"This is the last step to begin your child's journey to success!"}
           </p>
         </div>
-        <Button
-          disabled={gradeLevel === "" || isLoading}
-          type="button"
-          variant={"secondary"}
-          onClick={handleRegisterComplete}
-          className="w-56 h-16 text-lg font-semibold rounded-full"
-        >
-          Get Started{" "}
-          {isLoading && <Loader2 className="w-5 h-5 ml-2 animate-spin" />}
-        </Button>
-      </div>
-    </article>
+        <div className="flex flex-col items-center justify-start flex-1">
+          <div className="relative flex flex-col items-center justify-between col-span-5 gap-8 pt-8">
+            <div className="relative z-10 flex flex-col items-center justify-center flex-1 mb-0 lg:mb-32 md:mb-32 xl:mb-32">
+              <LevelFormCard
+                child_bday={searchParams.dob as string}
+                setGradeLevel={(e: string) => setGradeLevel(e)}
+              />
+            </div>
+            <div className="hidden fixed lg:flex md:flex xl:flex bottom-0 left-0 h-[25rem] w-[71.5vw] overflow-hidden z-0">
+              <Image
+                className=""
+                src={SVG1}
+                alt="homepage"
+                fill
+                // objectFit={"cover"}
+              />
+            </div>
+
+            {/* MOBILE */}
+            <div className="fixed bottom-0 z-0 w-2/3 overflow-hidden -translate-x-1/2 aspect-square lg:hidden xl:hidden md:hidden left-1/2">
+              <Image
+                className=""
+                src={SVG1}
+                alt="homepage"
+                fill
+                // objectFit={"cover"}
+              />
+            </div>
+          </div>
+          <Button
+            disabled={gradeLevel === "" || isLoading}
+            type="button"
+            variant={"secondary"}
+            onClick={handleRegisterComplete}
+            className="w-40 h-10 text-lg font-semibold rounded-full"
+          >
+            Get Started{" "}
+            {isLoading && <Loader2 className="w-5 h-5 ml-2 animate-spin" />}
+          </Button>
+        </div>
+      </article>
+
+      {/* DESKTOP */}
+      <article className="hidden w-full h-screen grid-cols-7 lg:grid md:grid xl:grid">
+        <div className="relative flex flex-col items-center justify-between col-span-5 gap-8 pt-8">
+          <div className="relative z-10 flex flex-col items-center justify-center flex-1 mb-32">
+            <LevelFormCard
+              child_bday={searchParams.dob as string}
+              setGradeLevel={(e: string) => setGradeLevel(e)}
+            />
+          </div>
+          <div className="fixed bottom-0 left-0 h-[28rem] w-[71.5vw] overflow-hidden z-0">
+            <Image
+              className=""
+              src={SVG1}
+              alt="homepage"
+              fill
+              // objectFit={"cover"}
+            />
+          </div>
+        </div>
+        <div className="flex flex-col items-center justify-between col-span-2 px-8 py-20 bg-main-500">
+          <div className="flex flex-col items-center justify-start">
+            <div className="font-black text-white">
+              <div className="flex items-center justify-center p-4 rounded-full w-36 h-36 bg-main-700">
+                <h2 className="text-8xl">{2}</h2>
+              </div>
+            </div>
+            <h1 className="mt-8 text-5xl font-bold text-white">{"Finish!"}</h1>
+            <p className="mt-3 text-sm text-center text-white">
+              {
+                "This is the last step to begin your child's journey to success!"
+              }
+            </p>
+          </div>
+          <Button
+            disabled={gradeLevel === "" || isLoading}
+            type="button"
+            variant={"secondary"}
+            onClick={handleRegisterComplete}
+            className="w-56 h-16 text-lg font-semibold rounded-full"
+          >
+            Get Started{" "}
+            {isLoading && <Loader2 className="w-5 h-5 ml-2 animate-spin" />}
+          </Button>
+        </div>
+      </article>
+    </>
   );
 };
 
