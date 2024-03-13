@@ -100,7 +100,7 @@ export default function Home({ searchParams }: PageProps) {
         </div>
         <div className="flex flex-col items-center justify-center w-full gap-2 p-6 mt-4 shadow rounded-xl bg-main-500">
           <h3 className="text-lg text-center text-white">
-            Learn some of the core techniques in our Webinar!
+            {`Get this Free Training Course for Parents with Preschoolers, Worth $289.99!`}
           </h3>
           {CORE_VALUES.map((d, i) => {
             return (
