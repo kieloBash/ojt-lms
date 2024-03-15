@@ -7,7 +7,7 @@ import "next-cloudinary/dist/cld-video-player.css";
 
 const VideoLanding = () => {
   return (
-    <div className="w-full max-w-[30rem] max-h-[17rem] rounded-lg overflow-hidden relative">
+    <div className="w-full max-w-[30rem] max-h-[15rem] rounded-lg overflow-hidden relative">
       <CldVideoPlayer
         id="promotional-2"
         width={"1920"}
