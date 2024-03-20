@@ -12,6 +12,7 @@ import {
   LayoutGrid,
   MessagesSquareIcon,
   Settings,
+  Users,
 } from "lucide-react";
 import {
   DropdownMenu,
@@ -52,12 +53,12 @@ const NavButtons = ({ user }: { user: ParentType | UserType }) => {
   ];
   const AdminNavLinks = [
     { label: "dashboard", href: "/dashboard" },
-    { label: "calendar", href: "/calendar" },
-    { label: "materials", href: "/materials" },
+    // { label: "calendar", href: "/calendar" },
+    // { label: "materials", href: "/materials" },
+    { label: "users", href: "/users" },
     { label: "courses", href: "/courses" },
     { label: "messages", href: "/messages" },
-    { label: "settings", href: "/settings" },
-    { label: "users", href: "/users" },
+    // { label: "settings", href: "/settings" },
     // { label: "help", href: "/help" },
   ];
 
@@ -118,6 +119,9 @@ const NavButtons = ({ user }: { user: ParentType | UserType }) => {
     );
   }
 
+  const preferredLinks =
+    user.role === "teacher" ? TeacherNavLinks : AdminNavLinks;
+
   return (
     <div className="flex flex-col items-center justify-center gap-4">
       <div className="w-full h-20 pt-4">
@@ -137,13 +141,15 @@ const NavButtons = ({ user }: { user: ParentType | UserType }) => {
               <div className="flex flex-col">
                 <span className="text-lg font-semibold">{user.name}</span>
                 <span className="font-semibold">{user.email}</span>
-                <span className="font-normal capitalize text-slate-600">{user.role}</span>
+                <span className="font-normal capitalize text-slate-600">
+                  {user.role}
+                </span>
               </div>
             </DropdownMenuLabel>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
-      {TeacherNavLinks.map((nav) => {
+      {preferredLinks.map((nav) => {
         const isActive =
           (pathname.includes(nav.href) && nav.href.length > 1) ||
           pathname === nav.href;
@@ -183,6 +189,7 @@ const NavButtons = ({ user }: { user: ParentType | UserType }) => {
                 {nav.label === "materials" && (
                   <BookOpen className={iconClassName} />
                 )}
+                {nav.label === "users" && <Users className={iconClassName} />}
                 {nav.label === "help" && <Info className={iconClassName} />}
               </Button>
             </TooltipButton>
