@@ -55,6 +55,7 @@ const NavButtons = ({ user }: { user: ParentType | UserType }) => {
     { label: "dashboard", href: "/dashboard" },
     // { label: "calendar", href: "/calendar" },
     // { label: "materials", href: "/materials" },
+    { label: "transactions", href: "/transactions" },
     { label: "users", href: "/users" },
     { label: "courses", href: "/courses" },
     { label: "messages", href: "/messages" },
