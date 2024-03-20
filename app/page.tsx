@@ -88,7 +88,7 @@ Memorise New Vocabulary Words.
           <VideoLanding />
           <div className="flex flex-col flex-1 w-full gap-4 mt-6">
             <h3 className="text-xl text-center">
-              {`In this program, we'll discover 8 memory enhancement techniques`}
+              {`In this webinar, we'll discover 8 memory enhancement techniques`}
             </h3>
             <div className="grid flex-1 w-full grid-cols-4 grid-rows-2 gap-4">
               {CORE_VALUES.map((d, i) => {

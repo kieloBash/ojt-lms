@@ -39,11 +39,13 @@ export default function RootLayout({
           src="https://static.hotjar.com/c/hotjar-3882899.js?sv=6"
           strategy="afterInteractive"
         />
-        <body className={poppins.className}>
+        <body className={`${poppins.className}`}>
           <main className="flex flex-col items-center justify-start w-full min-h-screen bg-slate-50">
             <Toaster />
             <AuthProvider>
-              <QueryProvider>{children}</QueryProvider>
+              <QueryProvider>
+                <div className="relative w-full max-w-screen-2xl">{children}</div>
+              </QueryProvider>
             </AuthProvider>
           </main>
           <HotJarSnippet />
