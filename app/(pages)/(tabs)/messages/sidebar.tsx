@@ -9,12 +9,11 @@ import { ParentType } from "@/lib/interfaces/parent.interface";
 
 const MessageSidebar = async () => {
   const user = (await authUserClerk()) as UserType | ParentType;
-  console.log(user);
 
   if (!user) return null;
 
   return (
-    <article className="flex flex-col bg-white w-72">
+    <article className="flex flex-col w-full bg-white lg:w-72 md:w-72 xl:w-72">
       <header className="flex items-center justify-between w-full h-20 px-4">
         <h2 className="text-3xl font-bold tracking-tight text-main-500">
           Chats

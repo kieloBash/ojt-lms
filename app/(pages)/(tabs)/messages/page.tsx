@@ -6,10 +6,10 @@ import { authUserClerk } from "@/lib/actions/parent.action";
 import { UserType } from "@/lib/interfaces/user.interface";
 import { ParentType } from "@/lib/interfaces/parent.interface";
 import { Loader2 } from "lucide-react";
+import MessageSidebar from "./sidebar";
 
 const MessagesPage = async () => {
   const user = (await authUserClerk()) as UserType | ParentType;
-  console.log(user);
 
   if (!user)
     return (
@@ -19,15 +19,18 @@ const MessagesPage = async () => {
     );
 
   return (
-    <section className="flex flex-col items-center justify-center flex-1">
-      <div className="relative flex items-center justify-center w-full -mb-4 overflow-hidden">
-        <Image src={LOGO} alt="Umonics Logo" width={500} />
-      </div>
-      <div className="mt-8 mb-2 text-4xl text-center">
-        Start a conversation now!
-      </div>
-      <NewChatModal blank user={user} />
-    </section>
+    <>
+      <MessageSidebar />
+      <section className="flex-col items-center justify-center flex-1 hidden lg:flex xl:flex md:flex">
+        <div className="relative flex items-center justify-center w-full -mb-4 overflow-hidden">
+          <Image src={LOGO} alt="Umonics Logo" width={500} />
+        </div>
+        <div className="mt-8 mb-2 text-4xl text-center">
+          Start a conversation now!
+        </div>
+        <NewChatModal blank user={user} />
+      </section>
+    </>
   );
 };
 

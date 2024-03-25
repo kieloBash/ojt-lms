@@ -5,10 +5,5 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return (
-    <section className="flex w-full min-h-screen">
-      <MessageSidebar />
-      {children}
-    </section>
-  );
+  return <section className="flex w-full min-h-screen">{children}</section>;
 }
