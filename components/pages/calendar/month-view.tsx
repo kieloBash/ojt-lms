@@ -107,13 +107,13 @@ const MonthlyView = ({
                   return (
                     <div
                       key={idx}
-                      className="relative flex flex-col items-center justify-start w-full h-full p-2 border-b border-r"
+                      className="relative flex flex-col items-center justify-start w-full h-full py-1 border-b border-r"
                     >
-                      <button
-                        className={`${dayClass} w-8 h-8 hover:bg-main-200 rounded-full transition-colors mb-1`}
+                      <div
+                        className={`${dayClass} w-8 h-8 rounded-full transition-colors mb-1 flex justify-center items-center cursor-default`}
                       >
                         <span className="text-base">{day.format("D")}</span>
-                      </button>
+                      </div>
                       {dayAttendances && dayAttendances.length > 0 ? (
                         <>
                           {dayAttendances.map((dayAttendance) => {
@@ -150,7 +150,7 @@ const MonthlyView = ({
                                 <div
                                   className={`w-full flex justify-between ${colorClass} mb-1 p-1 transition-colors`}
                                 >
-                                  <p className="text-xs">
+                                  <p className="text-[0.6rem]">
                                     {dayAttendance.ageGroup} |{" "}
                                     {dayjs(new Date(dayAttendance.date)).format(
                                       "dddd"
@@ -165,13 +165,6 @@ const MonthlyView = ({
                                       dayAttendance.endTime
                                     )}
                                   </p>
-
-                                  {/* <p className="text-xs line-clamp-1">
-                                    {convertTime(
-                                      dayAttendance.startTime,
-                                      dayAttendance.endTime
-                                    )}
-                                  </p> */}
                                 </div>
                               </button>
                             );

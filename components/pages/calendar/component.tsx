@@ -29,7 +29,7 @@ const CalendarComponent = ({
 }: {
   userInfo: UserType | ParentType;
 }) => {
-  const { calendarType, monthIndex } = useCalendarContext();
+  const { toggleSidebar, monthIndex } = useCalendarContext();
   const { selectedChild } = useSelectedChild();
   const [alertMissed, setAlertMissed] = useState(false);
   const [alertAsk, setAlertAsk] = useState(false);
@@ -71,8 +71,6 @@ const CalendarComponent = ({
     indexMonth: monthIndex,
     selectedWeek: currentWeek,
   });
-
-  console.log(attendancesOptions);
 
   useEffect(() => {
     if (ATTENDANCES?.data && (!alertMissed || !alertAsk) && currentWeek) {
@@ -127,17 +125,24 @@ const CalendarComponent = ({
       ) : (
         <MainSidebarCalendar />
       )}
-      {calendarType === "Month" ? (
+
+      {toggleSidebar ? (
+        <></>
+      ) : (
+        <div className="block w-full h-full lg:hidden xl:hidden md:hidden">
+          <MonthlyView
+            userInfo={userInfo}
+            attendance={ATTENDANCES.data as AttendanceType[]}
+          />
+        </div>
+      )}
+
+      <div className="hidden w-full h-full lg:block xl:block md:block">
         <MonthlyView
           userInfo={userInfo}
           attendance={ATTENDANCES.data as AttendanceType[]}
         />
-      ) : (
-        <WeeklyView
-          userInfo={userInfo}
-          attendance={ATTENDANCES.data as AttendanceType[]}
-        />
-      )}
+      </div>
     </>
   );
 };

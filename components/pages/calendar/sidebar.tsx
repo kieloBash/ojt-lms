@@ -95,11 +95,6 @@ const CalendarSideBar = ({
     return null; // No items found within the week
   }
 
-  // PRINTS
-  // console.log(weeklyDates);
-  // console.log(filteredAttendance);
-  // console.log(upcomingClasses);
-
   // SIDESHEET FOR CLASS DETAILS
   const [sheetTrigger, setSheetTrigger] = useState(false);
   const [selectedAttendance, setSelectedAttendance] =
@@ -139,8 +134,8 @@ const CalendarSideBar = ({
           selectedAttendance={selectedAttendance}
         />
       )}
-      
-      <article className="flex flex-col items-start justify-center w-full max-w-xs p-1 bg-white">
+
+      <article className="flex flex-col items-start justify-center w-full p-1 bg-white lg:max-w-xs xl:max-w-xs md:max-w-xs">
         {upcomingClasses.length > 0 ? (
           <Label className="w-full text-xl font-bold text-center">
             Upcoming Classes
@@ -167,7 +162,7 @@ const CalendarSideBar = ({
                   <button
                     type="button"
                     key={attendanceFound._id}
-                    className="p-0 text-left"
+                    className="w-full p-0 text-left"
                     onClick={() => {
                       setSelectedAttendance(attendanceFound);
                       setSheetTrigger(true);
@@ -184,7 +179,7 @@ const CalendarSideBar = ({
               return (
                 <Card
                   key={index}
-                  className={`${cardClass} relative flex items-center justify-center w-full h-20 max-w-xs transition-colors`}
+                  className={`${cardClass} relative flex items-center justify-center w-full h-20 lg:max-w-xs xl:max-w-xs md:max-w-xs transition-colors`}
                   onClick={() => {
                     if (isDateAfterWeekEnd(dayjs(), week.end)) return;
 

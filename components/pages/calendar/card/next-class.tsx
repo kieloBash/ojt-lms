@@ -35,7 +35,7 @@ export function NextClassCard({
     | undefined;
 }) {
   return (
-    <Card className="w-full max-w-xs hover:bg-slate-100 transition-colors">
+    <Card className="w-full transition-colors hover:bg-slate-100">
       <CardHeader className="grid grid-cols-[1fr_110px] items-start gap-4 space-y-0">
         <div className="space-y-1">
           <CardTitle>{dayjs(attendance.date).format("dddd")}</CardTitle>
