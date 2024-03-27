@@ -9,15 +9,19 @@ const Footer = () => {
   return (
     <footer className="w-full py-8 bg-white border-t">
       <div className="max-w-screen-xl px-4 mx-auto">
-        <div className="relative flex items-center justify-center w-full -mb-4 overflow-hidden">
+        <div className="relative items-center justify-center hidden w-full -mb-4 overflow-hidden lg:flex xl:flex md:flex">
           <Image src={LOGO} alt="Umonics Logo" width={500} />
         </div>
-        <div className="flex items-center justify-between pt-10 text-sm font-light text-dark-1">
+        {/* MOBILE */}
+        <div className="relative flex items-center justify-center w-full -mb-4 overflow-hidden lg:hidden xl:hidden md:hidden">
+          <Image src={LOGO} alt="Umonics Logo" width={300} />
+        </div>
+        <div className="flex items-center justify-between pt-10 text-xs font-light lg:text-sm text-dark-1">
           <span className="">
             © Preschool Memory Enrichment Training Program by The Umonics Method
             All Rights Reserved 2023
           </span>
-          <div className="flex items-center justify-center gap-2">
+          <div className="flex items-center justify-center lg:gap-2 gap-0.5">
             <Button
               variant={"link"}
               onClick={() => {}}
